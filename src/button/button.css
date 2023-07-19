@@ -1,0 +1,44 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+:host {
+  /* Fonts */
+  --button-font-family: 'Poppins', sans-serif;
+  --button-font-size: 15px;
+
+  /* Padding */
+  --button-padding: 8px 20px;
+
+  /* Borders */
+  --button-border-radius: 8px;
+  --button-border-width: 0px;
+  --button-border-color: var(--blue-darken-2);
+
+  /* Background & colors */
+  --button-background-color: var(--blue-darken-2);
+  --button-color: white;
+
+  /* Addtionals */
+  --button-cursor: pointer;
+}
+
+/* Base styles */
+.button {
+  border-width: var(--button-border-width);
+  border-color: var(--button-border-color);
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-background-color);
+  color: var(--button-color);
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  cursor: var(--button-cursor);
+}
+
+.button__wrapper {
+  display: flex;
+  align-items: center;
+  padding: var(--button-padding);
+}
