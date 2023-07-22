@@ -1,7 +1,7 @@
 * {
   padding: 0px;
   margin: 0px;
-  box-sizing: border-box;
+  box-sizing: content-box;
 }
 
 :host {
@@ -10,12 +10,13 @@
   --button-font-size: 15px;
 
   /* Padding */
-  --button-padding: 8px 20px;
+  --button-padding: 10px 20px;
 
   /* Borders */
   --button-border-radius: 8px;
   --button-border-width: 0px;
   --button-border-color: var(--blue-darken-2);
+  --button-border-style: solid;
 
   /* Background & colors */
   --button-background-color: var(--blue-darken-2);
@@ -41,4 +42,22 @@
   display: flex;
   align-items: center;
   padding: var(--button-padding);
+}
+
+/* Appearance: Outlined */
+:host([appearance="outlined"]) {
+  --button-border-width: 2px;
+
+  --button-border-color: var(--button-background-color);
+  --button-color: var(--button-background-color);
+
+  --button-padding: 8px 18px;
+}
+
+:host([appearance="outlined"]) .button {
+  background-color: transparent;
+  border-width: var(--button-border-width);
+  border-color: var(--button-border-color);
+  border-style: var(--button-border-style);
+  color: var(--button-color);
 }
