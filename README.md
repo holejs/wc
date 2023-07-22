@@ -49,6 +49,22 @@ These options allow you to make simple transformations to the button text.
 <hwc-button capitalize appearance="text" color="pink-darken-2">click me!</hwc-button>
 ```
 
+### Rounded
+
+This property adds pronounced borders to the side of the component.
+
+```html
+<hwc-button rounded uppercase color="red-darken-2">Click me!</hwc-button>
+```
+
+### Fullwidth
+
+Is an attribute that makes the button stretch to the full width of its parent container.
+
+```html
+<hwc-button fullwidth rounded color="orange-darken-2">Click me!</hwc-button>
+```
+
 ### CSS Custom Properties
 
 | Name                              | Description                                     |
