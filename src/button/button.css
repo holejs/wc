@@ -67,6 +67,15 @@
   border-radius: 50rem;
 }
 
+/* Fullwidth */
+:host([fullwidth]) .button {
+  width: 100%;
+}
+
+:host([fullwidth]) .button__wrapper {
+  justify-content: center;
+}
+
 /* Appearance: Outlined */
 :host([appearance="outlined"]) {
   --button-border-width: 2px;

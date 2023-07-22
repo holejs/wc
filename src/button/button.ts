@@ -35,6 +35,8 @@ export class Button extends LitElement {
 
   @property({ type: Boolean }) rounded: boolean = false
 
+  @property({ type: Boolean }) fullwidth: boolean = false
+
   protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
       const color = (getColor(this.color as ColorNameMap) || this.color).trim()
