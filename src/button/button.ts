@@ -27,6 +27,12 @@ export class Button extends LitElement {
 
   @property({ type: String }) color: string = 'blue-darken-2'
 
+  @property({ type: Boolean }) lowercase: boolean = false
+
+  @property({ type: Boolean }) uppercase: boolean = false
+
+  @property({ type: Boolean }) capitalize: boolean = false
+
   protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
       const color = getColor(this.color as ColorNameMap) || this.color

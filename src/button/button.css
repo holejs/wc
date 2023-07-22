@@ -44,6 +44,19 @@
   padding: var(--button-padding);
 }
 
+/* Uppercase, Lowercase & Capitalize */
+:host([uppercase]) .button {
+  text-transform: uppercase;
+}
+
+:host([lowercase]) .button {
+  text-transform: lowercase;
+}
+
+:host([capitalize]) .button {
+  text-transform: capitalize;
+}
+
 /* Appearance: Outlined */
 :host([appearance="outlined"]) {
   --button-border-width: 2px;
