@@ -1,3 +1,16 @@
+## Table of contents
+
+- [Table of contents](#table-of-contents)
+- [Buttons](#buttons)
+  - [Usage](#usage)
+  - [Appearance](#appearance)
+  - [Colors](#colors)
+  - [Uppercase, Lowercase \& Capitalize](#uppercase-lowercase--capitalize)
+  - [Rounded](#rounded)
+  - [Fullwidth](#fullwidth)
+  - [CSS Custom Properties](#css-custom-properties)
+
+
 ## Buttons
 
 The `Buttons` component provides a simple and flexible way to create interactive buttons in your web application. Buttons are essential elements that allow users to perform actions and interact with your website or web application.
