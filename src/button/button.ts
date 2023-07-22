@@ -15,7 +15,7 @@ declare global {
 
 export type ButtonType = "button" | "submit" | "reset" | "menu"
 
-export type ButtonAppearance = "outlined"
+export type ButtonAppearance = "outlined" | "text"
 
 @customElement('hwc-button')
 export class Button extends LitElement {

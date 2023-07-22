@@ -74,3 +74,13 @@
   border-style: var(--button-border-style);
   color: var(--button-color);
 }
+
+/* Appearance: Text */
+:host([appearance="text"]) .button {
+  --button-color: var(--button-background-color);
+}
+
+:host([appearance="text"]) .button {
+  background-color: transparent;
+  color: var(--button-color);
+}
