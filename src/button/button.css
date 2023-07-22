@@ -36,12 +36,17 @@
   font-family: var(--button-font-family);
   font-size: var(--button-font-size);
   cursor: var(--button-cursor);
+  transition: 250ms all ease;
 }
 
 .button__wrapper {
   display: flex;
   align-items: center;
   padding: var(--button-padding);
+}
+
+.button:hover {
+  opacity: 0.90;
 }
 
 /* Uppercase, Lowercase & Capitalize */
@@ -75,6 +80,10 @@
   color: var(--button-color);
 }
 
+:host([appearance="outlined"]) .button:hover {
+  background-color: var(--button-hover-background-color);
+}
+
 /* Appearance: Text */
 :host([appearance="text"]) .button {
   --button-color: var(--button-background-color);
@@ -82,5 +91,10 @@
 
 :host([appearance="text"]) .button {
   background-color: transparent;
+  color: var(--button-color);
+}
+
+:host([appearance="text"]) .button:hover {
+  background-color: var(--button-hover-background-color);
   color: var(--button-color);
 }

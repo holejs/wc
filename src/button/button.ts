@@ -5,7 +5,7 @@ import styles from './button.css?inline'
 
 import { ColorNameMap } from "../declarations";
 
-import { getColor } from "../utils";
+import { getColor, hexToRgba, isHexColor } from "../utils";
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -35,9 +35,13 @@ export class Button extends LitElement {
 
   protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
-      const color = getColor(this.color as ColorNameMap) || this.color
+      const color = (getColor(this.color as ColorNameMap) || this.color).trim()
 
       this.style.setProperty('--button-background-color', color)
+
+      const hoverColor = isHexColor(color) ? hexToRgba(color, 0.1) : color
+
+      this.style.setProperty('--button-hover-background-color', hoverColor)
     }
   }
 
