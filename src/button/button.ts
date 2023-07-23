@@ -25,7 +25,7 @@ export class Button extends LitElement {
 
   @property({ type: String }) type: ButtonType = 'button'
 
-  @property({ type: String }) color: string = 'blue-darken-2'
+  @property({ type: String }) color: string = ''
 
   @property({ type: Boolean }) lowercase: boolean = false
 
@@ -41,11 +41,11 @@ export class Button extends LitElement {
     if (_changedProperties.has('color')) {
       const color = (getColor(this.color as ColorNameMap) || this.color).trim()
 
-      this.style.setProperty('--button-background-color', color)
+      this.style.setProperty('--hwc-button-bg', color)
 
       const hoverColor = isHexColor(color) ? hexToRgba(color, 0.1) : color
 
-      this.style.setProperty('--button-hover-background-color', hoverColor)
+      this.style.setProperty('--hwc-button-hover-bg-color', hoverColor)
     }
   }
 
