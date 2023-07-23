@@ -5,6 +5,7 @@
   - [Usage](#usage)
   - [Appearance](#appearance)
   - [Colors](#colors)
+  - [Color gradient](#color-gradient)
   - [Uppercase, Lowercase \& Capitalize](#uppercase-lowercase--capitalize)
   - [Rounded](#rounded)
   - [Fullwidth](#fullwidth)
@@ -49,6 +50,25 @@ The color property allows you to modify the color of the component.
 ```
 
 > **NOTE**: You can see the color palette in the following link [Color palette](https://github.com/holejs/web-components/blob/main/src/assets/colors.css)
+
+### Color gradient
+
+You can set gradient colors using a simple css class. Let's see the following example:
+
+```html
+<style>
+  /* Step 1: Define your class. */
+  /* Gradient taken from https://uigradients.com/#ElectricViolet */
+  .electric-violet__bg {
+    --hwc-button-bg: #4776E6;
+    --hwc-button-bg: -webkit-linear-gradient(to right, #8E54E9, #4776E6);
+    --hwc-button-bg: linear-gradient(to right, #8E54E9, #4776E6);
+  }
+</style>
+
+<!-- Step 2: Adding class. -->
+<hwc-button class="electric-violet__bg">Gradient button!</hwc-button>
+```
 
 ### Uppercase, Lowercase & Capitalize
 
