@@ -82,14 +82,14 @@ Is an attribute that makes the button stretch to the full width of its parent co
 
 | Name                              | Description                                     |
 | --------------------------------- | ----------------------------------------------- |
-| `--button-font-family`            | Font family for the button text.                |
-| `--button-font-size`              | Font size for the button text.                  |
-| `--button-padding`                | Padding for the button content.                 |
-| `--button-border-radius`          | Border radius for the button.                   |
-| `--button-border-width`           | Border width for the button.                    |
-| `--button-border-color`           | Border color for the button.                    |
-| `--button-border-style`           | Border style for the button.                    |
-| `--button-background-color`       | Background color for the button.                |
-| `--button-color`                  | Text color for the button.                      |
-| `--button-cursor`                 | Cursor style when hovering over the button.     |
-| `--button-hover-background-color` | Background color when hovering over the button. |
+| `--hwc-button-font-family`            | Font family for the button text.                |
+| `--hwc-button-font-size`              | Font size for the button text.                  |
+| `--hwc-button-padding`                | Padding for the button content.                 |
+| `--hwc-button-border-radius`          | Border radius for the button.                   |
+| `--hwc-button-border-width`           | Border width for the button.                    |
+| `--hwc-button-border-color`           | Border color for the button.                    |
+| `--hwc-button-border-style`           | Border style for the button.                    |
+| `--hwc-button-bg`       | Background color for the button.                |
+| `--hwc-button-color`                  | Text color for the button.                      |
+| `--hwc-button-cursor`                 | Cursor style when hovering over the button.     |
+| `--hwc-button-hover-bg-color` | Background color when hovering over the button. |
