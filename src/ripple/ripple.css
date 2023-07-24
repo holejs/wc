@@ -1,0 +1,29 @@
+:host {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.ripple {
+  position: absolute;
+  content: "";
+  border-radius: 50%;
+  transform: scale(0);
+  background-color: currentColor;
+  opacity: 0.35;
+  pointer-events: none;
+  animation: rippleAnimation 700ms linear;
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes rippleAnimation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
