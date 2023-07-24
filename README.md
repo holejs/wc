@@ -139,7 +139,7 @@ This property allows you to apply a visual lift effect to the component, creatin
 ```html
 <style>
   .custom__elevation {
-    --hwc-button-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    --hwc-button-box-shadow: 3px 7px 15px rgba(103, 74, 156 , 0.65);
   }
 </style>
 
