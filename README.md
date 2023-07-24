@@ -9,6 +9,7 @@
   - [Uppercase, Lowercase \& Capitalize](#uppercase-lowercase--capitalize)
   - [Rounded](#rounded)
   - [Fullwidth](#fullwidth)
+- [Elevations](#elevations)
   - [CSS Custom Properties](#css-custom-properties)
 
 
@@ -116,22 +117,51 @@ Is an attribute that makes the button stretch to the full width of its parent co
 <hwc-button fullwidth rounded color="orange-darken-2">Click me!</hwc-button>
 ```
 
+## Elevations
+
+This property allows you to apply a visual lift effect to the component, creating a sense of depth and making the button appear to be raised or floating above the surface.
+
+```html
+<hwc-button elevation="1" color="teal-darken-2">Click me!</hwc-button>
+
+<hwc-button elevation="2" appearance="text" color="green-darken-2">Click me!</hwc-button>
+
+<hwc-button elevation="3" color="yellow-darken-2">Click me!</hwc-button>
+
+<hwc-button elevation="4" appearance="outlined" color="blue-darken-2">Click me!</hwc-button>
+
+<hwc-button elevation="5" color="teal-darken-2">Click me!</hwc-button>
+```
+
+**Create your custom elevations**
+
+```html
+<style>
+  .elevation-10 {
+    --hwc-button-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  }
+</style>
+
+<hwc-button class="elevation-10" color="purple-darken-2">Custom elevation button!</hwc-button>
+```
+
 ### CSS Custom Properties
 
-| Name                              | Description                                     |
-| --------------------------------- | ----------------------------------------------- |
-| `--hwc-button-font-family`            | Font family for the button text.                |
-| `--hwc-button-font-size`              | Font size for the button text.                  |
-| `--hwc-button-font-weight` | This property determines the font weight of the button text. |
+| Name                          | Description                                                               |
+| ----------------------------- | ------------------------------------------------------------------------- |
+| `--hwc-button-font-family`    | Font family for the button text.                                          |
+| `--hwc-button-font-size`      | Font size for the button text.                                            |
+| `--hwc-button-font-weight`    | This property determines the font weight of the button text.              |
 | `--hwc-button-letter-spacing` | This property controls the spacing between characters in the button text. |
-| `--hwc-button-height` | This property sets the height of the button. |
-| `--hwc-button-width` | This property defines the width of the button. |
-| `--hwc-button-padding`                | Padding for the button content.                 |
-| `--hwc-button-border-radius`          | Border radius for the button.                   |
-| `--hwc-button-border-width`           | Border width for the button.                    |
-| `--hwc-button-border-color`           | Border color for the button.                    |
-| `--hwc-button-border-style`           | Border style for the button.                    |
-| `--hwc-button-bg`       | Background color for the button.                |
-| `--hwc-button-color`                  | Text color for the button.                      |
-| `--hwc-button-cursor`                 | Cursor style when hovering over the button.     |
-| `--hwc-button-hover-bg-color` | Background color when hovering over the button. |
+| `--hwc-button-height`         | This property sets the height of the button.                              |
+| `--hwc-button-width`          | This property defines the width of the button.                            |
+| `--hwc-button-padding`        | Padding for the button content.                                           |
+| `--hwc-button-border-radius`  | Border radius for the button.                                             |
+| `--hwc-button-border-width`   | Border width for the button.                                              |
+| `--hwc-button-border-color`   | Border color for the button.                                              |
+| `--hwc-button-border-style`   | Border style for the button.                                              |
+| `--hwc-button-bg`             | Background color for the button.                                          |
+| `--hwc-button-color`          | Text color for the button.                                                |
+| `--hwc-button-cursor`         | Cursor style when hovering over the button.                               |
+| `--hwc-button-hover-bg-color` | Background color when hovering over the button.                           |
+| `--hwc-button-box-shadow`     | Allow to set shadows to the component                                     |
