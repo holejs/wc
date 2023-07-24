@@ -153,3 +153,30 @@
 :host([appearance="fab"]) .button__wrapper {
   padding: 0px;
 }
+
+/* Icon */
+:host([appearance="icon"]) {
+  --hwc-button-height: 35px;
+  --hwc-button-width: 35px;
+  --hwc-button-color: var(--hwc-button-bg);
+}
+
+:host([appearance="icon"]) .button {
+  border-radius: 50%;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  height: var(--hwc-button-height);
+  width: var(--hwc-button-width);
+  color: var(--hwc-button-color);
+}
+
+:host([appearance="icon"]) .button:hover {
+  background: var(--hwc-button-hover-bg-color);
+}
+
+:host([appearance="icon"]) .button__wrapper {
+  padding: 0px;
+}
