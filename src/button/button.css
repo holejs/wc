@@ -53,7 +53,7 @@
   cursor: var(--hwc-button-cursor);
   height: var(--hwc-button-height);
   width: var(--hwc-button-width);
-  box-shadow: var(--hwc-button-elevation);
+  box-shadow: var(--hwc-button-box-shadow);
   transition: 250ms all ease;
 }
 

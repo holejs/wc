@@ -27,9 +27,9 @@ export class Button extends LitElement {
 
   @property({ type: String }) type: ButtonType = 'button'
 
-  @property({ type: String }) color: string = ''
+  @property({ type: String }) color!: string
 
-  @property({ type: Number, reflect: true }) elevation: ButtonElevation = 1
+  @property({ type: Number, reflect: true }) elevation: ButtonElevation = 0
 
   @property({ type: Boolean }) lowercase: boolean = false
 
@@ -55,7 +55,7 @@ export class Button extends LitElement {
     if (_changedProperties.has('elevation')) {
       const elevation = getElevation(`elevation${this.elevation}` as ElevationNameMap) || null
 
-      this.style.setProperty('--hwc-button-elevation', elevation)
+      this.style.setProperty('--hwc-button-box-shadow', elevation)
     }
   }
 
