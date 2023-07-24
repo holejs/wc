@@ -10,6 +10,7 @@
   - [Rounded](#rounded)
   - [Fullwidth](#fullwidth)
   - [Elevations](#elevations)
+  - [Ripple](#ripple)
   - [CSS Custom Properties](#css-custom-properties)
 
 
@@ -143,6 +144,18 @@ This property allows you to apply a visual lift effect to the component, creatin
 </style>
 
 <hwc-button class="custom__elevation" color="purple-darken-2">Custom elevation button!</hwc-button>
+```
+
+### Ripple
+
+The **ripple** effect simulates waves that propagate from the point where the interaction was made, spreading across the button area, and then gradually fading out.
+
+```html
+<hwc-button elevation="1">
+  <!-- Adding ripple effect -->
+  <hwc-ripple></hwc-ripple>
+  Button + Ripple!
+</hwc-button>
 ```
 
 ### CSS Custom Properties
