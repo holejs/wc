@@ -16,7 +16,7 @@
   --hwc-button-letter-spacing: 0px;
 
   /* Height & Width */
-  --hwc-button-height: auto;
+  --hwc-button-height: 43px;
   --hwc-button-width: auto;
 
   /* Padding */
@@ -41,20 +41,28 @@
 /* Base styles */
 .button {
   display: inline-block;
+  position: relative;
+  
   border-width: var(--hwc-button-border-width);
   border-color: var(--hwc-button-border-color);
   border-radius: var(--hwc-button-border-radius);
+  
   background: var(--hwc-button-bg);
   color: var(--hwc-button-color);
+
   font-family: var(--hwc-button-font-family);
   font-size: var(--hwc-button-font-size);
   font-weight: var(--hwc-button-font-weight);
   letter-spacing: var(--hwc-button-letter-spacing);
+  
   cursor: var(--hwc-button-cursor);
+
   height: var(--hwc-button-height);
   width: var(--hwc-button-width);
+
   box-shadow: var(--hwc-button-box-shadow);
   transition: 250ms all ease;
+  overflow: hidden;
 }
 
 .button__wrapper {
