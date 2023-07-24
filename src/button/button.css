@@ -35,6 +35,7 @@
 
   /* Additionals */
   --hwc-button-cursor: pointer;
+  /* --hwc-button-elevation: var(--hwc-elevation-1); */
 }
 
 /* Base styles */
@@ -52,6 +53,7 @@
   cursor: var(--hwc-button-cursor);
   height: var(--hwc-button-height);
   width: var(--hwc-button-width);
+  box-shadow: var(--hwc-button-elevation);
   transition: 250ms all ease;
 }
 

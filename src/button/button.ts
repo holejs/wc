@@ -3,9 +3,9 @@ import { customElement, property } from "lit/decorators.js";
 
 import styles from './button.css?inline'
 
-import { ColorNameMap } from "../declarations";
+import { ColorNameMap, ElevationNameMap } from "../declarations";
 
-import { getColor, hexToRgba, isHexColor } from "../utils";
+import { getColor, getElevation, hexToRgba, isHexColor } from "../utils";
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,6 +17,8 @@ export type ButtonType = "button" | "submit" | "reset" | "menu"
 
 export type ButtonAppearance = "outlined" | "text" | "fab" | "icon"
 
+export type ButtonElevation = 0 | 1 | 2 | 3 | 4 | 5;
+
 @customElement('hwc-button')
 export class Button extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
@@ -26,6 +28,8 @@ export class Button extends LitElement {
   @property({ type: String }) type: ButtonType = 'button'
 
   @property({ type: String }) color: string = ''
+
+  @property({ type: Number, reflect: true }) elevation: ButtonElevation = 1
 
   @property({ type: Boolean }) lowercase: boolean = false
 
@@ -46,6 +50,12 @@ export class Button extends LitElement {
       const hoverColor = isHexColor(color) ? hexToRgba(color, 0.1) : color
 
       this.style.setProperty('--hwc-button-hover-bg-color', hoverColor)
+    }
+
+    if (_changedProperties.has('elevation')) {
+      const elevation = getElevation(`elevation${this.elevation}` as ElevationNameMap) || null
+
+      this.style.setProperty('--hwc-button-elevation', elevation)
     }
   }
 

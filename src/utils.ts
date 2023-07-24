@@ -1,4 +1,4 @@
-import { ColorNameMap, colorsMap } from "./declarations";
+import { ColorNameMap, ElevationNameMap, colorsMap, elevationMap } from "./declarations";
 
 /**
  * Returns a color value corresponding to the given color name.
@@ -7,6 +7,15 @@ import { ColorNameMap, colorsMap } from "./declarations";
 */
 export function getColor (name: ColorNameMap): string {
   return colorsMap[name]
+}
+
+/**
+ * Returns a elevation value.
+ * @param name The name of the elevation.
+ * @returns The elevation value corresponding to the given elevation name.
+ */
+export function getElevation (name: ElevationNameMap): string {
+  return elevationMap[name]
 }
 
 /**
