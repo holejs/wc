@@ -5,9 +5,19 @@
 }
 
 :host {
+  display: inline-block;
+  width: auto;
+  height: auto;
+
   /* Fonts */
   --hwc-button-font-family: 'Poppins', sans-serif;
   --hwc-button-font-size: 15px;
+  --hwc-button-font-weight: normal;
+  --hwc-button-letter-spacing: 0px;
+
+  /* Height & Width */
+  --hwc-button-height: auto;
+  --hwc-button-width: auto;
 
   /* Padding */
   --hwc-button-padding: 10px 20px;
@@ -29,6 +39,7 @@
 
 /* Base styles */
 .button {
+  display: inline-block;
   border-width: var(--hwc-button-border-width);
   border-color: var(--hwc-button-border-color);
   border-radius: var(--hwc-button-border-radius);
@@ -36,7 +47,11 @@
   color: var(--hwc-button-color);
   font-family: var(--hwc-button-font-family);
   font-size: var(--hwc-button-font-size);
+  font-weight: var(--hwc-button-font-weight);
+  letter-spacing: var(--hwc-button-letter-spacing);
   cursor: var(--hwc-button-cursor);
+  height: var(--hwc-button-height);
+  width: var(--hwc-button-width);
   transition: 250ms all ease;
 }
 
@@ -69,6 +84,10 @@
 }
 
 /* Fullwidth */
+:host([fullwidth]) {
+  display: block;
+}
+
 :host([fullwidth]) .button {
   width: 100%;
 }
@@ -112,4 +131,25 @@
 :host([appearance="text"]) .button:hover {
   background-color: var(--hwc-button-hover-bg-color);
   color: var(--hwc-button-color);
+}
+
+/* Appearance: Fab */
+:host([appearance="fab"]) {
+  --hwc-button-height: 35px;
+  --hwc-button-width: 35px;
+}
+
+:host([appearance="fab"]) .button {
+  border-radius: 50%;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--hwc-button-height);
+  width: var(--hwc-button-width);
+  color: var(--hwc-button-color);
+}
+
+:host([appearance="fab"]) .button__wrapper {
+  padding: 0px;
 }
