@@ -9,7 +9,7 @@
   - [Uppercase, Lowercase \& Capitalize](#uppercase-lowercase--capitalize)
   - [Rounded](#rounded)
   - [Fullwidth](#fullwidth)
-- [Elevations](#elevations)
+  - [Elevations](#elevations)
   - [CSS Custom Properties](#css-custom-properties)
 
 
@@ -117,7 +117,7 @@ Is an attribute that makes the button stretch to the full width of its parent co
 <hwc-button fullwidth rounded color="orange-darken-2">Click me!</hwc-button>
 ```
 
-## Elevations
+### Elevations
 
 This property allows you to apply a visual lift effect to the component, creating a sense of depth and making the button appear to be raised or floating above the surface.
 
