@@ -6,6 +6,10 @@
   right: 0;
   overflow: hidden;
   display: inline-block;
+
+  --hwc-ripple-bg: currentColor;
+  --hwc-ripple-opacity: 0.35;
+  --hwc-ripple-animation-duration: 700ms;
 }
 
 .ripple {
@@ -13,10 +17,12 @@
   content: "";
   border-radius: 50%;
   transform: scale(0);
-  background-color: currentColor;
-  opacity: 0.35;
+  background: var(--hwc-ripple-bg);
+  opacity: var(--hwc-ripple-opacity);
   pointer-events: none;
-  animation: rippleAnimation 700ms linear;
+  animation-name: rippleAnimation;
+  animation-timing-function: linear;
+  animation-duration: var(--hwc-ripple-animation-duration);
   height: 100%;
   width: 100%;
 }
