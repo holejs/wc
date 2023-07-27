@@ -52,7 +52,7 @@ export default class Button extends LitElement {
     if (_changedProperties.has('color')) {
       const color = (getColor(this.color as ColorNameMap) || this.color).trim()
 
-      this.style.setProperty('--hwc-button-bg', color)
+      this.style.setProperty('--hwc-button-color', color)
 
       const hoverColor = isHexColor(color) ? hexToRgba(color, 0.1) : color
 
