@@ -1,9 +1,9 @@
 import { test, expect, describe } from 'vitest'
 import { html } from 'lit'
 
-import { _query, _render } from '../testing/utils'
+import { _query, _render } from '../utils'
 
-import './button'
+import '../../src/button/button'
 
 describe('Button', () => {
   test('Render default button', async () => {
