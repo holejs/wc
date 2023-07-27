@@ -1,6 +1,8 @@
 ## Table of contents
 
 - [Table of contents](#table-of-contents)
+- [Installation](#installation)
+- [Setup](#setup)
 - [Buttons](#buttons)
   - [Usage](#usage)
   - [Appearance](#appearance)
@@ -19,6 +21,29 @@
   - [Opacity](#opacity)
   - [CSS Custom Properties](#css-custom-properties-1)
 
+## Installation
+
+To start using the suite of components it is necessary to install the package.
+
+```bash
+npm i @holejs/wc
+```
+
+## Setup
+
+Import the component suite into your main input file. Generally the `index.ts` is used.
+
+```ts
+// Imports styles.
+import '@holejs/wc/styles/colors.css'
+import '@holejs/wc/styles/elevations.css'
+
+// Import all components.
+import '@holejs/wc'
+
+// or import specific components.
+import '@holejs/wc/button/button'
+```
 
 ## Buttons
 
