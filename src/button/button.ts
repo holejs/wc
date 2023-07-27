@@ -1,11 +1,11 @@
 import { LitElement, html, css, unsafeCSS, CSSResultGroup, PropertyValueMap } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, query } from "lit/decorators.js";
 
 import styles from './button.css?inline'
 
 import { ColorNameMap, ElevationNameMap } from "../declarations";
 
-import { getColor, getElevation, hexToRgba, isHexColor } from "../utils";
+import { getAllAriaProps, getColor, getElevation, hexToRgba, isHexColor } from "../utils";
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -20,7 +20,7 @@ export type ButtonAppearance = "outlined" | "text" | "fab" | "icon"
 export type ButtonElevation = 0 | 1 | 2 | 3 | 4 | 5;
 
 @customElement('hwc-button')
-export class Button extends LitElement {
+export default class Button extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   @property({ type: String }) appearance!: ButtonAppearance
@@ -40,6 +40,12 @@ export class Button extends LitElement {
   @property({ type: Boolean }) rounded: boolean = false
 
   @property({ type: Boolean }) fullwidth: boolean = false
+
+  @query('.button') $button!: HTMLButtonElement
+
+  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    getAllAriaProps(this).forEach((attr) => this.$button.setAttribute(attr.name, attr.value))
+  }
 
   protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
@@ -61,7 +67,7 @@ export class Button extends LitElement {
 
   protected render(): unknown {
     return html`
-      <button type=${this.type} class="button" role="button">
+      <button type=${this.type} class="button">
         <div class="button__wrapper">
           <slot></slot>
         </div>
@@ -69,3 +75,5 @@ export class Button extends LitElement {
     `
   }
 }
+
+export class HWCButton extends Button {}
