@@ -1,21 +1,22 @@
-import { LitElement, html, css, unsafeCSS, CSSResultGroup, PropertyValueMap } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { LitElement, html, css, unsafeCSS, CSSResultGroup, PropertyValueMap } from 'lit'
+import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './button.css?inline'
 
-import { ColorNameMap, ElevationNameMap } from "../declarations";
+import { ColorNameMap, ElevationNameMap } from '../declarations'
 
-import { getAllAriaProps, getColor, getElevation, hexToRgba, isHexColor } from "../utils";
+import { getAllAriaProps, getColor, getElevation, hexToRgba, isHexColor } from '../utils'
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
     'hwc-button': Button;
   }
 }
 
-export type ButtonType = "button" | "submit" | "reset" | "menu"
+export type ButtonType = 'button' | 'submit' | 'reset' | 'menu'
 
-export type ButtonAppearance = "outlined" | "text" | "fab" | "icon"
+export type ButtonAppearance = 'outlined' | 'text' | 'fab' | 'icon'
 
 export type ButtonElevation = 0 | 1 | 2 | 3 | 4 | 5;
 
@@ -47,7 +48,7 @@ export default class Button extends LitElement {
     getAllAriaProps(this).forEach((attr) => this.$button.setAttribute(attr.name, attr.value))
   }
 
-  protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+  protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
       const color = (getColor(this.color as ColorNameMap) || this.color).trim()
 
@@ -65,7 +66,7 @@ export default class Button extends LitElement {
     }
   }
 
-  protected render(): unknown {
+  protected render (): unknown {
     return html`
       <button type=${this.type} class="button">
         <div class="button__wrapper">

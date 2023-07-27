@@ -1,12 +1,11 @@
 import { customElement } from 'lit/decorators.js'
 import { LitElement, css, html } from 'lit'
 
-import '@material/mwc-icon'
-
 import './button/button'
 import './ripple/ripple'
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
     'my-element': MyElement
   }
@@ -38,24 +37,24 @@ export class MyElement extends LitElement {
     }
   `
 
-  render() {
+  render () {
     return html`
       <div>
         <section style="padding: 10px 0px">
-          <hwc-button color="orange-darken-2" elevation="1">
+          <hwc-button aria-label="Sybmit form" color="orange-darken-2" elevation="1">
             <hwc-ripple></hwc-ripple>
             Click me!
           </hwc-button>
   
-          <hwc-button color="red-darken-2">
+          <hwc-button aria-label="Hello world" color="red-darken-2">
             Click me!
           </hwc-button>
   
-          <hwc-button>
+          <hwc-button aria-label="Good bye">
             Click me!
           </hwc-button>
   
-          <hwc-button color="purple-darken-2">
+          <hwc-button aria-label="Amazing" color="purple-darken-2">
             Click me!
           </hwc-button>
         </section>
@@ -186,7 +185,7 @@ export class MyElement extends LitElement {
             </svg>
           </hwc-button>
 
-          <hwc-button appearance="icon" color="orange-darken-2">
+          <hwc-button role="button" aria-label="Cerrar ventana" aria-expanded="false" appearance="icon" color="orange-darken-2">
             <hwc-ripple></hwc-ripple>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
               <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>

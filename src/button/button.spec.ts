@@ -1,7 +1,7 @@
 import { test, expect, describe } from 'vitest'
 import { html } from 'lit'
 
-import { _createElement, _query, _render } from '../testing/utils'
+import { _query, _render } from '../testing/utils'
 
 import './button'
 
@@ -11,7 +11,6 @@ describe('Button', () => {
 
     const $button = _query('hwc-button')
 
-    expect($button).to.exist
     expect($button?.textContent).toContain('Click me!')
   })
 })

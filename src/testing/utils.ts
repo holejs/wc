@@ -1,8 +1,10 @@
-import { TemplateResult, render } from "lit";
+import { TemplateResult, render } from 'lit'
 
 export interface VElement {
+  // eslint-disable-next-line no-undef
   tag: keyof HTMLElementTagNameMap;
   props: Record<string, string>;
+  // eslint-disable-next-line no-use-before-define
   children: (VNode | string)[];
 }
 

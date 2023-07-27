@@ -1,15 +1,22 @@
-import { LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
 
 import styles from './ripple.css?inline'
 
-import { ColorNameMap } from '../declarations';
+import { ColorNameMap } from '../declarations'
 
-import { getColor } from '../utils';
+import { getColor } from '../utils'
+
+declare global {
+  // eslint-disable-next-line no-unused-vars
+  interface HTMLElementTagNameMap {
+    'hwc-ripple': Ripple;
+  }
+}
 
 @customElement('hwc-ripple')
-export class Ripple extends LitElement {
-  static styles = css`${unsafeCSS(styles)}`;
+export default class Ripple extends LitElement {
+  static styles = css`${unsafeCSS(styles)}`
 
   @property({ type: String }) color!: string
 
@@ -17,11 +24,11 @@ export class Ripple extends LitElement {
 
   @property({ type: Number }) opacity = 0.35
 
-  protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    this.addEventListener('click', this.createRipple);
+  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    this.addEventListener('click', this.createRipple)
   }
 
-  protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+  protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('duration')) {
       this.style.setProperty('--hwc-ripple-animation-duration', this.duration)
     }
@@ -37,27 +44,29 @@ export class Ripple extends LitElement {
     }
   }
 
-  private createRipple(event: any) {
-    const ripple = document.createElement('span');
+  private createRipple (event: any) {
+    const ripple = document.createElement('span')
 
-    ripple.className = 'ripple';
+    ripple.className = 'ripple'
 
-    const rect = this.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
+    const rect = this.getBoundingClientRect()
+    const size = Math.max(rect.width, rect.height)
 
-    const x = event.pageX - rect.left - size / 2;
-    const y = event.pageY - rect.top - size / 2;
+    const x = event.pageX - rect.left - size / 2
+    const y = event.pageY - rect.top - size / 2
 
-    ripple.style.width = ripple.style.height = `${size}px`;
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
+    ripple.style.width = ripple.style.height = `${size}px`
+    ripple.style.left = `${x}px`
+    ripple.style.top = `${y}px`
 
-    this.shadowRoot?.appendChild(ripple);
+    this.shadowRoot?.appendChild(ripple)
 
-    ripple.addEventListener('animationend', () => ripple.remove());
+    ripple.addEventListener('animationend', () => ripple.remove())
   }
 
   protected render (): unknown {
-    return html`<slot></slot>`;
+    return html`<slot></slot>`
   }
 }
+
+export class HWCRipple extends Ripple {}

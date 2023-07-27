@@ -1,4 +1,4 @@
-import { ColorNameMap, ElevationNameMap, colorsMap, elevationMap } from "./declarations";
+import { ColorNameMap, ElevationNameMap, colorsMap, elevationMap } from './declarations'
 
 /**
  * Returns a color value corresponding to the given color name.
@@ -33,19 +33,19 @@ export function getElevation (name: ElevationNameMap): string {
  * console.log(rgbaColor); // Output: "rgba(229, 57, 53, 0.5)"
  */
 export function hexToRgba (hex: string, alpha = 1): string {
-  const _hex = hex.toString().replace("#", "");
+  const _hex = hex.toString().replace('#', '')
 
   // Convert hexadecimal value to RGB components
-  const r = parseInt(_hex.substring(0, 2), 16);
-  const g = parseInt(_hex.substring(2, 4), 16);
-  const b = parseInt(_hex.substring(4, 6), 16);
+  const r = parseInt(_hex.substring(0, 2), 16)
+  const g = parseInt(_hex.substring(2, 4), 16)
+  const b = parseInt(_hex.substring(4, 6), 16)
 
   // Validate the value of the alpha channel (transparency)
   if (alpha < 0 || alpha > 1) {
-    throw new Error("The value of the alpha channel must be between 0 and 1.");
+    throw new Error('The value of the alpha channel must be between 0 and 1.')
   }
 
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
 /**
@@ -62,9 +62,9 @@ export function hexToRgba (hex: string, alpha = 1): string {
  * console.log(isHexColor("red")); // Output: false
  */
 export function isHexColor (text: string): boolean {
-  const hexColorRegex = /^#([0-9A-Fa-f]{3}){1,2}$/;
+  const hexColorRegex = /^#([0-9A-Fa-f]{3}){1,2}$/
 
-  return hexColorRegex.test(text);
+  return hexColorRegex.test(text)
 }
 
 /**
@@ -80,9 +80,8 @@ export function isHexColor (text: string): boolean {
  * console.log(ariaProps);
  * // Output: [Attr, Attr, ...] (an array of attributes)
  */
-export function getAllAriaProps(el: HTMLElement): Attr[] {
-  const _attr = el.attributes;
-  
-  return Array.from(_attr).filter(attr => attr.name.startsWith('aria-'));
-}
+export function getAllAriaProps (el: HTMLElement): Attr[] {
+  const _attr = el.attributes
 
+  return Array.from(_attr).filter(attr => attr.name.startsWith('aria-'))
+}
