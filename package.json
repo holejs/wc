@@ -21,7 +21,9 @@
     "./ripple/ripple.js": {
       "types": "./dist/types/ripple/ripple.d.ts",
       "default": "./dist/ripple.js"
-    }
+    },
+    "./styles/colors.css": "./dist/assets/colors.css",
+    "./styles/elevations.css": "./dist/assets/elevations.css"
   },
   "scripts": {
     "lint:fix": "eslint --fix src/**/*.ts",
@@ -48,6 +50,7 @@
     "typescript": "5.0.2",
     "vite": "4.4.0",
     "vite-plugin-dts": "^3.3.1",
+    "vite-plugin-static-copy": "^0.17.0",
     "vitest": "0.33.0"
   }
 }
