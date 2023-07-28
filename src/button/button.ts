@@ -55,7 +55,7 @@ export default class Button extends LitElement {
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
-      const color = isValidColorFormat(this.color) ? `var(--${this.color})` : this.color
+      const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
       this.style.setProperty('--hwc-button-color', color)
     }

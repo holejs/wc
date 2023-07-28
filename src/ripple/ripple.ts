@@ -36,7 +36,7 @@ export default class Ripple extends LitElement {
     }
 
     if (_changedProperties.has('color')) {
-      const color = this.color && isValidColorFormat(this.color) ? `var(--${this.color})` : this.color
+      const color = this.color && isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
       this.style.setProperty('--hwc-ripple-bg', color)
     }

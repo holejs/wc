@@ -25,11 +25,11 @@
   /* Borders */
   --hwc-button-border-radius: 8px;
   --hwc-button-border-width: 0px;
-  --hwc-button-border-color: var(--blue-darken-2);
+  --hwc-button-border-color: var(--hwc-blue-darken-2);
   --hwc-button-border-style: solid;
 
   /* Background & colors */
-  --hwc-button-color: var(--blue-darken-2);
+  --hwc-button-color: var(--hwc-blue-darken-2);
   --hwc-button-text-color: white;
   --hwc-button-bg: var(--hwc-button-color);
   --hwc-button-hover-bg: rgba(25, 118, 210, 0.1);
