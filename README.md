@@ -210,8 +210,9 @@ The **ripple** effect simulates waves that propagate from the point where the in
 | `--hwc-button-color`          | Color for the button.                                                     |
 | `--hwc-button-text-color`     | Text color for the button.                                                |
 | `--hwc-button-cursor`         | Cursor style when hovering over the button.                               |
-| `--hwc-button-hover-bg-color` | Background color when hovering over the button.                           |
-| `--hwc-button-box-shadow`     | Allow to set shadows to the component                                     |
+| `--hwc-button-hover-bg`       | Background color when hovering over the button.                           |
+| `--hwc-button-box-shadow`     | Allow to set shadows to the component.                                    |
+| `--hwc-button-hover-opacity`  | Set opacity to the hover background component.                            |
 
 ## Ripple
 
