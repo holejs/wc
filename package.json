@@ -1,11 +1,39 @@
 {
   "name": "@holejs/wc",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "directories": {
+    "lib": "dist"
+  },
   "files": [
-    "dist"
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE",
+    "dist/**"
   ],
+  "bugs": {
+    "url": "https://github.com/holejs/wc/issues"
+  },
+  "repository": {
+    "url": "https://github.com/holejs/wc"
+  },
+  "homepage": "https://github.com/holejs/wc",
+  "keywords": [
+    "components",
+    "web-components",
+    "component-library",
+    "lit-html",
+    "lit-element"
+  ],
+  "author": {
+    "name": "Ivan Guevara",
+    "email": "ivanzaldivar16@gmail.com",
+    "url": "https://github.com/thebug404"
+  },
+  "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
@@ -27,6 +55,7 @@
   },
   "scripts": {
     "lint:fix": "eslint --fix src/**/*.ts",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "dev": "vite serve demo/",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -39,18 +68,19 @@
   "devDependencies": {
     "@open-wc/testing": "3.2.0",
     "@testing-library/dom": "9.3.1",
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
-    "@typescript-eslint/parser": "^6.2.0",
-    "eslint": "^8.45.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-n": "^16.0.1",
-    "eslint-plugin-promise": "^6.1.1",
+    "@typescript-eslint/eslint-plugin": "6.2.0",
+    "@typescript-eslint/parser": "6.2.0",
+    "conventional-changelog": "4.0.0",
+    "eslint": "8.45.0",
+    "eslint-config-standard": "17.1.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-n": "16.0.1",
+    "eslint-plugin-promise": "6.1.1",
     "jsdom": "22.1.0",
     "typescript": "5.0.2",
     "vite": "4.4.0",
-    "vite-plugin-dts": "^3.3.1",
-    "vite-plugin-static-copy": "^0.17.0",
+    "vite-plugin-dts": "3.3.1",
+    "vite-plugin-static-copy": "0.17.0",
     "vitest": "0.33.0"
   }
 }
