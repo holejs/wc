@@ -10,9 +10,7 @@ import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './button.css?inline'
 
-import { ElevationNameMap } from '../declarations'
-
-import { getAllAriaProps, getElevation, isValidColorFormat } from '../utils'
+import { getAllAriaProps, isValidColorFormat } from '../utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -25,7 +23,7 @@ export type ButtonType = 'button' | 'submit' | 'reset' | 'menu'
 
 export type ButtonAppearance = 'outlined' | 'text' | 'fab' | 'icon'
 
-export type ButtonElevation = 0 | 1 | 2 | 3 | 4 | 5;
+export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 
 @customElement('hwc-button')
 export default class Button extends LitElement {
@@ -37,7 +35,7 @@ export default class Button extends LitElement {
 
   @property({ type: String }) color!: string
 
-  @property({ type: Number, reflect: true }) elevation: ButtonElevation = 0
+  @property({ type: String, reflect: true }) elevation!: ButtonElevation
 
   @property({ type: Boolean }) lowercase: boolean = false
 
@@ -63,9 +61,10 @@ export default class Button extends LitElement {
     }
 
     if (_changedProperties.has('elevation')) {
-      const elevation = getElevation(`elevation${this.elevation}` as ElevationNameMap) || null
-
-      this.style.setProperty('--hwc-button-box-shadow', elevation)
+      this.style.setProperty(
+        '--hwc-button-box-shadow',
+        `var(--hwc-box-shadow-${this.elevation})`
+      )
     }
   }
 
