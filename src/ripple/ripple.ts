@@ -3,9 +3,7 @@ import { customElement, property } from 'lit/decorators.js'
 
 import styles from './ripple.css?inline'
 
-import { ColorNameMap } from '../declarations'
-
-import { getColor } from '../utils'
+import { isValidColorFormat } from '../utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -37,10 +35,10 @@ export default class Ripple extends LitElement {
       this.style.setProperty('--hwc-ripple-opacity', this.opacity.toString())
     }
 
-    if (_changedProperties.has('opacity')) {
-      const color = getColor(this.color as ColorNameMap) || this.color
+    if (_changedProperties.has('color')) {
+      const color = this.color && isValidColorFormat(this.color) ? `var(--${this.color})` : this.color
 
-      this.style.setProperty('--hwc-ripple-bg', color || null)
+      this.style.setProperty('--hwc-ripple-bg', color)
     }
   }
 
