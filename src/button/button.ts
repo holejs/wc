@@ -1,11 +1,18 @@
-import { LitElement, html, css, unsafeCSS, CSSResultGroup, PropertyValueMap } from 'lit'
+import {
+  PropertyValueMap,
+  CSSResultGroup,
+  LitElement,
+  unsafeCSS,
+  html,
+  css
+} from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './button.css?inline'
 
-import { ColorNameMap, ElevationNameMap } from '../declarations'
+import { ElevationNameMap } from '../declarations'
 
-import { getAllAriaProps, getColor, getElevation, hexToRgba, isHexColor } from '../utils'
+import { getAllAriaProps, getElevation, isValidColorFormat } from '../utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -50,13 +57,9 @@ export default class Button extends LitElement {
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
-      const color = (getColor(this.color as ColorNameMap) || this.color).trim()
+      const color = isValidColorFormat(this.color) ? `var(--${this.color})` : this.color
 
       this.style.setProperty('--hwc-button-color', color)
-
-      const hoverColor = isHexColor(color) ? hexToRgba(color, 0.1) : color
-
-      this.style.setProperty('--hwc-button-hover-bg-color', hoverColor)
     }
 
     if (_changedProperties.has('elevation')) {

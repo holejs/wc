@@ -32,11 +32,12 @@
   --hwc-button-color: var(--blue-darken-2);
   --hwc-button-text-color: white;
   --hwc-button-bg: var(--hwc-button-color);
-  --hwc-button-hover-bg-color: rgba(25, 118, 210, 0.1);
+  --hwc-button-hover-bg: rgba(25, 118, 210, 0.1);
 
   /* Additionals */
   --hwc-button-cursor: pointer;
   --hwc-button-box-shadow: none;
+  --hwc-button-hover-opacity: 0.9;
 }
 
 /* Base styles */
@@ -70,10 +71,6 @@
   display: flex;
   align-items: center;
   padding: var(--hwc-button-padding);
-}
-
-.button:hover {
-  opacity: 0.90;
 }
 
 /* Uppercase, Lowercase & Capitalize */
@@ -114,6 +111,8 @@
   --hwc-button-border-color: var(--hwc-button-color);
   --hwc-button-text-color: var(--hwc-button-color);
 
+  --hwc-button-hover-bg: var(--hwc-button-color);
+
   --hwc-button-padding: 8px 18px;
 }
 
@@ -123,10 +122,6 @@
   border-color: var(--hwc-button-border-color);
   border-style: var(--hwc-button-border-style);
   color: var(--hwc-button-text-color);
-}
-
-:host([appearance="outlined"]) .button:hover {
-  background-color: var(--hwc-button-hover-bg-color);
 }
 
 /* Appearance: Text */
@@ -140,16 +135,17 @@
 }
 
 :host([appearance="text"]) .button:hover {
-  background: var(--hwc-button-hover-bg-color);
   color: var(--hwc-button-text-color);
 }
 
-/* Appearance: Fab */
-:host([appearance="fab"]) {
+/* Appearance: Fab & Icon */
+:host([appearance="fab"]),
+:host([appearance="icon"]) {
   --hwc-button-height: 35px;
   --hwc-button-width: 35px;
 }
 
+:host([appearance="icon"]) .button,
 :host([appearance="fab"]) .button {
   border-radius: 50%;
   padding: 0px;
@@ -161,33 +157,54 @@
   color: var(--hwc-button-text-color);
 }
 
-:host([appearance="fab"]) .button__wrapper {
-  padding: 0px;
+:host([appearance="fab"]) .button__wrapper,
+:host([appearance="icon"]) .button__wrapper {
+  padding: 0;
 }
 
 /* Icon */
 :host([appearance="icon"]) {
-  --hwc-button-height: 35px;
-  --hwc-button-width: 35px;
   --hwc-button-text-color: var(--hwc-button-color);
 }
 
 :host([appearance="icon"]) .button {
-  border-radius: 50%;
-  padding: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: transparent;
-  height: var(--hwc-button-height);
-  width: var(--hwc-button-width);
-  color: var(--hwc-button-text-color);
 }
 
-:host([appearance="icon"]) .button:hover {
-  background: var(--hwc-button-hover-bg-color);
+/* Hover */
+:host([appearance="outlined"]),
+:host([appearance="text"]),
+:host([appearance="icon"]) {
+  --hwc-button-hover-opacity: 0.1;
+  --hwc-button-hover-bg: var(--hwc-button-color);
 }
 
-:host([appearance="icon"]) .button__wrapper {
-  padding: 0px;
+.button__wrapper::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.2);
+  transition: opacity 250ms ease;
+}
+
+.button:hover .button__wrapper::before {
+  opacity: var(--hwc-button-hover-opacity);
+}
+
+:host([appearance="outlined"]) .button__wrapper::before,
+:host([appearance="text"]) .button__wrapper::before,
+:host([appearance="icon"]) .button__wrapper::before {
+  background: var(--hwc-button-hover-bg);
+}
+
+:host([appearance="outlined"]) .button:hover .button__wrapper::before,
+:host([appearance="text"]) .button:hover .button__wrapper::before,
+:host([appearance="icon"]) .button:hover .button__wrapper::before {
+  opacity: var(--hwc-button-hover-opacity);
 }

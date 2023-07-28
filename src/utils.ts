@@ -85,3 +85,17 @@ export function getAllAriaProps (el: HTMLElement): Attr[] {
 
   return Array.from(_attr).filter(attr => attr.name.startsWith('aria-'))
 }
+
+export function isValidColorFormat (text: string): boolean {
+  // Expresiones regulares para validar los formatos RGB, RGBA, HEX y HSL
+  const rgbRegex = /^(rgb|rgba)\(\s*(\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*\d*\.?\d+\s*)?)\)$/i
+  const hexRegex = /^#([0-9A-F]{3}){1,2}$/i
+  const hslRegex = /^hsl\(\s*\d{1,3}\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%\s*\)$/i
+
+  // Verificar si el texto coincide con alguno de los formatos
+  if (rgbRegex.test(text) || hexRegex.test(text) || hslRegex.test(text)) {
+    return false
+  }
+
+  return true
+}
