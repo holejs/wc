@@ -5,7 +5,9 @@
 }
 
 :host {
-  /* position: relative; */
+  /* Colors */
+  --hwc-card-bg: transparent;
+  --hwc-card-text-color: unset;
 
   /* Padding */
   --hwc-card-header-padding: 15px 15px 5px 15px;
@@ -23,6 +25,8 @@
   position: relative;
   box-shadow: var(--hwc-card-box-shadow);
   border-radius: var(--hwc-card-border-radius);
+  background: var(--hwc-card-bg);
+  color: var(--hwc-card-text-color);
 }
 
 .body__wrapper {
