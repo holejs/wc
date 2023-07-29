@@ -60,6 +60,7 @@
   "scripts": {
     "lint:fix": "eslint --fix src/**/*.ts",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "publish:patch": "npm run build && npm version patch && npm publish && git push origin",
     "dev": "vite serve demo/",
     "build": "tsc && vite build",
     "preview": "vite preview",
