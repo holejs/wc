@@ -1,3 +1,12 @@
+# [0.1.0](https://github.com/holejs/wc/compare/v0.0.2...v0.1.0) (2023-07-29)
+
+
+### Features
+
+* **button:** The button is attached to the form ([e5f8e80](https://github.com/holejs/wc/commit/e5f8e8017285d4a6f14843a2945dde664515ab45))
+
+
+
 ## [0.0.2](https://github.com/holejs/wc/compare/v0.0.1...v0.0.2) (2023-07-29)
 
 
