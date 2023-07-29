@@ -26,6 +26,8 @@ export default class Card extends LitElement {
 
   @property({ type: String }) color!: string
 
+  @property({ type: Boolean }) outlined!: boolean
+
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (this.hasElementSlot('slot[name="header"]')) this.$cardHeader.remove()
 
@@ -36,7 +38,7 @@ export default class Card extends LitElement {
     if (_changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
-      this.style.setProperty('--hwc-card-bg', color)
+      this.style.setProperty('--hwc-card-color', color)
     }
 
     if (_changedProperties.has('elevation')) {
