@@ -1,3 +1,15 @@
+## [0.0.2](https://github.com/holejs/wc/compare/v0.0.1...v0.0.2) (2023-07-29)
+
+
+### Features
+
+* **button:** Colors are allowed. ([8c0dc3f](https://github.com/holejs/wc/commit/8c0dc3ffef28bf77d5ae7c31c698eada3041f8b8))
+* **card:** Added disabled property ([33cbe70](https://github.com/holejs/wc/commit/33cbe7099a3f464d9c8a32f1035ad57bb0f44e30))
+* **card:** Added general styles and functionality ([bc6cc34](https://github.com/holejs/wc/commit/bc6cc3487ce2095715e8f1ff2dcab6a872568b15))
+* **card:** Added support for outlined variant ([15c9ab9](https://github.com/holejs/wc/commit/15c9ab957cbce1e7572bc887dc6c7c05208ee168))
+
+
+
 ## 0.0.1 (2023-07-28)
 
 
