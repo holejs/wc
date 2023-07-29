@@ -8,6 +8,7 @@ import '../../src/assets/colors.css'
 // Import components
 import '../../src/button/button'
 import '../../src/ripple/ripple'
+import '../../src/card/card'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -31,6 +32,16 @@ export class MyElement extends LitElement {
       --hwc-button-bg: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 
+    .gradient__card {
+      --hwc-card-bg: #9D50BB;  /* fallback for old browsers */
+      --hwc-card-bg: -webkit-linear-gradient(to right, #6E48AA, #9D50BB);  /* Chrome 10-25, Safari 5.1-6 */
+      --hwc-card-bg: linear-gradient(to right, #6E48AA, #9D50BB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .gradient-card__shadow {
+      --hwc-card-box-shadow: 3px 7px 15px rgba(103, 74, 156 , 0.65);
+    }
+
     .azure-pop__color2 {
       --hwc-ripple-bg: #bdc3c7;  /* fallback for old browsers */
       --hwc-ripple-bg: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
@@ -45,6 +56,21 @@ export class MyElement extends LitElement {
   render () {
     return html`
       <div>
+        <section style="padding: 10px 0px">
+          <hwc-card>
+            <div slot="header">
+              <h1 style="margin: 0">Header</h1>
+            </div>
+
+            <!-- <hwc-ripple color="blue-darken-2" opacity="0.15"></hwc-ripple> -->
+            <h1 style="margin: 0">Body</h1>
+
+            <div slot="footer">
+              <h1 style="margin: 0">Footer</h1>
+            </div>
+          </hwc-card>
+        </section>
+
         <section style="padding: 10px 0px">
           <hwc-button aria-label="Sybmit form" color="orange-darken-2" elevation="1">
             <hwc-ripple></hwc-ripple>
