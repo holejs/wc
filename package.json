@@ -46,6 +46,10 @@
       "types": "./dist/types/button/button.d.ts",
       "default": "./dist/button.js"
     },
+    "./card/card.js": {
+      "types": "./dist/types/card/card.d.ts",
+      "default": "./dist/card.js"
+    },
     "./ripple/ripple.js": {
       "types": "./dist/types/ripple/ripple.d.ts",
       "default": "./dist/ripple.js"
