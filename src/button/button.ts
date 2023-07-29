@@ -29,6 +29,11 @@ export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 export default class Button extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
+  private readonly internals = (this as HTMLElement).attachInternals()
+
+  // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
+  static formAssociated = true
+
   @property({ type: String }) appearance!: ButtonAppearance
 
   @property({ type: String }) type: ButtonType = 'button'
@@ -68,9 +73,44 @@ export default class Button extends LitElement {
     }
   }
 
+  /**
+   * Handles the click event on the custom `hwc-button`.
+   *
+   * - If the `type` attribute is "submit", it submits the associated form.
+   * - If the `type` attribute is "reset", it resets the associated form.
+   *
+   * @param {MouseEvent} _event - The click event of the button.
+   */
+  private _handleClick (_event: MouseEvent): void {
+    const { type, internals } = this
+
+    // Check if the button is of type "submit" or "reset".
+    const isSubmit = type === 'submit'
+    const isReset = type === 'reset'
+
+    // If the button is neither "submit" nor "reset", do nothing.
+    if (!(isSubmit || isReset)) return
+
+    // Get the form associated with the `hwc-button` component.
+    const { form: $form } = internals
+
+    // If there is no associated form, do nothing.
+    if (!$form) return
+
+    // If the button is of type "submit", submit the form.
+    if (isSubmit) return $form?.requestSubmit()
+
+    // If the button is of type "reset", reset the form.
+    if (isReset) return $form.reset()
+  }
+
   protected render (): unknown {
     return html`
-      <button type=${this.type} class="button">
+      <button
+        class="button"
+        type=${this.type}
+        @click=${this._handleClick}
+      >
         <div class="button__wrapper">
           <slot></slot>
         </div>
