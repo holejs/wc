@@ -28,6 +28,8 @@ export default class Card extends LitElement {
 
   @property({ type: Boolean }) outlined!: boolean
 
+  @property({ type: Boolean }) disabled!: boolean
+
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (this.hasElementSlot('slot[name="header"]')) this.$cardHeader.remove()
 

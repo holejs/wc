@@ -52,3 +52,13 @@
   border-style: var(--hwc-card-border-style);
   border-color: var(--hwc-card-border-color);
 }
+
+/* Disabled */
+:host([disabled]) {
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  opacity: .5;
+}
