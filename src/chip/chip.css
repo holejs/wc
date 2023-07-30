@@ -1,0 +1,60 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: content-box;
+}
+
+:host {
+  display: inline-block;
+
+  /* Fonts */
+  --hwc-chip-font-family: Poppins, system-ui, sans-serif;
+
+  /* Colors */
+  --hwc-chip-color: var(--hwc-grey-lighten-2);
+  --hwc-chip-bg: var(--hwc-chip-color);
+  --hwc-chip-text-color: var(--hwc-chip-color);
+
+  /* Fonts */
+  --hwc-chip-font-size: .875rem;
+
+  /* Padding */
+  --hwc-chip-padding: 5px 10px;
+
+  /* Borders */
+  --hwc-chip-border-radius: 5px;
+
+  /* Opacity */
+  --hwc-chip-opacity: .15;
+}
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  color: var(--hwc-chip-text-color);
+  border-radius: var(--hwc-chip-border-radius);
+  font-family: var(--hwc-chip-font-family);
+  font-size: var(--hwc-chip-font-size);
+  overflow: hidden;
+}
+
+.chip::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--hwc-chip-bg);
+  opacity: var(--hwc-chip-opacity);
+  z-index: -1;
+}
+
+.chip__wrapper {
+  width: auto;
+  display: flex;
+  align-items: center;
+  padding: var(--hwc-chip-padding);
+}
