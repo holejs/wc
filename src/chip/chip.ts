@@ -5,11 +5,15 @@ import styles from './chip.css?inline'
 
 import { isValidColorFormat } from '../utils'
 
+export type ChipAppearence = 'filled' | 'outlined'
+
 @customElement('hwc-chip')
 export default class Chip extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   @query('.chip') $chip!: HTMLElement
+
+  @property({ type: String, reflect: true }) appearance: ChipAppearence = 'filled'
 
   @property({ type: String }) color: string = 'blue-lighten-1'
 

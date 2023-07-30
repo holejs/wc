@@ -38,7 +38,7 @@
   overflow: hidden;
 }
 
-.chip::after {
+:host([appearance="filled"]) .chip::after {
   position: absolute;
   content: "";
   top: 0;
