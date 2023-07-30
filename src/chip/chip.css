@@ -58,3 +58,8 @@
   align-items: center;
   padding: var(--hwc-chip-padding);
 }
+
+/* Rounded */
+:host([rounded]) .chip {
+  border-radius: 50rem;
+}
