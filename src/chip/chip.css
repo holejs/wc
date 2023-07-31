@@ -88,6 +88,10 @@
 
 /* Appearance: outlined */
 :host([appearance="outlined"]) .chip {
+  --hwc-chip-padding: 3px 8px;
+}
+
+:host([appearance="outlined"]) .chip {
   color: var(--hwc-chip-text-color);
   border-width: var(--hwc-chip-border-width);
   border-style: var(--hwc-chip-border-style);
@@ -101,7 +105,12 @@
 
 /* Closable */
 .chip-button__closable {
-  --hwc-button-height: 25px;
-  --hwc-button-width: 25px;
+  --hwc-button-height: 21px;
+  --hwc-button-width: 21px;
   --hwc-button-color: var(--hwc-chip-color);
+}
+
+.closable__icon {
+  width: 13px;
+  height: 13px;
 }
