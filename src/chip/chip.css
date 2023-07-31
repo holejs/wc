@@ -73,6 +73,10 @@
   --hwc-chip-text-color: white;
 }
 
+:host([appearance="filled"]) .chip-button__closable {
+  --hwc-button-color: white;
+}
+
 :host([appearance="filled"]) .chip {
   color: var(--hwc-chip-text-color);
 }
@@ -84,6 +88,10 @@
 
 :host([appearance="text"]) .chip::after {
   opacity: var(--hwc-chip-opacity);
+}
+
+:host([appearance="text"]) .chip-button__closable {
+  --hwc-button-color: var(--hwc-chip-text-color);
 }
 
 /* Appearance: outlined */
@@ -98,19 +106,85 @@
   border-color: var(--hwc-chip-border-color);
 }
 
+:host([appearance="outlined"]) .chip-button__closable {
+  --hwc-button-color: var(--hwc-chip-text-color);
+}
+
 /* Rounded */
 :host([rounded]) .chip {
   border-radius: 50rem;
 }
 
 /* Closable */
-.chip-button__closable {
+:host([size="regular"]) .chip-button__closable {
   --hwc-button-height: 21px;
   --hwc-button-width: 21px;
-  --hwc-button-color: var(--hwc-chip-color);
 }
 
-.closable__icon {
+:host([size="regular"]) .closable__icon {
   width: 13px;
   height: 13px;
+}
+
+/* Size: x-small */
+:host([size="x-small"]) .chip {
+  --hwc-chip-font-size: 10px;
+  --hwc-chip-padding: 2px 5px;
+}
+
+:host([size="x-small"]) .chip-button__closable {
+  --hwc-button-height: 15px;
+  --hwc-button-width: 15px;
+}
+
+:host([size="x-small"]) .closable__icon {
+  height: 10px;
+  width: 10px;
+}
+
+/* Size: small */
+:host([size="small"]) .chip {
+  --hwc-chip-font-size: 12px;
+  --hwc-chip-padding: 4px 8px;
+}
+
+:host([size="small"]) .chip-button__closable {
+  --hwc-button-height: 18px;
+  --hwc-button-width: 18px;
+}
+
+:host([size="small"]) .closable__icon {
+  height: 12px;
+  width: 12px;
+}
+
+/* Size: small */
+:host([size="large"]) .chip {
+  --hwc-chip-font-size: 16px;
+}
+
+:host([size="large"]) .chip-button__closable {
+  --hwc-button-height: 21px;
+  --hwc-button-width: 21px;
+}
+
+:host([size="large"]) .closable__icon {
+  height: 15px;
+  width: 15px;
+}
+
+/* Size: small */
+:host([size="x-large"]) .chip {
+  --hwc-chip-font-size: 17px;
+  --hwc-chip-padding: 7px 17px;
+}
+
+:host([size="x-large"]) .chip-button__closable {
+  --hwc-button-height: 25px;
+  --hwc-button-width: 25px;
+}
+
+:host([size="x-large"]) .closable__icon {
+  height: 17px;
+  width: 17px;
 }

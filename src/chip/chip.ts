@@ -1,5 +1,5 @@
 import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
-import { customElement, property, query } from 'lit/decorators.js'
+import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
 
 import styles from './chip.css?inline'
@@ -10,13 +10,15 @@ import '../button/button'
 
 export type ChipAppearence = 'filled' | 'outlined' | 'text'
 
+export type ChipSize = 'x-small' | 'small' | 'regular' | 'large' | 'x-large'
+
 @customElement('hwc-chip')
 export default class Chip extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
-  @query('.chip') $chip!: HTMLElement
-
   @property({ type: String, reflect: true }) appearance: ChipAppearence = 'filled'
+
+  @property({ type: String, reflect: true }) size: ChipSize = 'regular'
 
   @property({ type: String }) color!: string
 
