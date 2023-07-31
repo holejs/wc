@@ -11,7 +11,7 @@
   --hwc-chip-font-family: Poppins, system-ui, sans-serif;
 
   /* Colors */
-  --hwc-chip-color: var(--hwc-grey-lighten-2);
+  --hwc-chip-color: var(--hwc-grey-lighten-1);
   --hwc-chip-bg: var(--hwc-chip-color);
   --hwc-chip-text-color: var(--hwc-chip-color);
 
@@ -34,11 +34,24 @@
 .chip {
   position: relative;
   display: inline-flex;
-  color: var(--hwc-chip-text-color);
   border-radius: var(--hwc-chip-border-radius);
   font-family: var(--hwc-chip-font-family);
   font-size: var(--hwc-chip-font-size);
   overflow: hidden;
+}
+
+:host([appearance="filled"]) .chip::after,
+:host([appearance="text"]) .chip::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--hwc-chip-bg);
+  z-index: -1;
 }
 
 .chip__wrapper {
@@ -56,22 +69,26 @@
 }
 
 /* Appearance: filled */
-:host([appearance="filled"]) .chip::after {
-  position: absolute;
-  content: "";
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--hwc-chip-bg);
+:host([appearance="filled"]) {
+  --hwc-chip-text-color: white;
+}
+
+:host([appearance="filled"]) .chip {
+  color: var(--hwc-chip-text-color);
+}
+
+/* Appearance: filled */
+:host([appearance="text"]) .chip {
+  color: var(--hwc-chip-text-color);
+}
+
+:host([appearance="text"]) .chip::after {
   opacity: var(--hwc-chip-opacity);
-  z-index: -1;
 }
 
 /* Appearance: outlined */
 :host([appearance="outlined"]) .chip {
+  color: var(--hwc-chip-text-color);
   border-width: var(--hwc-chip-border-width);
   border-style: var(--hwc-chip-border-style);
   border-color: var(--hwc-chip-border-color);

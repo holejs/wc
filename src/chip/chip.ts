@@ -8,7 +8,7 @@ import { isValidColorFormat } from '../utils'
 
 import '../button/button'
 
-export type ChipAppearence = 'filled' | 'outlined'
+export type ChipAppearence = 'filled' | 'outlined' | 'text'
 
 @customElement('hwc-chip')
 export default class Chip extends LitElement {
@@ -18,7 +18,7 @@ export default class Chip extends LitElement {
 
   @property({ type: String, reflect: true }) appearance: ChipAppearence = 'filled'
 
-  @property({ type: String }) color: string = 'blue-lighten-1'
+  @property({ type: String }) color!: string
 
   @property({ type: Boolean }) rounded: boolean = false
 
