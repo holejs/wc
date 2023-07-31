@@ -48,6 +48,13 @@
   padding: var(--hwc-chip-padding);
 }
 
+.chip__actions {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  margin-left: 5px;
+}
+
 /* Appearance: filled */
 :host([appearance="filled"]) .chip::after {
   position: absolute;
@@ -73,4 +80,11 @@
 /* Rounded */
 :host([rounded]) .chip {
   border-radius: 50rem;
+}
+
+/* Closable */
+.chip-button__closable {
+  --hwc-button-height: 25px;
+  --hwc-button-width: 25px;
+  --hwc-button-color: var(--hwc-chip-color);
 }
