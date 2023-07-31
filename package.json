@@ -50,6 +50,10 @@
       "types": "./dist/types/card/card.d.ts",
       "default": "./dist/card.js"
     },
+    "./chip/chip.js": {
+      "types": "./dist/types/chip/chip.d.ts",
+      "default": "./dist/chip.js"
+    },
     "./ripple/ripple.js": {
       "types": "./dist/types/ripple/ripple.d.ts",
       "default": "./dist/ripple.js"
