@@ -38,13 +38,14 @@
       - [close](#close)
     - [Events](#events)
       - [close](#close-1)
+    - [CSS Custom Properties](#css-custom-properties-2)
   - [Card](#card)
     - [Usage](#usage-3)
     - [Header, Body \& Footer](#header-body--footer)
     - [Color](#color-2)
     - [Outlined](#outlined)
     - [Disabled](#disabled)
-    - [CSS Custom Properties](#css-custom-properties-2)
+    - [CSS Custom Properties](#css-custom-properties-3)
   - [Advance](#advance)
     - [Color palette](#color-palette)
       - [Customize color palette](#customize-color-palette)
@@ -440,6 +441,26 @@ This event is executed when the component's `close()` method is executed.
   $chip.addEventListener('close', () => console.log('Closed'))
 </script>
 ```
+
+### CSS Custom Properties
+
+| Name                                | Description                                                      |
+| ----------------------------------- | ---------------------------------------------------------------- |
+| `--hwc-chip-font-family`            | Defines the font family used for the text inside the chip.       |
+| `--hwc-chip-color`                  | Defines the main color of the chip.                              |
+| `--hwc-chip-bg`                     | Defines the background color of the chip.                        |
+| `--hwc-chip-text-color`             | Defines the text color inside the chip.                          |
+| `--hwc-chip-font-size`              | Defines the font size used for the text inside the chip.         |
+| `--hwc-chip-padding`                | Defines the padding of the content inside the chip.              |
+| `--hwc-chip-border-width`           | Defines the border width of the chip.                            |
+| `--hwc-chip-border-style`           | Defines the border style of the chip.                            |
+| `--hwc-chip-border-color`           | Defines the border color of the chip.                            |
+| `--hwc-chip-border-radius`          | Defines the border radius used to round the corners of the chip. |
+| `--hwc-chip-opacity`                | Defines the opacity of the chip.                                 |
+| `--hwc-chip-closable-button-height` | Defines the height of the closable button inside the chip.       |
+| `--hwc-chip-closable-button-width`  | Defines the width of the closable button inside the chip.        |
+| `--hwc-chip-closable-icon-height`   | Defines the height of the closable icon inside the chip.         |
+| `--hwc-chip-closable-icon-width`    | Defines the width of the closable icon inside the chip.          |
 
 ## Card
 
