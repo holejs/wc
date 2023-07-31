@@ -53,14 +53,14 @@ Import the component suite into your main input file. Generally the `index.ts` i
 
 ```ts
 // Imports styles.
-import '@holejs/wc/styles/colors.css'
 import '@holejs/wc/styles/elevations.css'
+import '@holejs/wc/styles/colors.css'
 
 // Import all components.
 import '@holejs/wc'
 
 // or import specific components.
-import '@holejs/wc/button/button'
+import '@holejs/wc/button/button.js'
 ```
 
 ## Buttons
