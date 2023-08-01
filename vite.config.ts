@@ -10,6 +10,7 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       entry: [
+        path.resolve(__dirname, './src/alert/alert.ts'),
         path.resolve(__dirname, './src/button/button.ts'),
         path.resolve(__dirname, './src/card/card.ts'),
         path.resolve(__dirname, './src/chip/chip.ts'),

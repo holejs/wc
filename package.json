@@ -42,6 +42,10 @@
       "types": "./dist/types/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./alert/alert.js": {
+      "types": "./dist/types/alert/alert.d.ts",
+      "default": "./dist/alert.js"
+    },
     "./button/button.js": {
       "types": "./dist/types/button/button.d.ts",
       "default": "./dist/button.js"
