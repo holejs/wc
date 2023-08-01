@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-export type AlertAppearance = 'text'
+export type AlertAppearance = 'filled' | 'text' | 'outlined'
 
 export type AlertType = 'info' | 'success' | 'warning' | 'error'
 
@@ -21,7 +21,7 @@ export type AlertType = 'info' | 'success' | 'warning' | 'error'
 export default class Alert extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
-  @property({ type: String }) appearance!: AlertAppearance
+  @property({ type: String }) appearance: AlertAppearance = 'filled'
 
   @property({ type: String, reflect: true }) type!: AlertType
 
