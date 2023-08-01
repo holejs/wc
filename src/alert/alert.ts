@@ -1,7 +1,10 @@
-import { CSSResultGroup, LitElement, TemplateResult, css, html, unsafeCSS } from 'lit'
+import { CSSResultGroup, LitElement, PropertyValueMap, TemplateResult, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
+import { when } from 'lit/directives/when.js'
 
 import styles from './alert.css?inline'
+
+import { isValidColorFormat } from '../utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -16,7 +19,17 @@ export type AlertType = 'info' | 'success' | 'warning' | 'error'
 export default class Alert extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
-  @property({ type: String, reflect: true }) type: AlertType = 'info'
+  @property({ type: String, reflect: true }) type!: AlertType
+
+  @property({ type: String }) color!: string
+
+  protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    if (_changedProperties.has('color')) {
+      const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
+
+      this.style.setProperty('--hwc-alert-color', color)
+    }
+  }
 
   private iconTmpl (type: AlertType) {
     const icon: Record<AlertType, TemplateResult<1>> = {
@@ -49,9 +62,14 @@ export default class Alert extends LitElement {
     return html`
       <div class="alert">
         <div class="alert__wrapper">
-          <span class="alert__icon">
-            ${this.iconTmpl(this.type)}
-          </span>
+          ${when(
+            this.type,
+            () => html`
+              <span class="alert__icon">
+                ${this.iconTmpl(this.type)}
+              </span>
+            `
+          )}
 
           <div class="alert__content">
             <slot></slot>

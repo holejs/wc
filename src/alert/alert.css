@@ -8,7 +8,7 @@
   display: inline-block;
 
   /* Colors */
-  --hwc-alert-color: unset;
+  --hwc-alert-color: var(--hwc-blue-darken-1);
   --hwc-alert-bg: var(--hwc-alert-color);
   --hwc-alert-text-color: white;
 
@@ -44,10 +44,7 @@
 .alert__icon svg {
   width: 20px;
   height: 20px;
-}
-
-.alert__content {
-  margin-left: 15px;
+  margin-right: 15px;
 }
 
 /* Types */
