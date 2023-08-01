@@ -8,6 +8,13 @@ import { isValidColorFormat } from '../utils'
 
 import '../button/button'
 
+declare global {
+  // eslint-disable-next-line no-unused-vars
+  interface HTMLElementTagNameMap {
+    'hwc-chip': Chip;
+  }
+}
+
 export type ChipAppearence = 'filled' | 'outlined' | 'text'
 
 export type ChipSize = 'x-small' | 'small' | 'regular' | 'large' | 'x-large'
