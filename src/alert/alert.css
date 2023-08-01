@@ -51,6 +51,22 @@
   margin-right: 15px;
 }
 
+.alert__actions {
+  display: inline-flex;
+  margin-left: 10px;
+}
+
+.alert-button__close {
+  --hwc-button-color: var(--hwc-alert-text-color);
+  --hwc-button-height: 28px;
+  --hwc-button-width: 28px;
+}
+
+.alert-icon__close {
+  width: 20px;
+  height: 20px;
+}
+
 /* Types */
 :host([type="info"]) {
   --hwc-alert-color: var(--hwc-blue-darken-1);

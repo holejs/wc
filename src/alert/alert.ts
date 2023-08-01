@@ -6,6 +6,8 @@ import styles from './alert.css?inline'
 
 import { isValidColorFormat } from '../utils'
 
+import '../button/button'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
@@ -25,6 +27,8 @@ export default class Alert extends LitElement {
 
   @property({ type: String, reflect: true }) type!: AlertType
 
+  @property({ type: Boolean }) dismissible: boolean = false
+
   @property({ type: String }) color!: string
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -33,6 +37,22 @@ export default class Alert extends LitElement {
 
       this.style.setProperty('--hwc-alert-color', color)
     }
+  }
+
+  /**
+   * Closes the element and performs actions associated with the 'close' event.
+   */
+  close (): void {
+    const event = new CustomEvent('close', {
+      bubbles: true,
+      cancelable: true
+    })
+
+    const cancelled = this.dispatchEvent(event)
+
+    if (!cancelled) return
+
+    this.remove()
   }
 
   private iconTmpl (type: AlertType) {
@@ -78,6 +98,19 @@ export default class Alert extends LitElement {
           <div class="alert__content">
             <slot></slot>
           </div>
+
+          ${when(
+            this.dismissible,
+            () => html`
+              <div class="alert__actions">
+                <hwc-button @click=${() => this.close()} class="alert-button__close" appearance="icon">
+                  <svg class="alert-icon__close" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                  </svg>
+                </hwc-button>
+              </div>
+            `
+          )}
         </div>
       </div>
     `
