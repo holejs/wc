@@ -13,11 +13,15 @@ declare global {
   }
 }
 
+export type AlertAppearance = 'text'
+
 export type AlertType = 'info' | 'success' | 'warning' | 'error'
 
 @customElement('hwc-alert')
 export default class Alert extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
+
+  @property({ type: String }) appearance!: AlertAppearance
 
   @property({ type: String, reflect: true }) type!: AlertType
 

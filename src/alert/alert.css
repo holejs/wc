@@ -24,6 +24,7 @@
 }
 
 .alert {
+  position: relative;
   background: var(--hwc-alert-bg);
   color: var(--hwc-alert-text-color);
   font-family: var(--hwc-alert-font-family);
@@ -49,17 +50,42 @@
 
 /* Types */
 :host([type="info"]) {
-  --hwc-alert-bg: var(--hwc-blue-darken-1);
+  --hwc-alert-color: var(--hwc-blue-darken-1);
 }
 
 :host([type="success"]) {
-  --hwc-alert-bg: var(--hwc-green-darken-1);
+  --hwc-alert-color: var(--hwc-green-darken-1);
 }
 
 :host([type="warning"]) {
-  --hwc-alert-bg: var(--hwc-orange-darken-1);
+  --hwc-alert-color: var(--hwc-orange-darken-1);
 }
 
 :host([type="error"]) {
-  --hwc-alert-bg: var(--hwc-red-darken-1);
+  --hwc-alert-color: var(--hwc-red-darken-1);
+}
+
+/* Appearances */
+:host([appearance="text"]) {
+  --hwc-alert-opacity: .15;
+  --hwc-alert-text-color: var(--hwc-alert-color);
+}
+
+:host([appearance="text"]) .alert {
+  background: transparent;
+}
+
+:host([appearance="text"]) .alert::before {
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--hwc-alert-bg);
+  border-radius: var(--hwc-alert-border-radius);
+  opacity: var(--hwc-alert-opacity);
+  z-index: -1;
 }
