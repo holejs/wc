@@ -83,6 +83,10 @@ export class MyElement extends LitElement {
 
             <!-- <hwc-ripple color="blue-darken-2" opacity="0.15"></hwc-ripple> -->
             <h1 style="margin: 0">Body</h1>
+            <form>
+              <input name="email">
+              <hwc-button type="submit">Submit</hwc-button>
+            </form>
 
             <div slot="footer">
               <h1 style="margin: 0">Footer</h1>
