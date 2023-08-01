@@ -8,6 +8,7 @@ import '../../src/assets/colors.css'
 // Import components
 import '../../src/button/button'
 import '../../src/ripple/ripple'
+import '../../src/chip/chip'
 import '../../src/card/card'
 
 declare global {
@@ -56,6 +57,24 @@ export class MyElement extends LitElement {
   render () {
     return html`
       <div>
+      <section style="padding: 10px 0px">
+          <hwc-chip>Vicente Van Coco</hwc-chip>
+
+          <hwc-chip appearance="outlined" color="purple-darken-1">Vicente Van Coco</hwc-chip>
+
+          <hwc-chip closable appearance="text" color="indigo-darken-4">Vicente Van Coco</hwc-chip>
+
+          <hwc-chip closable size="x-small" appearance="text" color="blue-darken-2">Vicente Van Coco</hwc-chip>
+
+          <hwc-chip closable size="small" appearance="text" color="blue-darken-2">Vicente Van Coco</hwc-chip>
+
+          <hwc-chip closable appearance="text" color="blue-darken-2">Vicente Van Coco</hwc-chip>
+
+          <hwc-chip closable size="large" appearance="text" color="blue-darken-2">Vicente Van Coco</hwc-chip>
+
+          <hwc-chip closable size="x-large" appearance="text" color="blue-darken-2">Vicente Van Coco</hwc-chip>
+        </section>
+
         <section style="padding: 10px 0px">
           <hwc-card>
             <div slot="header">
