@@ -1,3 +1,21 @@
+# [0.3.0](https://github.com/holejs/wc/compare/v0.2.0...v0.3.0) (2023-08-01)
+
+
+### Bug Fixes
+
+* **chip:**  define global types ([efbe1a3](https://github.com/holejs/wc/commit/efbe1a3ffcbfb6b6c3d896a390de5b7540d60f42))
+
+
+### Features
+
+* **alert:** Added support for "text" appearance ([fcb6e79](https://github.com/holejs/wc/commit/fcb6e79b1d19411fd4d5af84c230b6c40e0c4b7a))
+* **alert:** Added support for the "dismissible" property ([c85c061](https://github.com/holejs/wc/commit/c85c061000cdc499fea0ae5032de5e11251aaa2f))
+* **alert:** Added the "outlined" appearance ([5e5adab](https://github.com/holejs/wc/commit/5e5adab8286563af563f268806e53da93e23ab93))
+* **alert:** Color change is allowed ([4c23072](https://github.com/holejs/wc/commit/4c23072ee8285bf8ec472bd14cee556140f168c0))
+* **alert:** The basic scheme and operation were defined ([af34d63](https://github.com/holejs/wc/commit/af34d63edbc903df3ee57b54f29cf01ad1361566))
+
+
+
 # [0.2.0](https://github.com/holejs/wc/compare/v0.1.0...v0.2.0) (2023-08-01)
 
 
