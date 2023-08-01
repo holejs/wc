@@ -1,3 +1,23 @@
+# [0.2.0](https://github.com/holejs/wc/compare/v0.1.0...v0.2.0) (2023-08-01)
+
+
+### Bug Fixes
+
+* **chip:** The sizes were corrected ([b4a020a](https://github.com/holejs/wc/commit/b4a020a80cd3a2360b8dfbf06abffedd8b014278))
+
+
+### Features
+
+* **chip:** Added "appearance" property ([ed6ff16](https://github.com/holejs/wc/commit/ed6ff16b2570bde226524541b4f66236ae652b4d))
+* **chip:** Added "outlined" appearance ([0036b84](https://github.com/holejs/wc/commit/0036b840aa3ce9b1ac15dd6ea99cba5b8d013566))
+* **chip:** Added closable functionality ([0096cca](https://github.com/holejs/wc/commit/0096ccab882eba318ef04c700cb7b70bee585fc6))
+* **chip:** Added the "rounded" property ([ae9bad9](https://github.com/holejs/wc/commit/ae9bad99b8d1637ccd35360a82cbfa7a1f402c62))
+* **chip:** Added the "text" appearance ([725fe6b](https://github.com/holejs/wc/commit/725fe6bde9d71c6ad8b35503a3aa596b722b7d08))
+* **chip:** It is allowed to set different sizes ([093fa05](https://github.com/holejs/wc/commit/093fa053a9896b2b4d6e13f5573687e2c8424508))
+* **chip:** The base design is complete ([39ca781](https://github.com/holejs/wc/commit/39ca7810612b55cd68b251a4b76f7ca162d10242))
+
+
+
 # [0.1.0](https://github.com/holejs/wc/compare/v0.0.2...v0.1.0) (2023-07-29)
 
 
