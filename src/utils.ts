@@ -33,3 +33,12 @@ export function isValidColorFormat (text: string): boolean {
   // Check if the text matches any of the formats
   return !(rgbRegex.test(text) || hexRegex.test(text) || hslRegex.test(text))
 }
+
+/**
+ * Checks if an attribute exists in an object.
+ * @param obj - The object in which to verify the attribute's existence.
+ * @param key - The name of the attribute to check.
+ */
+export function hasAttr (obj: Record<string, any>, key: string): boolean {
+  return key in obj
+}

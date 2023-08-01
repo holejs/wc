@@ -10,7 +10,7 @@ import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './button.css?inline'
 
-import { getAllAriaProps, isValidColorFormat } from '../utils'
+import { getAllAriaProps, hasAttr, isValidColorFormat } from '../utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -29,7 +29,8 @@ export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 export default class Button extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
-  private readonly internals = (this as HTMLElement).attachInternals()
+  // eslint-disable-next-line no-undef
+  private readonly internals: ElementInternals | null = null
 
   // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
   static formAssociated = true
@@ -53,6 +54,14 @@ export default class Button extends LitElement {
   @property({ type: Boolean }) fullwidth: boolean = false
 
   @query('.button') $button!: HTMLButtonElement
+
+  constructor () {
+    super()
+
+    if (hasAttr(this, 'attachInternals')) {
+      this.internals = this.attachInternals()
+    }
+  }
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     getAllAriaProps(this).forEach((attr) => this.$button.setAttribute(attr.name, attr.value))
@@ -83,6 +92,8 @@ export default class Button extends LitElement {
    */
   private _handleClick (_event: MouseEvent): void {
     const { type, internals } = this
+
+    if (!internals) return
 
     // Check if the button is of type "submit" or "reset".
     const isSubmit = type === 'submit'
