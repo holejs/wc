@@ -8,6 +8,7 @@ import '../../src/assets/colors.css'
 // Import components
 import '../../src/button/button'
 import '../../src/ripple/ripple'
+import '../../src/alert/alert'
 import '../../src/chip/chip'
 import '../../src/card/card'
 
@@ -57,7 +58,23 @@ export class MyElement extends LitElement {
   render () {
     return html`
       <div>
-      <section style="padding: 10px 0px">
+        <section style="padding: 10px 0px">
+          <hwc-alert>I'm an Alert Usage Example</hwc-alert>
+
+          <hwc-alert type="info">I'm an Alert Usage Example</hwc-alert>
+
+          <hwc-alert type="success">I'm an Alert Usage Example</hwc-alert>
+
+          <hwc-alert type="warning">I'm an Alert Usage Example</hwc-alert>
+
+          <hwc-alert type="error">I'm an Alert Usage Example</hwc-alert>
+
+          <hwc-alert type="warning" appearance="outlined">I'm an Alert Usage Example</hwc-alert>
+
+          <hwc-alert appearance="text" color="blue-darken-2">I'm an Alert Usage Example</hwc-alert>
+        </section>
+
+        <section style="padding: 10px 0px">
           <hwc-chip>Vicente Van Coco</hwc-chip>
 
           <hwc-chip appearance="outlined" color="purple-darken-1">Vicente Van Coco</hwc-chip>
