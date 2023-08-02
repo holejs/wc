@@ -7,18 +7,24 @@
 :host {
   display: inline-flex;
 
+  /* Colors */
+  --hwc-text-field-color: unset;
+
+  --hwc-text-field-focused-color: unset;
+
   /* Fonts */
   --hwc-text-field-font-family: Poppins, sans-serif;
+  --hwc-text-field-text-color: unset;
   --hwc-text-field-font-size: 16px;
 
   --hwc-text-field-label-font-size: 14px;
-  --hwc-text-field-label-text-color: #808080;
+  --hwc-text-field-label-text-color: var(--hwc-grey-lighten-1);
 
   /* Paddings */
   --hwc-text-field-padding: 12px 15px;
 
   /* Borders */
-  --hwc-text-field-border-color: #808080;
+  --hwc-text-field-border-color: var(--hwc-grey-lighten-1);
   --hwc-text-field-border-width: 2px;
   --hwc-text-field-border-style: solid;
   --hwc-text-field-border-radius: 10px;
@@ -30,6 +36,7 @@
   border-color: var(--hwc-text-field-border-color);
   border-style: var(--hwc-text-field-border-style);
   border-radius: var(--hwc-text-field-border-radius);
+  margin-top: 3px;
   cursor: text;
 }
 
@@ -44,5 +51,14 @@
   outline: none;
   font-size: var(--hwc-text-field-font-size);
   font-family: var(--hwc-text-field-font-family);
+  caret-color: var(--hwc-text-field-caret-color);
+  color: var(--hwc-text-field-text-color);
   background: transparent;
+}
+
+/* Focus */
+.text-field__content:focus-within {
+  --hwc-text-field-border-color: var(--hwc-text-field-focused-color);
+  --hwc-text-field-label-text-color: var(--hwc-text-field-focused-color);
+  --hwc-text-field-caret-color: var(--hwc-text-field-focused-color);
 }

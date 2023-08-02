@@ -44,15 +44,11 @@ export function hasAttr (obj: Record<string, any>, key: string): boolean {
 }
 
 export function generateHash (length: number = 10): string {
-  let result = ''
-
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
   const charactersLength = characters.length
 
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-
-  return result
+  return Array.from({ length }, (_, index) => index)
+    .map(() => characters.charAt(Math.floor(Math.random() * charactersLength)))
+    .join('')
 }

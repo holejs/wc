@@ -4,7 +4,7 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './text-field.css?inline'
 
-import { generateHash } from '../utils'
+import { generateHash, isValidColorFormat } from '../utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -12,6 +12,8 @@ declare global {
     'hwc-text-field': TextField;
   }
 }
+
+export type TextFieldType = 'hidden' | 'text' | 'search' | 'tel' | 'url' | 'email' | 'password' | 'datetime' | 'date' | 'month' | 'week' | 'time' | 'datetime-local' | 'number' | 'range' | 'color' | 'checkbox' | 'radio' | 'file' | 'submit' | 'image' | 'reset' | 'button'
 
 @customElement('hwc-text-field')
 export default class TextField extends LitElement {
@@ -21,16 +23,32 @@ export default class TextField extends LitElement {
 
   @query('.text-field__control') $control!: HTMLDivElement
 
-  @property({ type: Boolean }) autofocus: boolean = false
+  @property({ type: String, reflect: true }) type: TextFieldType = 'text'
+
+  @property({ type: String }) name!: string
+
+  @property({ type: String, reflect: true }) autocomplete: 'on' | 'off' = 'on'
 
   @property({ type: String }) label: string | null = null
 
+  @property({ type: Boolean }) autofocus: boolean = false
+
   @property({ type: String }) placeholder!: string
+
+  @property({ type: String }) color!: string
 
   @state() private uniqueId = `text-field-${generateHash()}`
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.$control.addEventListener('click', () => this.$input.focus())
+  }
+
+  protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    if (_changedProperties.has('color')) {
+      const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
+
+      this.style.setProperty('--hwc-text-field-focused-color', color)
+    }
   }
 
   protected render (): unknown {
@@ -56,7 +74,10 @@ export default class TextField extends LitElement {
                 class="text-field__input"
                 ?autofocus=${this.autofocus}
                 placeholder=${this.placeholder}
+                autocomplete=${this.autocomplete}
                 id=${this.uniqueId}
+                type=${this.type}
+                name=${this.name}
               >
             </div>
           </div>
