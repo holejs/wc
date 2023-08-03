@@ -1,10 +1,10 @@
 import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
-import { customElement, property, query, state } from 'lit/decorators.js'
+import { customElement, property, query } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
 
 import styles from './text-field.css?inline'
 
-import { generateHash, isValidColorFormat } from '../utils'
+import { isValidColorFormat } from '../utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -23,9 +23,16 @@ export default class TextField extends LitElement {
 
   @query('.text-field__control') $control!: HTMLDivElement
 
+  readonly internals = this.attachInternals()
+
+  // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
+  static formAssociated = true
+
   @property({ type: String, reflect: true }) type: TextFieldType = 'text'
 
   @property({ type: String }) name!: string
+
+  @property({ type: String }) value: string = ''
 
   @property({ type: String, reflect: true }) autocomplete: 'on' | 'off' = 'on'
 
@@ -37,10 +44,10 @@ export default class TextField extends LitElement {
 
   @property({ type: String }) color!: string
 
-  @state() private uniqueId = `text-field-${generateHash()}`
-
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.$control.addEventListener('click', () => this.$input.focus())
+
+    this.setValue(this.value)
   }
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -49,6 +56,22 @@ export default class TextField extends LitElement {
 
       this.style.setProperty('--hwc-text-field-focused-color', color)
     }
+
+    if (_changedProperties.has('value')) {
+      this.setValue(this.value)
+    }
+  }
+
+  setValue (value: string = ''): void {
+    this.internals.setFormValue(value)
+  }
+
+  private _onInput (ev: InputEvent): void {
+    const $input = ev.target as HTMLInputElement
+
+    const value = $input.value
+
+    this.setValue(value)
   }
 
   protected render (): unknown {
@@ -62,7 +85,7 @@ export default class TextField extends LitElement {
               ${when(
                 this.label,
                 () => html`<label
-                  for=${this.uniqueId}
+                  for="text-field"
                   class="text-field__label"
                 >${this.label}</label>`
               )}
@@ -72,12 +95,14 @@ export default class TextField extends LitElement {
               <!-- Input -->
               <input
                 class="text-field__input"
-                ?autofocus=${this.autofocus}
-                placeholder=${this.placeholder}
+                id="text-field"
                 autocomplete=${this.autocomplete}
-                id=${this.uniqueId}
+                placeholder=${this.placeholder}
+                ?autofocus=${this.autofocus}
+                .value=${this.value}
                 type=${this.type}
                 name=${this.name}
+                @input=${this._onInput}
               >
             </div>
           </div>
