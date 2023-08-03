@@ -74,6 +74,16 @@ export default class TextField extends LitElement {
     this.setValue(value)
   }
 
+  private _onKeydown (ev: KeyboardEvent): void {
+    if (!(ev.code === 'Enter')) return
+
+    const $form = this.internals.form
+
+    if (!$form) return
+
+    $form.requestSubmit()
+  }
+
   protected render (): unknown {
     return html`
       <div class="text-field">
@@ -103,6 +113,7 @@ export default class TextField extends LitElement {
                 type=${this.type}
                 name=${this.name}
                 @input=${this._onInput}
+                @keydown=${this._onKeydown}
               >
             </div>
           </div>
