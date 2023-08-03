@@ -15,6 +15,8 @@ declare global {
 
 export type TextFieldType = 'hidden' | 'text' | 'search' | 'tel' | 'url' | 'email' | 'password' | 'datetime' | 'date' | 'month' | 'week' | 'time' | 'datetime-local' | 'number' | 'range' | 'color' | 'checkbox' | 'radio' | 'file' | 'submit' | 'image' | 'reset' | 'button'
 
+export type TextFieldAppearance = 'regular' | 'outlined'
+
 @customElement('hwc-text-field')
 export default class TextField extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
@@ -27,6 +29,8 @@ export default class TextField extends LitElement {
 
   // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
   static formAssociated = true
+
+  @property({ type: String, reflect: true }) appearance: TextFieldAppearance = 'outlined'
 
   @property({ type: String, reflect: true }) type: TextFieldType = 'text'
 

@@ -62,3 +62,18 @@
   --hwc-text-field-label-text-color: var(--hwc-text-field-focused-color);
   --hwc-text-field-caret-color: var(--hwc-text-field-focused-color);
 }
+
+/* Appearance: Regular */
+:host([appearance="regular"]) {
+  --hwc-text-field-padding: 0px 0px 5px 0px;
+}
+
+:host([appearance="regular"]) .text-field__control {
+  border: none;
+  border-radius: 0;
+  border-bottom-width: var(--hwc-text-field-border-width);
+  border-bottom-color: var(--hwc-text-field-border-color);
+  border-bottom-style: var(--hwc-text-field-border-style);
+  padding: var(--hwc-text-field-padding);
+  margin: 0;
+}
