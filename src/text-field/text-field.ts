@@ -15,7 +15,7 @@ declare global {
 
 export type TextFieldType = 'hidden' | 'text' | 'search' | 'tel' | 'url' | 'email' | 'password' | 'datetime' | 'date' | 'month' | 'week' | 'time' | 'datetime-local' | 'number' | 'range' | 'color' | 'checkbox' | 'radio' | 'file' | 'submit' | 'image' | 'reset' | 'button'
 
-export type TextFieldAppearance = 'regular' | 'outlined'
+export type TextFieldAppearance = 'underline' | 'outlined'
 
 @customElement('hwc-text-field')
 export default class TextField extends LitElement {

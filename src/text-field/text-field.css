@@ -28,6 +28,9 @@
   --hwc-text-field-border-width: 2px;
   --hwc-text-field-border-style: solid;
   --hwc-text-field-border-radius: 10px;
+
+  /* Animations */
+  --hwc-text-field-transition: 200ms all ease;
 }
 
 .text-field__control {
@@ -38,6 +41,7 @@
   border-radius: var(--hwc-text-field-border-radius);
   margin-top: 3px;
   cursor: text;
+  transition: var(--hwc-text-field-transition);
 }
 
 .text-field__label {
@@ -63,12 +67,12 @@
   --hwc-text-field-caret-color: var(--hwc-text-field-focused-color);
 }
 
-/* Appearance: Regular */
-:host([appearance="regular"]) {
+/* Appearance: Underline */
+:host([appearance="underline"]) {
   --hwc-text-field-padding: 0px 0px 5px 0px;
 }
 
-:host([appearance="regular"]) .text-field__control {
+:host([appearance="underline"]) .text-field__control {
   border: none;
   border-radius: 0;
   border-bottom-width: var(--hwc-text-field-border-width);
