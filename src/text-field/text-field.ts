@@ -48,6 +48,8 @@ export default class TextField extends LitElement {
 
   @property({ type: String }) color!: string
 
+  @property({ type: String }) hint!: string
+
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.$control.addEventListener('click', () => this.$input.focus())
 
@@ -124,7 +126,7 @@ export default class TextField extends LitElement {
 
           <!-- Details -->
           <div class="text-field__details">
-            <!--  -->
+            <span>${this.hint}</span>
           </div>
         </div>
       </div>

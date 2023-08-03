@@ -31,6 +31,11 @@
 
   /* Animations */
   --hwc-text-field-transition: 200ms all ease;
+
+  /* Details */
+  --hwc-text-field-details-font-size: 12px;
+  --hwc-text-field-details-font-family: Poppins, sans-serif;
+  --hwc-text-field-details-text-color: var(--hwc-grey-lighten-1);
 }
 
 .text-field__control {
@@ -58,6 +63,13 @@
   caret-color: var(--hwc-text-field-caret-color);
   color: var(--hwc-text-field-text-color);
   background: transparent;
+}
+
+.text-field__details {
+  margin-top: 5px;
+  font-size: var(--hwc-text-field-details-font-size);
+  font-family: var(--hwc-text-field-details-font-family);;
+  color: var(--hwc-text-field-details-text-color);
 }
 
 /* Focus */
