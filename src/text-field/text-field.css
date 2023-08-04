@@ -67,6 +67,10 @@
   background: transparent;
 }
 
+.text-field__input::placeholder {
+  color: var(--hwc-text-field-placeholder, unset);
+}
+
 .text-field__details {
   margin-top: 5px;
   font-size: var(--hwc-text-field-details-font-size);
