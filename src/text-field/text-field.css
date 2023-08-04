@@ -95,3 +95,17 @@
   padding: var(--hwc-text-field-padding);
   margin: 0;
 }
+
+/* Erros */
+.text-field.error .text-field__control {
+  border-color: var(--hwc-red-darken-2);
+}
+
+.text-field.error .text-field__input {
+  caret-color: var(--hwc-red-darken-2);
+}
+
+.text-field.error .text-field__label,
+.text-field.error .text-field__details {
+  color: var(--hwc-red-darken-2);
+}

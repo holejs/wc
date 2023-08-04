@@ -14,18 +14,32 @@
     <script type="module" src="./src/index.ts"></script>
   </head>
 
-  <body>
+  <body class="dark">
     <main>
       <section style="padding: 10px 0px">
-        <form @submit="${this._onSubmit}">
+        <form id="signup-form" novalidate>
           <div style="margin-bottom: 20px">
             <hwc-text-field
               color="purple-darken-2"
               autocomplete="off"
-              name="username"
-              placeholder="Example: IvanZM123"
-              hint="Enter your username."
-              label="Username"
+              name="fullname"
+              placeholder="Example: Ivan Zaldivar"
+              hint="Enter your fullname."
+              label="Fullname"
+              rules="required|minlength:3|maxlength:10"
+            ></hwc-text-field>
+          </div>
+          <div style="margin-bottom: 20px">
+            <hwc-text-field
+              type="email"
+              color="purple-darken-2"
+              autocomplete="off"
+              name="email"
+              placeholder="Example: abc@domain.com"
+              hint="Enter your email."
+              rules="required|email"
+              label="Email"
+              rules="required"
             ></hwc-text-field>
           </div>
           <div>
@@ -34,6 +48,7 @@
               color="purple-darken-2"
               hint="Enter your password."
               type="password"
+              rules="required"
               name="password"
               label="Password"
             ></hwc-text-field>
@@ -41,6 +56,16 @@
           <hr />
           <hwc-button type="submit">Submit</hwc-button>
         </form>
+
+        <script>
+          const $form = document.querySelector('form')
+
+          $form.addEventListener('submit', (ev) => {
+            ev.preventDefault()
+
+            console.log($form.checkValidity())
+          })
+        </script>
       </section>
 
       <section style="padding: 10px 0px">
