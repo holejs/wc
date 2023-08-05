@@ -12,15 +12,13 @@ import { when } from 'lit/directives/when.js'
 import styles from './text-field.css?inline'
 
 import {
-  processValidationSequentially,
   maxlength,
   minlength,
   required,
-  email,
-  max,
-  min
+  email
 } from './validations'
-import { generateHash, isValidColorFormat } from '../utils'
+import { generateHash, getDataAttributes, isValidColorFormat } from '../utils'
+import { Feedback, ValidationControl } from './validation-controller'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -35,26 +33,11 @@ export type TextFieldAppearance = 'underline' | 'outlined'
 
 export type TextFieldStatusFeedback = 'completed' | 'invalid'
 
-export interface TextFieldFeedback {
-  name: string;
-  type: string;
-  status: TextFieldStatusFeedback;
-  message: string;
-  el: HTMLInputElement;
-}
-
-export interface TextFieldValidation {
-  name: string;
-  handler: (el: HTMLInputElement) => Promise<TextFieldFeedback>;
-}
-
 const validationMap = new Map([
   ['required', required],
   ['minlength', minlength],
   ['maxlength', maxlength],
-  ['email', email],
-  ['max', max],
-  ['min', min]
+  ['email', email]
 ])
 
 @customElement('hwc-text-field')
@@ -82,7 +65,7 @@ export default class TextField extends LitElement {
 
   @property({ type: String }) label: string | null = null
 
-  @property({ type: Boolean }) autofocus: boolean = false
+  @property({ type: Boolean }) autofocus!: boolean
 
   @property({ type: String }) placeholder!: string
 
@@ -92,16 +75,38 @@ export default class TextField extends LitElement {
 
   @property({ type: String }) rules!: string
 
+  private _validator = new ValidationControl(this)
+
   @state() private readonly uniqueId = `text-field-${generateHash()}`
 
-  @state() readonly validators: TextFieldValidation[] = []
-
-  @state() private _feedback: Partial<TextFieldFeedback> | null = null
+  @state() private _feedback: Partial<Feedback> | null = null
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.$control.addEventListener('click', () => this.$input.focus())
 
     this.setValue(this.value)
+
+    const rules = this.rules.split('|')
+
+    const ruleItems = rules.map((rule) => {
+      const [key, value = null] = rule.split(':')
+      return { key, value }
+    })
+
+    // Set all data attributes.
+    const dataAttrMap = getDataAttributes(this)
+
+    ruleItems.forEach(({ key, value }) => this.$input.setAttribute(key, value || ''))
+
+    ruleItems.forEach(({ key }) => {
+      const validator = validationMap.get(key)
+
+      if (!validator) return
+
+      const message = dataAttrMap.get(`data-error-message-${key}`)
+
+      this._validator.setValidator(validator({ message }))
+    })
   }
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -114,22 +119,6 @@ export default class TextField extends LitElement {
     if (_changedProperties.has('value')) {
       this.setValue(this.value)
     }
-
-    if (_changedProperties.has('rules')) {
-      const ruleChunks = this.rules.split('|')
-
-      const validators = ruleChunks.map((chunk) => {
-        const [key, value = ''] = chunk.split(':')
-
-        this.$input.setAttribute(key, value)
-
-        const validation = validationMap.get(key) as (...args: any) => TextFieldValidation
-
-        return validation(value)
-      })
-
-      this.validators.push(...validators)
-    }
   }
 
   setValue (value: string = ''): void {
@@ -137,24 +126,25 @@ export default class TextField extends LitElement {
   }
 
   private async _onValidation (ev: InputEvent): Promise<void> {
-    const $input = ev.target as HTMLInputElement
+    const errors = await this._validator.validate(ev)
 
-    const results = await processValidationSequentially(this.validators, $input)
-
-    const lastItem = results.at(-1)
-
-    if (lastItem?.status !== 'completed') {
-      this._feedback = lastItem || null
-
-      this.internals.setValidity(
-        { ...$input.validity, customError: true },
-        this._feedback?.message,
-        $input
-      )
-    } else {
+    if (!errors.length) {
       this._feedback = null
       this.internals.setValidity({})
+      return
     }
+
+    const $input = ev.target as HTMLInputElement
+
+    const [error] = errors
+
+    this._feedback = error
+
+    this.internals.setValidity(
+      { ...$input.validity, customError: true },
+      error.message,
+      $input
+    )
   }
 
   private async _onInput (ev: InputEvent): Promise<void> {

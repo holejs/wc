@@ -1,111 +1,89 @@
-import { TextFieldFeedback, TextFieldValidation } from './text-field'
+import { Feedback, Validator } from './validation-controller'
 
-function createFeedback (status: 'completed' | 'invalid', message: string): (el: HTMLInputElement) => TextFieldFeedback {
-  return ($el: HTMLInputElement): TextFieldFeedback => {
-    return {
-      status,
-      message,
-      name: $el.name,
-      type: $el.type,
-      el: $el
-    }
-  }
+export interface ValidationOptions {
+  message?: string;
 }
 
-export function required (): TextFieldValidation {
+export interface ValidationMinlengthOptions extends ValidationOptions {
+  length: number;
+}
+
+export interface ValidationMaxlengthOptions extends ValidationOptions {
+  length: number;
+}
+
+export function required ({ message }: ValidationOptions = {}): Validator {
   const name = 'required'
 
-  const handler = async ($el: HTMLInputElement): Promise<TextFieldFeedback> => {
-    const isValid = !!$el.value
+  const _message = message || 'This field is required.'
 
-    return isValid
-      ? createFeedback('completed', 'Completed.')($el)
-      : createFeedback('invalid', 'This field is required.')($el)
+  const handler = async (ev: InputEvent): Promise<Feedback> => {
+    const $input = ev.target as HTMLInputElement
+
+    const { valueMissing } = $input.validity
+
+    if (valueMissing) return { status: 'invalid', message: _message }
+
+    return { status: 'complete' }
   }
 
   return { name, handler }
 }
 
-export function email (): TextFieldValidation {
+export function email ({ message }: ValidationOptions = {}): Validator {
   const name = 'email'
 
-  const handler = async ($el: HTMLInputElement): Promise<TextFieldFeedback> => {
+  const _message = message || 'Email is invalid.'
+
+  const handler = async (ev: InputEvent): Promise<Feedback> => {
+    const $el = ev.target as HTMLInputElement
+
     const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test($el.value)
 
-    return isValid
-      ? createFeedback('completed', 'Completed.')($el)
-      : createFeedback('invalid', 'Email is invalid.')($el)
+    if (!isValid) return { status: 'invalid', message: _message }
+
+    return { status: 'complete', message: 'Completed' }
   }
 
   return { name, handler }
 }
 
-export function minlength (length: number): TextFieldValidation {
+export function minlength ({ message }: ValidationOptions): Validator {
   const name = 'minlength'
 
-  const handler = async ($el: HTMLInputElement): Promise<TextFieldFeedback> => {
-    const isValid = $el.value.length >= length
+  const handler = async (ev: InputEvent): Promise<Feedback> => {
+    const $el = ev.target as HTMLInputElement
 
-    return isValid
-      ? createFeedback('completed', 'Completed.')($el)
-      : createFeedback('invalid', `It must contain at least ${length} characters.`)($el)
+    const length = $el.minLength
+
+    const _message = message || `It must contain at least ${length} characters.`
+
+    const { tooShort } = $el.validity
+
+    if (tooShort) return { status: 'invalid', message: _message }
+
+    return { status: 'complete' }
   }
 
   return { name, handler }
 }
 
-export function maxlength (length: number): TextFieldValidation {
+export function maxlength ({ message }: ValidationOptions): Validator {
   const name = 'maxlength'
 
-  const handler = async ($el: HTMLInputElement): Promise<TextFieldFeedback> => {
-    const isValid = $el.value.length <= length
+  const handler = async (ev: InputEvent): Promise<Feedback> => {
+    const $el = ev.target as HTMLInputElement
 
-    return isValid
-      ? createFeedback('completed', 'Completed.')($el)
-      : createFeedback('invalid', `It must contain a maximum of ${length} characters.`)($el)
+    const length = $el.maxLength
+
+    const _message = message || `It must contain a maximum of ${length} characters.`
+
+    const { tooLong } = $el.validity
+
+    if (tooLong) return { status: 'invalid', message: _message }
+
+    return { status: 'complete' }
   }
 
   return { name, handler }
-}
-
-export function min (value: number): TextFieldValidation {
-  const name = 'min'
-
-  const handler = async ($el: HTMLInputElement): Promise<TextFieldFeedback> => {
-    const isValid = Number($el.value) >= value
-
-    return isValid
-      ? createFeedback('completed', 'Completed.')($el)
-      : createFeedback('invalid', `Must be greater than or equal to ${value}`)($el)
-  }
-
-  return { name, handler }
-}
-
-export function max (value: number): TextFieldValidation {
-  const name = 'max'
-
-  const handler = async ($el: HTMLInputElement): Promise<TextFieldFeedback> => {
-    const isValid = Number($el.value) <= value
-
-    return isValid
-      ? createFeedback('completed', 'Completed.')($el)
-      : createFeedback('invalid', `Must be less than or equal to ${value}`)($el)
-  }
-
-  return { name, handler }
-}
-
-export async function processValidationSequentially (validators: TextFieldValidation[], $el: HTMLInputElement): Promise<TextFieldFeedback[]> {
-  const validationResults: TextFieldFeedback[] = []
-
-  for (const validator of validators) {
-    const result = await validator.handler($el)
-
-    validationResults.push(result)
-
-    if (result.status === 'invalid') break
-  }
-
-  return validationResults
 }
