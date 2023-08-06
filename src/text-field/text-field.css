@@ -5,7 +5,7 @@
 }
 
 :host {
-  display: inline-flex;
+  display: block;
 
   --hwc-text-field-focused-color: unset;
 
@@ -65,6 +65,7 @@
   font-family: var(--hwc-text-field-font-family);
   caret-color: var(--hwc-text-field-caret-color);
   background: transparent;
+  width: 100%;
 }
 
 .text-field__input::placeholder {
