@@ -4,86 +4,102 @@ export interface ValidationOptions {
   message?: string;
 }
 
-export interface ValidationMinlengthOptions extends ValidationOptions {
-  length: number;
-}
+const createValidator = (name: string, handler: (ev: InputEvent, options: ValidationOptions) => Promise<Feedback>) => {
+  return ({ message }: ValidationOptions = {}): Validator => {
+    const _message = message
 
-export interface ValidationMaxlengthOptions extends ValidationOptions {
-  length: number;
-}
+    const validatorHandler: Validator['handler'] = async (ev) => {
+      return handler(ev, { message: _message })
+    }
 
-export function required ({ message }: ValidationOptions = {}): Validator {
-  const name = 'required'
-
-  const _message = message || 'This field is required.'
-
-  const handler = async (ev: InputEvent): Promise<Feedback> => {
-    const $input = ev.target as HTMLInputElement
-
-    const { valueMissing } = $input.validity
-
-    if (valueMissing) return { status: 'invalid', message: _message }
-
-    return { status: 'complete' }
+    return { name, handler: validatorHandler }
   }
-
-  return { name, handler }
 }
 
-export function email ({ message }: ValidationOptions = {}): Validator {
-  const name = 'email'
+export const required = createValidator('required', async (ev) => {
+  const $input = ev.target as HTMLInputElement
+  const { valueMissing } = $input.validity
 
-  const _message = message || 'Email is invalid.'
+  if (valueMissing) return { status: 'invalid', message: 'This field is required.' }
 
-  const handler = async (ev: InputEvent): Promise<Feedback> => {
-    const $el = ev.target as HTMLInputElement
+  return { status: 'complete' }
+})
 
-    const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test($el.value)
+export const email = createValidator('email', async (ev) => {
+  const $el = ev.target as HTMLInputElement
+  const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test($el.value)
 
-    if (!isValid) return { status: 'invalid', message: _message }
+  if (!isValid) return { status: 'invalid', message: 'Email is invalid.' }
 
-    return { status: 'complete', message: 'Completed' }
-  }
+  return { status: 'complete', message: 'Completed' }
+})
 
-  return { name, handler }
-}
+export const minlength = createValidator('minlength', async (ev) => {
+  const $el = ev.target as HTMLInputElement
 
-export function minlength ({ message }: ValidationOptions): Validator {
-  const name = 'minlength'
+  const _message = `It must contain at least ${$el.minLength} characters.`
 
-  const handler = async (ev: InputEvent): Promise<Feedback> => {
-    const $el = ev.target as HTMLInputElement
+  const { tooShort } = $el.validity
 
-    const length = $el.minLength
+  if (tooShort) return { status: 'invalid', message: _message }
 
-    const _message = message || `It must contain at least ${length} characters.`
+  return { status: 'complete' }
+})
 
-    const { tooShort } = $el.validity
+export const maxlength = createValidator('maxlength', async (ev) => {
+  const $el = ev.target as HTMLInputElement
 
-    if (tooShort) return { status: 'invalid', message: _message }
+  const _message = `It must contain a maximum of ${$el.maxLength} characters.`
 
-    return { status: 'complete' }
-  }
+  const { tooLong } = $el.validity
 
-  return { name, handler }
-}
+  if (tooLong) return { status: 'invalid', message: _message }
 
-export function maxlength ({ message }: ValidationOptions): Validator {
-  const name = 'maxlength'
+  return { status: 'complete' }
+})
 
-  const handler = async (ev: InputEvent): Promise<Feedback> => {
-    const $el = ev.target as HTMLInputElement
+export const min = createValidator('min', async (ev) => {
+  const $el = ev.target as HTMLInputElement
 
-    const length = $el.maxLength
+  const _message = `The value must be greater than or equal to ${$el.min}.`
 
-    const _message = message || `It must contain a maximum of ${length} characters.`
+  const { rangeUnderflow } = $el.validity
 
-    const { tooLong } = $el.validity
+  if (rangeUnderflow) return { status: 'invalid', message: _message }
 
-    if (tooLong) return { status: 'invalid', message: _message }
+  return { status: 'complete' }
+})
 
-    return { status: 'complete' }
-  }
+export const max = createValidator('max', async (ev) => {
+  const $el = ev.target as HTMLInputElement
 
-  return { name, handler }
-}
+  const _message = `The value must be less than or equal to ${$el.max}.`
+
+  const { rangeOverflow } = $el.validity
+
+  if (rangeOverflow) return { status: 'invalid', message: _message }
+
+  return { status: 'complete' }
+})
+
+export const pattern = createValidator('pattern', async (ev) => {
+  const $el = ev.target as HTMLInputElement
+
+  const _message = 'The value does not comply with the valid format.'
+
+  const { patternMismatch } = $el.validity
+
+  if (patternMismatch) return { status: 'invalid', message: _message }
+
+  return { status: 'complete' }
+})
+
+export const validationsMap = new Map([
+  ['required', required],
+  ['minlength', minlength],
+  ['maxlength', maxlength],
+  ['email', email],
+  ['min', min],
+  ['max', max],
+  ['pattern', pattern]
+])

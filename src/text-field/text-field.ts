@@ -11,14 +11,10 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './text-field.css?inline'
 
-import {
-  maxlength,
-  minlength,
-  required,
-  email
-} from './validations'
 import { generateHash, getDataAttributes, isValidColorFormat } from '../utils'
 import { Feedback, ValidationControl } from './validation-controller'
+import { validationsMap } from './validations'
+import { parseRules } from './utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -30,15 +26,6 @@ declare global {
 export type TextFieldType = 'hidden' | 'text' | 'search' | 'tel' | 'url' | 'email' | 'password' | 'datetime' | 'date' | 'month' | 'week' | 'time' | 'datetime-local' | 'number' | 'range' | 'color' | 'checkbox' | 'radio' | 'file' | 'submit' | 'image' | 'reset' | 'button'
 
 export type TextFieldAppearance = 'underline' | 'outlined'
-
-export type TextFieldStatusFeedback = 'completed' | 'invalid'
-
-const validationMap = new Map([
-  ['required', required],
-  ['minlength', minlength],
-  ['maxlength', maxlength],
-  ['email', email]
-])
 
 @customElement('hwc-text-field')
 export default class TextField extends LitElement {
@@ -75,38 +62,24 @@ export default class TextField extends LitElement {
 
   @property({ type: String }) rules!: string
 
-  private _validator = new ValidationControl(this)
-
-  @state() private readonly uniqueId = `text-field-${generateHash()}`
+  @state() private readonly _uniqueId = `text-field-${generateHash()}`
 
   @state() private _feedback: Partial<Feedback> | null = null
+
+  @state() _hasDirty = false
+
+  @state() _hasBlur = false
+
+  private _validator = new ValidationControl(this)
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.$control.addEventListener('click', () => this.$input.focus())
 
-    this.setValue(this.value)
+    this._setValue(this.value)
 
-    const rules = this.rules.split('|')
+    this._configureRules()
 
-    const ruleItems = rules.map((rule) => {
-      const [key, value = null] = rule.split(':')
-      return { key, value }
-    })
-
-    // Set all data attributes.
-    const dataAttrMap = getDataAttributes(this)
-
-    ruleItems.forEach(({ key, value }) => this.$input.setAttribute(key, value || ''))
-
-    ruleItems.forEach(({ key }) => {
-      const validator = validationMap.get(key)
-
-      if (!validator) return
-
-      const message = dataAttrMap.get(`data-error-message-${key}`)
-
-      this._validator.setValidator(validator({ message }))
-    })
+    this._onValidation({ target: this.$input } as any)
   }
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -117,29 +90,75 @@ export default class TextField extends LitElement {
     }
 
     if (_changedProperties.has('value')) {
-      this.setValue(this.value)
+      this._setValue(this.value)
     }
   }
 
-  setValue (value: string = ''): void {
+  private _setValue (value: string = ''): void {
+    if (value) this._hasDirty = true
     this.internals.setFormValue(value)
   }
 
+  /**
+   * Configures the validation rules for the input element.
+   * Parses the rules from the component's 'rules' property,
+   * sets corresponding attributes on the native input element,
+   * and associates validators based on the defined rules.
+   */
+  private _configureRules (): void {
+    // Parse the rules into key-value pairs.
+    const ruleItems = parseRules(this.rules)
+
+    // Get all data attributes.
+    const dataAttrMap = getDataAttributes(this)
+
+    ruleItems.forEach(({ key, value }) => {
+      // Set attribute native input.
+      this.$input.setAttribute(key, value || '')
+
+      // Get the corresponding validator function based on the rule key.
+      const validator = validationsMap.get(key)
+
+      if (!validator) return
+
+      // Get the custom error message from the data attributes, if available.
+      const message = dataAttrMap.get(`data-error-message-${key}`)
+
+      // Set the validator with the custom message in the validation controller.
+      this._validator.setValidator(validator({ message }))
+    })
+  }
+
+  /**
+   * Handle validation on input events.
+   *
+   * @private
+   * @param {InputEvent} ev - The input event triggered.
+   */
   private async _onValidation (ev: InputEvent): Promise<void> {
+    // Validate the input event using the _validator.
     const errors = await this._validator.validate(ev)
 
-    if (!errors.length) {
+    // Check if there are any errors.
+    const hasError = errors.length
+
+    // If there are no errors, reset the feedback and validity.
+    if (!hasError) {
       this._feedback = null
       this.internals.setValidity({})
       return
     }
 
+    // Extract the input element from the event target.
     const $input = ev.target as HTMLInputElement
 
+    // Get the first error from the errors array.
     const [error] = errors
 
-    this._feedback = error
+    // Update the feedback based on _hasBlur and _hasDirty flags.
+    this._feedback = this._hasBlur || this._hasDirty ? errors[0] : null
 
+    // Set the validity on the input element with the error message and customError flag.
     this.internals.setValidity(
       { ...$input.validity, customError: true },
       error.message,
@@ -147,18 +166,40 @@ export default class TextField extends LitElement {
     )
   }
 
+  /**
+   * Handle the onBlur event on the input element.
+   *
+   * @private
+   * @param {InputEvent} ev - The input event triggered.
+   */
+  private _onBlur (ev: InputEvent): void {
+    this._hasBlur = true
+    this._onValidation(ev)
+  }
+
+  /**
+   * Handle the onInput event on the input element.
+   *
+   * @private
+   * @param {InputEvent} ev - The input event triggered.
+   */
   private async _onInput (ev: InputEvent): Promise<void> {
     const $input = ev.target as HTMLInputElement
 
-    const value = $input.value
+    this._setValue($input.value)
 
     this._onValidation(ev)
-
-    this.setValue(value)
   }
 
+  /**
+   * Handle the onKeydown event on the input element.
+   * If the key pressed is Enter, the form will be submitted if available.
+   *
+   * @private
+   * @param {KeyboardEvent} ev - The keyboard event triggered.
+   */
   private _onKeydown (ev: KeyboardEvent): void {
-    if (!(ev.code === 'Enter')) return
+    if (ev.code !== 'Enter') return
 
     const $form = this.internals.form
 
@@ -178,7 +219,7 @@ export default class TextField extends LitElement {
               ${when(
                 this.label,
                 () => html`<label
-                  for=${this.uniqueId}
+                  for=${this._uniqueId}
                   class="text-field__label"
                 >${this.label}</label>`
               )}
@@ -188,7 +229,7 @@ export default class TextField extends LitElement {
               <!-- Input -->
               <input
                 class="text-field__input"
-                id=${this.uniqueId}
+                id=${this._uniqueId}
                 autocomplete=${this.autocomplete}
                 placeholder=${this.placeholder}
                 ?autofocus=${this.autofocus}
@@ -197,7 +238,7 @@ export default class TextField extends LitElement {
                 name=${this.name}
                 @input=${this._onInput}
                 @keydown=${this._onKeydown}
-                @blur=${this._onValidation}
+                @blur=${this._onBlur}
               >
             </div>
           </div>
