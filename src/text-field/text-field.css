@@ -81,9 +81,9 @@
 
 /* Focus */
 .text-field__content:focus-within {
-  --hwc-text-field-border-color: var(--hwc-text-field-focused-color);
-  --hwc-text-field-label-text-color: var(--hwc-text-field-focused-color);
-  --hwc-text-field-caret-color: var(--hwc-text-field-focused-color);
+  --hwc-text-field-border-color: var(--hwc-text-field-focused-color, var(--hwc-blue-darken-2));
+  --hwc-text-field-label-text-color: var(--hwc-text-field-focused-color, var(--hwc-blue-darken-2));
+  --hwc-text-field-caret-color: var(--hwc-text-field-focused-color, var(--hwc-blue-darken-2));
 }
 
 /* Appearance: Underline */
