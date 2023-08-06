@@ -11,9 +11,8 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './text-field.css?inline'
 
+import { Feedback, createValidationControl, validationsMap } from './validations'
 import { generateHash, getDataAttributes, isValidColorFormat } from '../utils'
-import { Feedback, ValidationControl } from './validation-controller'
-import { validationsMap } from './validations'
 import { parseRules } from './utils'
 
 declare global {
@@ -70,7 +69,7 @@ export default class TextField extends LitElement {
 
   @state() _hasBlur = false
 
-  private _validator = new ValidationControl(this)
+  private _validator = createValidationControl()
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.$control.addEventListener('click', () => this.$input.focus())
@@ -125,7 +124,7 @@ export default class TextField extends LitElement {
       const message = dataAttrMap.get(`data-error-message-${key}`)
 
       // Set the validator with the custom message in the validation controller.
-      this._validator.setValidator(validator({ message }))
+      this._validator.setValidation(key, validator({ message }))
     })
   }
 

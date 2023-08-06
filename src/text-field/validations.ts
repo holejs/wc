@@ -1,23 +1,41 @@
-import { Feedback, Validator } from './validation-controller'
-
 export interface ValidationOptions {
   message?: string;
 }
 
-const createValidator = (name: string, handler: (ev: InputEvent, options: ValidationOptions) => Promise<Feedback>) => {
-  return ({ message }: ValidationOptions = {}): Validator => {
+export interface Feedback {
+  status: 'complete' | 'invalid';
+  message?: string;
+}
+
+export type ValidationFn = (event: InputEvent) => Promise<Feedback>
+
+export const VALIDATION_REQUIRED_KEY = 'required'
+
+export const VALIDATION_MINLENGTH_KEY = 'minlength'
+
+export const VALIDATION_MAXLENGTH_KEY = 'maxlength'
+
+export const VALIDATION_PATTERN_KEY = 'pattern'
+
+export const VALIDATION_EMAIL_KEY = 'email'
+
+export const VALIDATION_MIN_KEY = 'min'
+
+export const VALIDATION_MAX_KEY = 'max'
+
+const createValidator = (handler: (ev: InputEvent, options: ValidationOptions) => Promise<Feedback>) => {
+  return ({ message }: ValidationOptions = {}): ValidationFn => {
     const _message = message
 
-    const validatorHandler: Validator['handler'] = async (ev) => {
-      return handler(ev, { message: _message })
-    }
+    const validatorHandler = async (ev: InputEvent) => handler(ev, { message: _message })
 
-    return { name, handler: validatorHandler }
+    return validatorHandler
   }
 }
 
-export const required = createValidator('required', async (ev) => {
+export const required = createValidator(async (ev: InputEvent) => {
   const $input = ev.target as HTMLInputElement
+
   const { valueMissing } = $input.validity
 
   if (valueMissing) return { status: 'invalid', message: 'This field is required.' }
@@ -25,7 +43,7 @@ export const required = createValidator('required', async (ev) => {
   return { status: 'complete' }
 })
 
-export const email = createValidator('email', async (ev) => {
+export const email = createValidator(async (ev: InputEvent) => {
   const $el = ev.target as HTMLInputElement
   const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test($el.value)
 
@@ -34,7 +52,7 @@ export const email = createValidator('email', async (ev) => {
   return { status: 'complete', message: 'Completed' }
 })
 
-export const minlength = createValidator('minlength', async (ev) => {
+export const minlength = createValidator(async (ev: InputEvent) => {
   const $el = ev.target as HTMLInputElement
 
   const _message = `It must contain at least ${$el.minLength} characters.`
@@ -46,7 +64,7 @@ export const minlength = createValidator('minlength', async (ev) => {
   return { status: 'complete' }
 })
 
-export const maxlength = createValidator('maxlength', async (ev) => {
+export const maxlength = createValidator(async (ev: InputEvent) => {
   const $el = ev.target as HTMLInputElement
 
   const _message = `It must contain a maximum of ${$el.maxLength} characters.`
@@ -58,7 +76,7 @@ export const maxlength = createValidator('maxlength', async (ev) => {
   return { status: 'complete' }
 })
 
-export const min = createValidator('min', async (ev) => {
+export const min = createValidator(async (ev: InputEvent) => {
   const $el = ev.target as HTMLInputElement
 
   const _message = `The value must be greater than or equal to ${$el.min}.`
@@ -70,7 +88,7 @@ export const min = createValidator('min', async (ev) => {
   return { status: 'complete' }
 })
 
-export const max = createValidator('max', async (ev) => {
+export const max = createValidator(async (ev: InputEvent) => {
   const $el = ev.target as HTMLInputElement
 
   const _message = `The value must be less than or equal to ${$el.max}.`
@@ -82,7 +100,7 @@ export const max = createValidator('max', async (ev) => {
   return { status: 'complete' }
 })
 
-export const pattern = createValidator('pattern', async (ev) => {
+export const pattern = createValidator(async (ev) => {
   const $el = ev.target as HTMLInputElement
 
   const _message = 'The value does not comply with the valid format.'
@@ -94,12 +112,48 @@ export const pattern = createValidator('pattern', async (ev) => {
   return { status: 'complete' }
 })
 
+export const createValidationControl = () => {
+  const validationMap = new Map<string, ValidationFn>()
+
+  const setValidation = (name: string, handler: ValidationFn) => {
+    if (getValidation(name)) {
+      return console.warn()
+    }
+
+    validationMap.set(name, handler)
+  }
+
+  const getAllValidations = () => [...validationMap].map(([name, handler]) => ({ name, handler }))
+
+  const getValidation = (name: string) => validationMap.get(name)
+
+  const validate = async (ev: InputEvent) => {
+    const feedbacks: Feedback[] = []
+
+    for (const validator of getAllValidations()) {
+      const result = await validator.handler(ev)
+
+      if (result.status === 'invalid') {
+        feedbacks.push(result)
+      }
+    }
+
+    return feedbacks
+  }
+
+  return {
+    getAllValidations,
+    setValidation,
+    getValidation,
+    validate
+  }
+}
+
 export const validationsMap = new Map([
-  ['required', required],
-  ['minlength', minlength],
-  ['maxlength', maxlength],
-  ['email', email],
-  ['min', min],
-  ['max', max],
-  ['pattern', pattern]
+  [VALIDATION_REQUIRED_KEY, required],
+  [VALIDATION_MINLENGTH_KEY, minlength],
+  [VALIDATION_MAXLENGTH_KEY, maxlength],
+  [VALIDATION_MIN_KEY, min],
+  [VALIDATION_MAX_KEY, max],
+  [VALIDATION_PATTERN_KEY, pattern]
 ])
