@@ -21,9 +21,9 @@
           <div style="margin-bottom: 20px">
             <hwc-text-field
               color="purple-darken-2"
-              autocomplete="off"
+              autofocus
               name="fullname"
-              placeholder="Example: Ivan Zaldivar"
+              placeholder="Ivan Zaldivar"
               hint="Enter your fullname."
               label="Fullname"
               rules="required|minlength:3|maxlength:10"
@@ -33,24 +33,22 @@
             <hwc-text-field
               type="email"
               color="purple-darken-2"
-              autocomplete="off"
               name="email"
-              placeholder="Example: abc@domain.com"
+              placeholder="abc@domain.com"
               hint="Enter your email."
               rules="required|email"
               label="Email"
-              rules="required"
             ></hwc-text-field>
           </div>
           <div>
             <hwc-text-field
-              appearance="underline"
-              color="purple-darken-2"
-              hint="Enter your password."
               type="password"
-              rules="required"
               name="password"
               label="Password"
+              color="purple-darken-2"
+              hint="Enter your password."
+              rules="required|pattern:^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$"
+              data-error-message-pattern="The password must have at least 8 characters, a capital letter, a symbol and a number."
             ></hwc-text-field>
           </div>
           <hr />
@@ -65,6 +63,16 @@
 
             console.log($form.checkValidity())
           })
+
+          const $fullname = document.querySelector('hwc-text-field')
+
+          // $fullname.validators.push({
+          //   name: 'gender',
+          //   handler: async ($el) => {
+          //     console.log($el)
+          //     return { status: 'completed', message: 'Completed.' }
+          //   }
+          // })
         </script>
       </section>
 
