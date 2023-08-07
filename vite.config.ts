@@ -19,6 +19,18 @@ export default defineConfig({
         path.resolve(__dirname, './src/index.ts')
       ],
       formats: ['es']
+    },
+    rollupOptions: {
+      external: /lit/,
+      output: {
+        globals: {
+          lit: 'lit',
+          'lit/decorators.js': 'lit/decorators',
+          'lit/directives/style-map.js': 'lit/directives/style-map',
+          'lit/directives/class-map.js': 'lit/directives/class-map',
+          'lit/directives/when.js': 'lit/directives/when'
+        }
+      }
     }
   },
   test: {
