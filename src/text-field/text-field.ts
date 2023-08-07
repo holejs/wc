@@ -69,16 +69,18 @@ export default class TextField extends LitElement {
 
   @state() _hasBlur = false
 
-  private _validator = createValidationControl()
+  private readonly _validator = createValidationControl()
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.$control.addEventListener('click', () => this.$input.focus())
+
+    this.internals.form?.addEventListener('reset', () => this.reset())
 
     this._setValue(this.value)
 
     this._configureRules()
 
-    this._onValidation({ target: this.$input } as any)
+    this._onValidation()
   }
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -90,11 +92,45 @@ export default class TextField extends LitElement {
 
     if (_changedProperties.has('value')) {
       this._setValue(this.value)
+
+      this._onValidation()
     }
   }
 
-  private _setValue (value: string = ''): void {
-    if (value) this._hasDirty = true
+  /**
+   * Indicates if the field has lost focus.
+   */
+  get hasBlur (): boolean {
+    return this._hasBlur
+  }
+
+  /**
+   * Indicates if the field has been modified.
+   */
+  get hasDirty (): boolean {
+    return (this._hasDirty || !!this.value) && !this.hasBlur
+  }
+
+  /**
+   * Reset the text field
+   */
+  reset (): void {
+    this._setValue('')
+
+    this._feedback = null
+
+    this._hasBlur = false
+
+    this._hasDirty = false
+
+    this._onValidation()
+  }
+
+  private _setValue (value: string): void {
+    this.value = value
+
+    this.$input.value = value
+
     this.internals.setFormValue(value)
   }
 
@@ -130,13 +166,12 @@ export default class TextField extends LitElement {
 
   /**
    * Handle validation on input events.
-   *
-   * @private
-   * @param {InputEvent} ev - The input event triggered.
    */
-  private async _onValidation (ev: InputEvent): Promise<void> {
+  private async _onValidation (): Promise<void> {
     // Validate the input event using the _validator.
-    const errors = await this._validator.validate(ev)
+    const errors = await this._validator.validate({
+      input: this.$input
+    })
 
     // Check if there are any errors.
     const hasError = errors.length
@@ -148,14 +183,13 @@ export default class TextField extends LitElement {
       return
     }
 
-    // Extract the input element from the event target.
-    const $input = ev.target as HTMLInputElement
+    const $input = this.$input
 
     // Get the first error from the errors array.
     const [error] = errors
 
     // Update the feedback based on _hasBlur and _hasDirty flags.
-    this._feedback = this._hasBlur || this._hasDirty ? errors[0] : null
+    this._feedback = this.hasBlur || this.hasDirty ? errors[0] : null
 
     // Set the validity on the input element with the error message and customError flag.
     this.internals.setValidity(
@@ -169,11 +203,11 @@ export default class TextField extends LitElement {
    * Handle the onBlur event on the input element.
    *
    * @private
-   * @param {InputEvent} ev - The input event triggered.
+   * @param {InputEvent} _ev - The input event triggered.
    */
-  private _onBlur (ev: InputEvent): void {
+  private _onBlur (_ev: InputEvent): void {
     this._hasBlur = true
-    this._onValidation(ev)
+    this._onValidation()
   }
 
   /**
@@ -187,7 +221,9 @@ export default class TextField extends LitElement {
 
     this._setValue($input.value)
 
-    this._onValidation(ev)
+    this._hasDirty = true
+
+    this._onValidation()
   }
 
   /**

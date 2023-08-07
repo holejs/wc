@@ -7,7 +7,12 @@ export interface Feedback {
   message?: string;
 }
 
-export type ValidationFn = (event: InputEvent) => Promise<Feedback>
+export interface ValidationContext {
+  input: HTMLInputElement;
+  [key: string]: unknown;
+}
+
+export type ValidationFn = (ctx: ValidationContext) => Promise<Feedback>
 
 export const VALIDATION_REQUIRED_KEY = 'required'
 
@@ -23,90 +28,76 @@ export const VALIDATION_MIN_KEY = 'min'
 
 export const VALIDATION_MAX_KEY = 'max'
 
-const createValidator = (handler: (ev: InputEvent, options: ValidationOptions) => Promise<Feedback>) => {
+const createValidator = (handler: (ctx: ValidationContext, options: ValidationOptions) => Promise<Feedback>) => {
   return ({ message }: ValidationOptions = {}): ValidationFn => {
     const _message = message
 
-    const validatorHandler = async (ev: InputEvent) => handler(ev, { message: _message })
+    const validatorHandler = async (ctx: ValidationContext) => handler(ctx, { message: _message })
 
     return validatorHandler
   }
 }
 
-export const required = createValidator(async (ev: InputEvent) => {
-  const $input = ev.target as HTMLInputElement
-
-  const { valueMissing } = $input.validity
+export const required = createValidator(async ({ input }: ValidationContext) => {
+  const { valueMissing } = input.validity
 
   if (valueMissing) return { status: 'invalid', message: 'This field is required.' }
 
   return { status: 'complete' }
 })
 
-export const email = createValidator(async (ev: InputEvent) => {
-  const $el = ev.target as HTMLInputElement
-
-  const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test($el.value)
+export const email = createValidator(async ({ input }: ValidationContext) => {
+  const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(input.value)
 
   if (!isValid) return { status: 'invalid', message: 'Email is invalid.' }
 
   return { status: 'complete' }
 })
 
-export const minlength = createValidator(async (ev: InputEvent) => {
-  const $el = ev.target as HTMLInputElement
+export const minlength = createValidator(async ({ input }: ValidationContext) => {
+  const { value, minLength } = input
 
-  const _message = `It must contain at least ${$el.minLength} characters.`
+  const _message = `It must contain at least ${minLength} characters.`
 
-  const { tooShort } = $el.validity
-
-  if (tooShort) return { status: 'invalid', message: _message }
+  if (!(value.length >= minLength)) return { status: 'invalid', message: _message }
 
   return { status: 'complete' }
 })
 
-export const maxlength = createValidator(async (ev: InputEvent) => {
-  const $el = ev.target as HTMLInputElement
+export const maxlength = createValidator(async ({ input }: ValidationContext) => {
+  const { value, maxLength } = input
 
-  const _message = `It must contain a maximum of ${$el.maxLength} characters.`
+  const _message = `It must contain a maximum of ${maxLength} characters.`
 
-  const { tooLong } = $el.validity
-
-  if (tooLong) return { status: 'invalid', message: _message }
+  if (!(value.length <= maxLength)) return { status: 'invalid', message: _message }
 
   return { status: 'complete' }
 })
 
-export const min = createValidator(async (ev: InputEvent) => {
-  const $el = ev.target as HTMLInputElement
+export const min = createValidator(async ({ input }: ValidationContext) => {
+  const _message = `The value must be greater than or equal to ${input.min}.`
 
-  const _message = `The value must be greater than or equal to ${$el.min}.`
-
-  const { rangeUnderflow } = $el.validity
+  const { rangeUnderflow } = input.validity || {}
 
   if (rangeUnderflow) return { status: 'invalid', message: _message }
 
   return { status: 'complete' }
 })
 
-export const max = createValidator(async (ev: InputEvent) => {
-  const $el = ev.target as HTMLInputElement
+export const max = createValidator(async ({ input }: ValidationContext) => {
+  const _message = `The value must be less than or equal to ${input.max}.`
 
-  const _message = `The value must be less than or equal to ${$el.max}.`
-
-  const { rangeOverflow } = $el.validity
+  const { rangeOverflow } = input.validity || {}
 
   if (rangeOverflow) return { status: 'invalid', message: _message }
 
   return { status: 'complete' }
 })
 
-export const pattern = createValidator(async (ev) => {
-  const $el = ev.target as HTMLInputElement
-
+export const pattern = createValidator(async ({ input }: ValidationContext) => {
   const _message = 'The value does not comply with the valid format.'
 
-  const { patternMismatch } = $el.validity
+  const { patternMismatch } = input.validity || {}
 
   if (patternMismatch) return { status: 'invalid', message: _message }
 
@@ -118,7 +109,7 @@ export const createValidationControl = () => {
 
   const setValidation = (name: string, handler: ValidationFn) => {
     if (getValidation(name)) {
-      return console.warn()
+      return console.error(`There is already a validation function for the field '${name}`)
     }
 
     validationMap.set(name, handler)
@@ -128,17 +119,17 @@ export const createValidationControl = () => {
 
   const getValidation = (name: string) => validationMap.get(name)
 
-  const validate = async (ev: InputEvent) => {
-    const feedbacks: Feedback[] = []
-
+  const validate = async (ctx: ValidationContext) => {
     const validations = getAllValidations()
 
+    const feedbacks: Feedback[] = []
+
+    const { input } = ctx
+
     for (const validation of validations) {
-      const $input = ev.target as HTMLInputElement
+      if (validations.at(0)?.name !== VALIDATION_REQUIRED_KEY && !input?.value) break
 
-      if (validations.at(0)?.name !== VALIDATION_REQUIRED_KEY && !$input?.value) break
-
-      const result = await validation.handler(ev)
+      const result = await validation.handler(ctx)
 
       if (result.status === 'invalid') {
         feedbacks.push(result)
