@@ -1,3 +1,12 @@
+## [0.4.2](https://github.com/holejs/wc/compare/v0.4.1...v0.4.2) (2023-08-07)
+
+
+### Bug Fixes
+
+* **text-field:** Add conditional check for required validation key and input value in the code ([a868753](https://github.com/holejs/wc/commit/a86875375c860a887be927e25be8dd92a9c55832))
+
+
+
 ## [0.4.1](https://github.com/holejs/wc/compare/v0.4.0...v0.4.1) (2023-08-07)
 
 
