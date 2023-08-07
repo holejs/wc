@@ -1,3 +1,20 @@
+# [0.4.0](https://github.com/holejs/wc/compare/v0.3.0...v0.4.0) (2023-08-07)
+
+
+### Features
+
+* **text-field:** Add function to catch "Enter" event ([a595432](https://github.com/holejs/wc/commit/a595432ba04e289dca8a697a509745e52db2eeb0))
+* **text-field:** Added support for "regular" appearance ([a3ca8e7](https://github.com/holejs/wc/commit/a3ca8e7aad35f437bfe97db226793b24e13e5cf5))
+* **text-field:** Added support for the "color" property and accessibility properties. ([add62c5](https://github.com/holejs/wc/commit/add62c5d4c9ea1b9365c793e786f85e3be41c0e4))
+* **text-field:** Added the "hint" property ([c90f874](https://github.com/holejs/wc/commit/c90f8742ad4a42c3f3cc00466f1c5fd31309a082))
+* **text-field:** Base design added ([5027a7a](https://github.com/holejs/wc/commit/5027a7a4237ceaa24ad9aca6fe775bec018153cc))
+* **text-field:** Changed the name from "regular" to "underline" ([f10ecec](https://github.com/holejs/wc/commit/f10ecec9a0c79a5933eed83014c24f8feb1cbbda))
+* **text-field:** It is allowed to customize the "placeholder" ([e5f66a3](https://github.com/holejs/wc/commit/e5f66a371102a0dfdc3e51d5877ec5f9d1e1404c))
+* **text-field:** It was associated with the form ([9036f74](https://github.com/holejs/wc/commit/9036f741514484a23ad2cd3a7c4f44ebc68514e3))
+* **text-field:** native validations were integrated (except the pattern) ([a791162](https://github.com/holejs/wc/commit/a791162bd64e8c9b1f815286f2ef893830244ebe))
+
+
+
 # [0.3.0](https://github.com/holejs/wc/compare/v0.2.0...v0.3.0) (2023-08-01)
 
 
