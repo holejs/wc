@@ -1,3 +1,12 @@
+## [0.4.3](https://github.com/holejs/wc/compare/v0.4.2...v0.4.3) (2023-08-07)
+
+
+### Bug Fixes
+
+* **text-field:** Added focus fixes, validations and allows resetting ([544abf0](https://github.com/holejs/wc/commit/544abf04362ca6583e31842795516983dc51f709))
+
+
+
 ## [0.4.2](https://github.com/holejs/wc/compare/v0.4.1...v0.4.2) (2023-08-07)
 
 
