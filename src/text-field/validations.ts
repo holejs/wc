@@ -50,7 +50,7 @@ export const email = createValidator(async (ev: InputEvent) => {
 
   if (!isValid) return { status: 'invalid', message: 'Email is invalid.' }
 
-  return { status: 'complete', message: 'Completed' }
+  return { status: 'complete' }
 })
 
 export const minlength = createValidator(async (ev: InputEvent) => {
@@ -131,8 +131,14 @@ export const createValidationControl = () => {
   const validate = async (ev: InputEvent) => {
     const feedbacks: Feedback[] = []
 
-    for (const validator of getAllValidations()) {
-      const result = await validator.handler(ev)
+    const validations = getAllValidations()
+
+    for (const validation of validations) {
+      const $input = ev.target as HTMLInputElement
+
+      if (validations.at(0)?.name !== VALIDATION_REQUIRED_KEY && !$input?.value) break
+
+      const result = await validation.handler(ev)
 
       if (result.status === 'invalid') {
         feedbacks.push(result)
