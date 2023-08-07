@@ -45,6 +45,7 @@ export const required = createValidator(async (ev: InputEvent) => {
 
 export const email = createValidator(async (ev: InputEvent) => {
   const $el = ev.target as HTMLInputElement
+
   const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test($el.value)
 
   if (!isValid) return { status: 'invalid', message: 'Email is invalid.' }
@@ -153,6 +154,7 @@ export const validationsMap = new Map([
   [VALIDATION_REQUIRED_KEY, required],
   [VALIDATION_MINLENGTH_KEY, minlength],
   [VALIDATION_MAXLENGTH_KEY, maxlength],
+  [VALIDATION_EMAIL_KEY, email],
   [VALIDATION_MIN_KEY, min],
   [VALIDATION_MAX_KEY, max],
   [VALIDATION_PATTERN_KEY, pattern]
