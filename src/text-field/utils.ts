@@ -1,3 +1,17 @@
+export function validateSyntaxRule (rules: string): boolean {
+  const ruleRegex = /^(required|minlength:\d+|maxlength:\d+|min:\d+|max:\d+|email|pattern:.+)(\|(?=(?!$))|$)/
+
+  const rulesArray = rules.split('|')
+
+  for (const rule of rulesArray) {
+    if (!rule.match(ruleRegex)) {
+      return false
+    }
+  }
+
+  return true
+}
+
 /**
  * Parses a rules string and returns an array of rule items.
  *
@@ -11,6 +25,8 @@
  * If the rule does not have a value, 'value' will be null.
  */
 export function parseRules (rules: string): { key: string; value: string | null }[] {
+  if (!rules || !validateSyntaxRule(rules)) return []
+
   const _rules = rules.split('|')
 
   return _rules.map((rule) => {
