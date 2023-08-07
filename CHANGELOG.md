@@ -1,3 +1,13 @@
+## [0.4.1](https://github.com/holejs/wc/compare/v0.4.0...v0.4.1) (2023-08-07)
+
+
+### Bug Fixes
+
+* **text-field:** Add syntax validations for rules and fix bug when no rules are set. ([1011950](https://github.com/holejs/wc/commit/1011950ba880ccf7cd6a9b56d30678b26c576c61))
+* **text-field:** Added email validation ([2c09807](https://github.com/holejs/wc/commit/2c09807374a791175970652f247945266c1df2ec))
+
+
+
 # [0.4.0](https://github.com/holejs/wc/compare/v0.3.0...v0.4.0) (2023-08-07)
 
 
