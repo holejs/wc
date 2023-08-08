@@ -69,6 +69,7 @@
     - [Hint](#hint)
     - [Validations](#validations)
     - [Error messages](#error-messages)
+    - [Custom validations](#custom-validations)
     - [CSS Custom Properties](#css-custom-properties-5)
   - [Advance](#advance)
     - [Color palette](#color-palette)
@@ -912,6 +913,39 @@ It is very likely that the default error messages will not meet your needs, but 
 ```
 
 Excellent, by doing this you have already customized the error messages.
+
+### Custom validations
+
+Unlike default validations, such as **length validations** (`minlength` and `maxlength`) or **format validations** (`pattern`), custom validations allow developers to create specific validation rules that tailor to the needs of their application.
+
+These rules can encompass anything from validating the format of a phone number to checking if an email address already exists in the database. If the entered data does not meet a custom validation rule, a feedback message is displayed to the user to inform them about the error and assist them in correcting it.
+
+Creating our own validation rules is extremely easy. Let's see the following example.
+
+**It validates that the name entered is of a man, since it only accepts names of men.**
+
+```ts
+const $fullname = document.querySelector('hwc-text-field')
+
+// Set out validation.
+$fullname.setValidation('gender', async ({ input }) => {
+  const { value } = input
+
+  const res = await fetch(`https://api.genderize.io/?name=${value}`)
+
+  const data = await res.json()
+
+  // Invalid. ⛔
+  if (!data.gender || data.gender === 'female') {
+    return { status: 'invalid', message: 'Only men are allowed.' }
+  }
+
+  // Valid. ✅
+  return { status: 'complete' }
+})
+```
+
+Ready, this way we can define our own validations with their feedback messages. 💪
 
 ### CSS Custom Properties
 
