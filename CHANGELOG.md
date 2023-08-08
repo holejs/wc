@@ -1,3 +1,12 @@
+## [0.4.4](https://github.com/holejs/wc/compare/v0.4.3...v0.4.4) (2023-08-08)
+
+
+### Bug Fixes
+
+* **text-field:** Fixed custom error messages issue ([450449e](https://github.com/holejs/wc/commit/450449eaba4f848e949f88187cbe5da1db574f1c))
+
+
+
 ## [0.4.3](https://github.com/holejs/wc/compare/v0.4.2...v0.4.3) (2023-08-07)
 
 
