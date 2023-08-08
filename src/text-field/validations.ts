@@ -28,106 +28,125 @@ export const VALIDATION_MIN_KEY = 'min'
 
 export const VALIDATION_MAX_KEY = 'max'
 
-const createValidator = (handler: (ctx: ValidationContext, options: ValidationOptions) => Promise<Feedback>) => {
-  return ({ message }: ValidationOptions = {}): ValidationFn => {
-    const _message = message
-
-    const validatorHandler = async (ctx: ValidationContext) => handler(ctx, { message: _message })
-
-    return validatorHandler
-  }
-}
-
-export const required = createValidator(async ({ input }: ValidationContext) => {
+export const required: ValidationFn = async ({ input }: ValidationContext) => {
   const { valueMissing } = input.validity
 
-  if (valueMissing) return { status: 'invalid', message: 'This field is required.' }
+  const message = input.getAttribute('data-error-message-required') || 'This field is required.'
+
+  if (valueMissing) return { status: 'invalid', message }
 
   return { status: 'complete' }
-})
+}
 
-export const email = createValidator(async ({ input }: ValidationContext) => {
+export const email: ValidationFn = async ({ input }: ValidationContext) => {
   const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(input.value)
 
-  if (!isValid) return { status: 'invalid', message: 'Email is invalid.' }
+  const message = input.getAttribute('data-error-message-email') || 'Email is invalid.'
+
+  if (!isValid) return { status: 'invalid', message }
 
   return { status: 'complete' }
-})
+}
 
-export const minlength = createValidator(async ({ input }: ValidationContext) => {
+export const minlength: ValidationFn = async ({ input }: ValidationContext) => {
   const { value, minLength } = input
 
-  const _message = `It must contain at least ${minLength} characters.`
+  const message = input.getAttribute('data-error-message-minlength') || `It must contain at least ${minLength} characters.`
 
-  if (!(value.length >= minLength)) return { status: 'invalid', message: _message }
+  if (!(value.length >= minLength)) return { status: 'invalid', message }
 
   return { status: 'complete' }
-})
+}
 
-export const maxlength = createValidator(async ({ input }: ValidationContext) => {
+export const maxlength: ValidationFn = async ({ input }: ValidationContext) => {
   const { value, maxLength } = input
 
-  const _message = `It must contain a maximum of ${maxLength} characters.`
+  const message = input.getAttribute('data-error-message-maxlength') || `It must contain a maximum of ${maxLength} characters.`
 
-  if (!(value.length <= maxLength)) return { status: 'invalid', message: _message }
+  if (!(value.length <= maxLength)) return { status: 'invalid', message }
 
   return { status: 'complete' }
-})
+}
 
-export const min = createValidator(async ({ input }: ValidationContext) => {
-  const _message = `The value must be greater than or equal to ${input.min}.`
+export const min: ValidationFn = async ({ input }: ValidationContext) => {
+  const message = input.getAttribute('data-error-message-min') || `The value must be greater than or equal to ${input.min}.`
 
   const { rangeUnderflow } = input.validity || {}
 
-  if (rangeUnderflow) return { status: 'invalid', message: _message }
+  if (rangeUnderflow) return { status: 'invalid', message }
 
   return { status: 'complete' }
-})
+}
 
-export const max = createValidator(async ({ input }: ValidationContext) => {
-  const _message = `The value must be less than or equal to ${input.max}.`
+export const max: ValidationFn = async ({ input }: ValidationContext) => {
+  const message = input.getAttribute('data-error-message-max') || `The value must be less than or equal to ${input.max}.`
 
   const { rangeOverflow } = input.validity || {}
 
-  if (rangeOverflow) return { status: 'invalid', message: _message }
+  if (rangeOverflow) return { status: 'invalid', message }
 
   return { status: 'complete' }
-})
+}
 
-export const pattern = createValidator(async ({ input }: ValidationContext) => {
-  const _message = 'The value does not comply with the valid format.'
+export const pattern: ValidationFn = async ({ input }: ValidationContext) => {
+  const message = input.getAttribute('data-error-message-pattern') || 'The value does not comply with the valid format.'
 
   const { patternMismatch } = input.validity || {}
 
-  if (patternMismatch) return { status: 'invalid', message: _message }
+  if (patternMismatch) return { status: 'invalid', message }
 
   return { status: 'complete' }
-})
+}
 
+/**
+ * Creates a validation control instance.
+ * This control manages a set of validation functions and their application on input fields.
+ */
 export const createValidationControl = () => {
-  const validationMap = new Map<string, ValidationFn>()
+  const validationMap = new Map()
 
-  const setValidation = (name: string, handler: ValidationFn) => {
+  /**
+   * Register a new validation function for a specific field.
+   * @param {string} name - The name of the field to validate.
+   * @param {ValidationFn} handler - The validation function to register.
+   * @returns {void}
+   */
+  const setValidation = (name: string, handler: ValidationFn): void => {
     if (getValidation(name)) {
-      return console.error(`There is already a validation function for the field '${name}`)
+      console.warn(`There is already a validation function for the field '${name}`)
     }
 
     validationMap.set(name, handler)
   }
 
-  const getAllValidations = () => [...validationMap].map(([name, handler]) => ({ name, handler }))
+  /**
+   * Get an array of objects containing all registered validation functions and their names.
+   * @returns {Array<{ name: string, handler: ValidationFn }>} Array of validation function objects.
+   */
+  const getAllValidations = (): Array<{ name: string; handler: ValidationFn; }> => [...validationMap].map(([name, handler]) => ({ name, handler }))
 
-  const getValidation = (name: string) => validationMap.get(name)
+  /**
+   * Get the validation function registered for a specific field.
+   * @param {string} name - The name of the field to get the validation function for.
+   * @returns {ValidationFn|undefined} The validation function or undefined if not found.
+   */
+  const getValidation = (name: string): ValidationFn | undefined => validationMap.get(name)
 
+  /**
+   * Run all registered validation functions on the provided context.
+   * @async
+   * @param {ValidationContext} ctx - The context containing input data for validation.
+   * @returns {Array<Feedback>} Array of feedback objects for each validation failure.
+   */
   const validate = async (ctx: ValidationContext) => {
     const validations = getAllValidations()
-
-    const feedbacks: Feedback[] = []
-
+    const feedbacks = []
     const { input } = ctx
 
     for (const validation of validations) {
-      if (validations.at(0)?.name !== VALIDATION_REQUIRED_KEY && !input?.value) break
+      if (validations[0]?.name !== VALIDATION_REQUIRED_KEY && !input?.value) {
+        break
+      }
 
       const result = await validation.handler(ctx)
 

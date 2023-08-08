@@ -144,24 +144,32 @@ export default class TextField extends LitElement {
     // Parse the rules into key-value pairs.
     const ruleItems = parseRules(this.rules)
 
-    // Get all data attributes.
-    const dataAttrMap = getDataAttributes(this)
+    // Set data attributes (data-*) in the native input.
+    this._applyDataAttributes(this)
 
     ruleItems.forEach(({ key, value }) => {
       // Set attribute native input.
-      this.$input.setAttribute(key, value || '')
-
-      // Get the corresponding validator function based on the rule key.
-      const validator = validationsMap.get(key)
-
-      if (!validator) return
-
-      // Get the custom error message from the data attributes, if available.
-      const message = dataAttrMap.get(`data-error-message-${key}`)
+      this._applyInputAttribute(key, value)
 
       // Set the validator with the custom message in the validation controller.
-      this._validator.setValidation(key, validator({ message }))
+      this._applyValidation(key)
     })
+  }
+
+  private _applyValidation (key: string): void {
+    const validation = validationsMap.get(key)
+
+    if (!validation) return
+
+    this._validator.setValidation(key, validation)
+  }
+
+  private _applyDataAttributes (el: HTMLElement): void {
+    getDataAttributes(el).forEach((value, key) => this._applyInputAttribute(key, value))
+  }
+
+  private _applyInputAttribute (key: string, value: string | null): void {
+    this.$input.setAttribute(key, value || '')
   }
 
   /**
