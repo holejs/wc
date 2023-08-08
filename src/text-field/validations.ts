@@ -1,3 +1,5 @@
+import { ValidationError } from './error'
+
 export interface ValidationOptions {
   message?: string;
 }
@@ -13,6 +15,8 @@ export interface ValidationContext {
 }
 
 export type ValidationFn = (ctx: ValidationContext) => Promise<Feedback>
+
+export type Validation = { name: string; handler: ValidationFn };
 
 export const VALIDATION_REQUIRED_KEY = 'required'
 
@@ -103,7 +107,7 @@ export const pattern: ValidationFn = async ({ input }: ValidationContext) => {
  * This control manages a set of validation functions and their application on input fields.
  */
 export const createValidationControl = () => {
-  const validationMap = new Map()
+  const validations: Validation[] = []
 
   /**
    * Register a new validation function for a specific field.
@@ -113,34 +117,41 @@ export const createValidationControl = () => {
    */
   const setValidation = (name: string, handler: ValidationFn): void => {
     if (getValidation(name)) {
-      console.warn(`There is already a validation function for the field '${name}`)
+      throw new ValidationError(`There is already a validation function for the field '${name}`)
     }
 
-    validationMap.set(name, handler)
+    validations.push({ name, handler })
   }
 
   /**
    * Get an array of objects containing all registered validation functions and their names.
-   * @returns {Array<{ name: string, handler: ValidationFn }>} Array of validation function objects.
+   *
+   * @returns {Validation[]} Array of validation function objects.
    */
-  const getAllValidations = (): Array<{ name: string; handler: ValidationFn; }> => [...validationMap].map(([name, handler]) => ({ name, handler }))
+  const getAllValidations = (): Validation[] => validations
 
   /**
    * Get the validation function registered for a specific field.
+   *
    * @param {string} name - The name of the field to get the validation function for.
-   * @returns {ValidationFn|undefined} The validation function or undefined if not found.
+   * @returns {Validation|undefined} The validation function or undefined if not found.
    */
-  const getValidation = (name: string): ValidationFn | undefined => validationMap.get(name)
+  const getValidation = (name: string): Validation | undefined => {
+    return validations.find((v) => v.name === name)
+  }
 
   /**
    * Run all registered validation functions on the provided context.
+   *
    * @async
    * @param {ValidationContext} ctx - The context containing input data for validation.
-   * @returns {Array<Feedback>} Array of feedback objects for each validation failure.
+   * @returns {Promise<Feedback[]>} Array of feedback objects for each validation failure.
    */
-  const validate = async (ctx: ValidationContext) => {
+  const validate = async (ctx: ValidationContext): Promise<Array<Feedback>> => {
     const validations = getAllValidations()
+
     const feedbacks = []
+
     const { input } = ctx
 
     for (const validation of validations) {

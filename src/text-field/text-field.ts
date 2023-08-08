@@ -11,7 +11,7 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './text-field.css?inline'
 
-import { Feedback, createValidationControl, validationsMap } from './validations'
+import { Feedback, Validation, ValidationFn, createValidationControl, validationsMap } from './validations'
 import { generateHash, getDataAttributes, isValidColorFormat } from '../utils'
 import { parseRules } from './utils'
 
@@ -71,6 +71,14 @@ export default class TextField extends LitElement {
 
   private readonly _validator = createValidationControl()
 
+  connectedCallback (): void {
+    super.connectedCallback()
+
+    const ruleItems = parseRules(this.rules)
+
+    ruleItems.forEach(({ key }) => this._applyValidation(key))
+  }
+
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     this.$control.addEventListener('click', () => this.$input.focus())
 
@@ -112,6 +120,15 @@ export default class TextField extends LitElement {
   }
 
   /**
+   * Retrieves an array of all registered validation functions.
+   *
+   * @returns {Array<{ name: string, handler: ValidationFn }>} An array containing objects with `name` and `handler` properties representing registered validation functions.
+   */
+  get validations (): { name: string; handler: ValidationFn }[] {
+    return this._validator.getAllValidations()
+  }
+
+  /**
    * Reset the text field
    */
   reset (): void {
@@ -124,6 +141,27 @@ export default class TextField extends LitElement {
     this._hasDirty = false
 
     this._onValidation()
+  }
+
+  /**
+   * Sets a validation function for a specific name.
+   *
+   * @param {string} name - The name associated with the validation function.
+   * @param {ValidationFn} validation - The validation function to set.
+   * @returns {void}
+   */
+  setValidation (name: string, validation: ValidationFn): void {
+    this._validator.setValidation(name, validation)
+  }
+
+  /**
+   * Gets the validation function associated with a specific name.
+   *
+   * @param {string} name - The name associated with the validation function to retrieve.
+   * @returns {Validation|undefined} The validation function corresponding to the name, or undefined if not found.
+   */
+  getValidation (name: string): Validation | undefined {
+    return this._validator.getValidation(name)
   }
 
   private _setValue (value: string): void {
@@ -150,9 +188,6 @@ export default class TextField extends LitElement {
     ruleItems.forEach(({ key, value }) => {
       // Set attribute native input.
       this._applyInputAttribute(key, value)
-
-      // Set the validator with the custom message in the validation controller.
-      this._applyValidation(key)
     })
   }
 
