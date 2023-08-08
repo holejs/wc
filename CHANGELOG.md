@@ -1,3 +1,12 @@
+# [0.5.0](https://github.com/holejs/wc/compare/v0.4.4...v0.5.0) (2023-08-08)
+
+
+### Features
+
+* **text-field:** Added support for custom validations ([2affa4b](https://github.com/holejs/wc/commit/2affa4b37e026d5a4a5b940fb4be007de5ee427b))
+
+
+
 ## [0.4.4](https://github.com/holejs/wc/compare/v0.4.3...v0.4.4) (2023-08-08)
 
 
