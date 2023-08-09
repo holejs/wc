@@ -1,3 +1,12 @@
+## [0.5.1](https://github.com/holejs/wc/compare/v0.5.0...v0.5.1) (2023-08-09)
+
+
+### Bug Fixes
+
+* **text-field:** The allowed textfield types were limited ([b6378b5](https://github.com/holejs/wc/commit/b6378b5c41ea4ae962b226d095cb4961cfbb0c0d))
+
+
+
 # [0.5.0](https://github.com/holejs/wc/compare/v0.4.4...v0.5.0) (2023-08-08)
 
 
