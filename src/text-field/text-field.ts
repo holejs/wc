@@ -13,6 +13,7 @@ import styles from './text-field.css?inline'
 
 import { Feedback, Validation, ValidationFn, createValidationControl, validationsMap } from './validations'
 import { generateHash, getDataAttributes, isValidColorFormat } from '../utils'
+import { TextFieldError } from './error'
 import { parseRules } from './utils'
 
 declare global {
@@ -22,9 +23,25 @@ declare global {
   }
 }
 
-export type TextFieldType = 'hidden' | 'text' | 'search' | 'tel' | 'url' | 'email' | 'password' | 'datetime' | 'date' | 'month' | 'week' | 'time' | 'datetime-local' | 'number' | 'range' | 'color' | 'checkbox' | 'radio' | 'file' | 'submit' | 'image' | 'reset' | 'button'
+export type TextFieldType = 'date' | 'datetime' | 'datetime-local' | 'email' | 'hidden' | 'month' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'time' | 'url'
 
 export type TextFieldAppearance = 'underline' | 'outlined'
+
+const ALLOWED_TEXTFIELD_TYPES = [
+  'date',
+  'datetime',
+  'datetime-local',
+  'email',
+  'hidden',
+  'month',
+  'number',
+  'password',
+  'search',
+  'tel',
+  'text',
+  'time',
+  'url'
+]
 
 @customElement('hwc-text-field')
 export default class TextField extends LitElement {
@@ -41,7 +58,20 @@ export default class TextField extends LitElement {
 
   @property({ type: String, reflect: true }) appearance: TextFieldAppearance = 'outlined'
 
-  @property({ type: String, reflect: true }) type: TextFieldType = 'text'
+  @property({
+    type: String,
+    reflect: true,
+    converter: (value) => {
+      const message = `The type "${value}" is invalid. Use the following values: ${ALLOWED_TEXTFIELD_TYPES.join(', ')}.`
+
+      if (!ALLOWED_TEXTFIELD_TYPES.includes(value || '')) {
+        throw new TextFieldError(message)
+      }
+
+      return value
+    }
+  })
+    type: TextFieldType = 'text'
 
   @property({ type: String }) name!: string
 
