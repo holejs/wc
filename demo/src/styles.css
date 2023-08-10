@@ -2,12 +2,9 @@ body.dark {
   background-color: #333;
 
   /* Buttons */
-  --hwc-text-field-bg: #333; /* Cambia el fondo del componente en el dark mode */
-  --hwc-text-field-input-text-color: #fff; /* Cambia el color del texto de entrada en el dark mode */
-  --hwc-text-field-label-text-color: #fff; /* Cambia el color del texto de etiqueta en el dark mode */
-  --hwc-text-field-details-text-color: #fff; /* Cambia el color del texto de detalles en el dark mode */
-  --hwc-text-field-border-color: #fff; /* Cambia el color del borde en el dark mode */
-  --hwc-text-field-placeholder: #d9d9d9;
+  --hwc-text-field-bg: #333;
+  --hwc-text-field-color: #fff;
+  --hwc-text-field-input-text-color: #fff;
   
   /* Cards */
   --hwc-card-bg: #505050;

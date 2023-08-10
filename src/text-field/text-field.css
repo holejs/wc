@@ -11,6 +11,7 @@
 
   /* Background */
   --hwc-text-field-bg: unset;
+  --hwc-text-field-color: unset;
 
   /* Fonts */
   --hwc-text-field-font-family: Poppins, sans-serif;
@@ -27,6 +28,10 @@
   /* Paddings */
   --hwc-text-field-padding: 12px 15px;
 
+  /* Margins */
+  --hwc-text-field-prepend-inner-margin: 0px 10px 0px 0px;
+  --hwc-text-field-append-inner-margin: 0px 0px 0px 10px;
+
   /* Borders */
   --hwc-text-field-border-color: unset;
   --hwc-text-field-border-width: 2px;
@@ -40,7 +45,7 @@
 .text-field__control {
   padding: var(--hwc-text-field-padding);
   border-width: var(--hwc-text-field-border-width);
-  border-color: var(--hwc-text-field-border-color, var(--hwc-grey-darken-1));
+  border-color: var(--hwc-text-field-border-color, var(--hwc-text-field-color, var(--hwc-grey-darken-1)));
   border-style: var(--hwc-text-field-border-style);
   border-radius: var(--hwc-text-field-border-radius);
   font-family: var(--hwc-text-field-font-family);
@@ -55,7 +60,7 @@
 .text-field__label {
   font-family: var(--hwc-text-field-font-family);
   font-size: var(--hwc-text-field-label-font-size);
-  color: var(--hwc-text-field-label-text-color, var(--hwc-grey-darken-1));
+  color: var(--hwc-text-field-label-text-color, var(--hwc-text-field-color, var(--hwc-grey-darken-1)));
   transition: var(--hwc-text-field-transition);
 }
 
@@ -78,17 +83,20 @@
   margin-top: 5px;
   font-size: var(--hwc-text-field-details-font-size);
   font-family: var(--hwc-text-field-font-family);
-  color: var(--hwc-text-field-details-text-color, var(--hwc-grey-darken-1));
+  color: var(--hwc-text-field-details-text-color, var(--hwc-text-field-color, var(--hwc-grey-darken-1)));
+}
+
+.prepend-inner__control,
+.append-inner__control {
+  color: var(--hwc-text-field-inner-color, var(--hwc-text-field-color, var(--hwc-grey-darken-1)));
 }
 
 .prepend-inner__control {
-  margin-right: 10px;
-  color: var(--hwc-text-field-inner-color, white);
+  margin: var(--hwc-text-field-prepend-inner-margin);
 }
 
 .append-inner__control {
-  margin-left: 10px;
-  color: var(--hwc-text-field-inner-color, white);
+  margin: var(--hwc-text-field-append-inner-margin);
 }
 
 /* Focus */
@@ -108,7 +116,7 @@
   border: none;
   border-radius: 0;
   border-bottom-width: var(--hwc-text-field-border-width);
-  border-bottom-color: var(--hwc-text-field-border-color, var(--hwc-grey-darken-1));
+  border-bottom-color: var(--hwc-text-field-border-color, var(--hwc-text-field-color, var(--hwc-grey-darken-1)));
   border-bottom-style: var(--hwc-text-field-border-style);
   padding: var(--hwc-text-field-padding);
   margin: 0;
