@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/holejs/wc/compare/v0.5.1...v0.6.0) (2023-08-10)
+
+
+### Features
+
+* **text-field:** Added "prepend-inner" and "append-inner" slots ([9b6fa2d](https://github.com/holejs/wc/commit/9b6fa2deac24789399f9263682651a6f691d417e))
+
+
+
 ## [0.5.1](https://github.com/holejs/wc/compare/v0.5.0...v0.5.1) (2023-08-09)
 
 
