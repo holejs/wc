@@ -1,3 +1,12 @@
+## [0.6.1](https://github.com/holejs/wc/compare/v0.6.0...v0.6.1) (2023-08-10)
+
+
+### Bug Fixes
+
+* **text-field:** Fixed the color of the slots ([9c7f7cd](https://github.com/holejs/wc/commit/9c7f7cd6f7fec39f3055bce0b4b18d2268a5983f))
+
+
+
 # [0.6.0](https://github.com/holejs/wc/compare/v0.5.1...v0.6.0) (2023-08-10)
 
 
