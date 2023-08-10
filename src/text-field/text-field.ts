@@ -51,6 +51,10 @@ export default class TextField extends LitElement {
 
   @query('.text-field__control') $control!: HTMLDivElement
 
+  @query('.prepend-inner__control') $prependInner!: HTMLDivElement
+
+  @query('.append-inner__control') $appendInner!: HTMLDivElement
+
   readonly internals = this.attachInternals()
 
   // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
@@ -110,6 +114,10 @@ export default class TextField extends LitElement {
   }
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    if (this._hasElementSlot('slot[name="prepend-inner"]')) this.$prependInner.remove()
+
+    if (this._hasElementSlot('slot[name="append-inner"]')) this.$appendInner.remove()
+
     this.$control.addEventListener('click', () => this.$input.focus())
 
     this.internals.form?.addEventListener('reset', () => this.reset())
@@ -192,6 +200,12 @@ export default class TextField extends LitElement {
    */
   getValidation (name: string): Validation | undefined {
     return this._validator.getValidation(name)
+  }
+
+  private _hasElementSlot (query: string): boolean {
+    const $slot = this.shadowRoot?.querySelector(query) as HTMLSlotElement | null
+
+    return !($slot && $slot.assignedNodes().length > 0)
   }
 
   private _setValue (value: string): void {
@@ -334,6 +348,11 @@ export default class TextField extends LitElement {
             </div>
 
             <div class="text-field__control">
+              <!-- Prepend inner -->
+              <div class="prepend-inner__control">
+                <slot name="prepend-inner"></slot>
+              </div>
+
               <!-- Input -->
               <input
                 class="text-field__input"
@@ -348,6 +367,11 @@ export default class TextField extends LitElement {
                 @keydown=${this._onKeydown}
                 @blur=${this._onBlur}
               >
+
+              <!-- Append inner -->
+              <div class="append-inner__control">
+                <slot name="append-inner"></slot>
+              </div>
             </div>
           </div>
 
