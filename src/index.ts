@@ -1,6 +1,7 @@
 export * from './alert/alert'
 export * from './button/button'
 export * from './card/card'
+export * from './checkbox/checkbox'
 export * from './chip/chip'
 export * from './ripple/ripple'
 export * from './text-field/text-field'
