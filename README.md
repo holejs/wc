@@ -1,5 +1,8 @@
 # @holejs/wc
 
+> **Warning**
+> This package is under development and is not suitable for production environments due to possible changes in future versions. Thanks for your understanding. ❤️
+
 **Hole.js** provides a diverse suite of web components made in [TypeScript](https://www.typescriptlang.org/) and [Lit](https://lit.dev/) 🔌. These components are easy to configure and use 🧩, allowing you to modify the original design in a practical way. ✨ In addition, they can be seamlessly integrated into the most popular frameworks. 🚀
 
 > If you want to interact with the components, we have prepared a [**Demo**](https://codesandbox.io/s/holejs-web-components-kzslns).
