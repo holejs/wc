@@ -14,7 +14,7 @@
   --hwc-checkbox-background-color: transparent;
   --hwc-checkbox-disabled-color: #F6F8FF;
   --hwc-checkbox-disabled-inner-color: #E1E6F9;
-  --hwx-checkbox-label-margin: 0px 0px 0px 10px;
+  --hwc-checkbox-label-margin: 0px 0px 0px 10px;
   --hwc-checkbox-font-family: Poppins, sans-serif;
   
   --hwc-checkbox-border-width: 2px;
@@ -125,7 +125,7 @@
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
-  margin: var(--hwx-checkbox-label-margin);
+  margin: var(--hwc-checkbox-label-margin);
   color: var(--hwc-checkbox-text-color, currentColor);
   font-family: var(--hwc-checkbox-font-family);
 }
