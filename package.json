@@ -54,6 +54,10 @@
       "types": "./dist/types/card/card.d.ts",
       "default": "./dist/card.js"
     },
+    "./checkbox/checkbox.js": {
+      "types": "./dist/types/checkbox/checkbox.d.ts",
+      "default": "./dist/checkbox.js"
+    },
     "./chip/chip.js": {
       "types": "./dist/types/chip/chip.d.ts",
       "default": "./dist/chip.js"
