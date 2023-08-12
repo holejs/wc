@@ -1,3 +1,13 @@
+# [0.7.0](https://github.com/holejs/wc/compare/v0.6.1...v0.7.0) (2023-08-12)
+
+
+### Features
+
+* **checkbox:** adding native validation ([2499aed](https://github.com/holejs/wc/commit/2499aed5af57103aa457e7ed814a76f3228ec522))
+* **checkbox:** the component was attached to the form ([5a28a2c](https://github.com/holejs/wc/commit/5a28a2c44fe90003ae30d00cfd5d6fa45f59757f))
+
+
+
 ## [0.6.1](https://github.com/holejs/wc/compare/v0.6.0...v0.6.1) (2023-08-10)
 
 
