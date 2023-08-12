@@ -66,8 +66,10 @@
   --hwc-checkbox-border-color: var(--hwc-checkbox-border-color);
 }
 
-:host([disabled]) .checkbox__label {
+:host([disabled]) {
   cursor: not-allowed;
+  opacity: .5;
+  user-select: none;
 }
 
 .checkbox input[type=checkbox]:hover:not(:checked):not(:disabled) {
@@ -126,4 +128,13 @@
   margin: var(--hwx-checkbox-label-margin);
   color: var(--hwc-checkbox-text-color, currentColor);
   font-family: var(--hwc-checkbox-font-family);
+}
+
+/* Erros */
+.checkbox.error {
+  --hwc-checkbox-error-color: var(--hwc-red-darken-2);
+
+  --hwc-checkbox-border-color: var(--hwc-checkbox-error-color);
+  --hwc-checkbox-focus-shadow: 1px var(--hwc-checkbox-error-color);
+  --hwc-checkbox-border-hover-color: var(--hwc-checkbox-error-color);
 }
