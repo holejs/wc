@@ -3,9 +3,13 @@ import { customElement, property, query, state } from 'lit/decorators.js'
 
 import styles from './checkbox.css?inline'
 
-import { createValidationControl, validationsMap } from '../text-field/validations'
-import { generateHash, getDataAttributes, isValidColorFormat } from '../utils'
-import { parseRules } from '../text-field/utils'
+import {
+  generateHash,
+  getDataAttributes,
+  isValidColorFormat,
+  parseRules
+} from '../utils'
+import { createValidationControl, validationsMap } from '../validations'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

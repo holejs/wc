@@ -11,10 +11,15 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './text-field.css?inline'
 
-import { Feedback, Validation, ValidationFn, createValidationControl, validationsMap } from './validations'
-import { generateHash, getDataAttributes, isValidColorFormat } from '../utils'
-import { TextFieldError } from './error'
-import { parseRules } from './utils'
+import {
+  Feedback,
+  Validation,
+  ValidationFn,
+  createValidationControl,
+  validationsMap
+} from '../validations'
+import { generateHash, getDataAttributes, isValidColorFormat, parseRules } from '../utils'
+import { TextFieldError } from '../error'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
