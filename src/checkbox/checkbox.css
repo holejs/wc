@@ -11,7 +11,7 @@
   --hwc-checkbox-active-inner-color: #fff;
   --hwc-checkbox-focus-shadow: 1px var(--hwc-checkbox-color);
   --hwc-checkbox-border-hover-color: var(--hwc-checkbox-color);
-  --hwc-checkbox-background-color: #fff;
+  --hwc-checkbox-background-color: transparent;
   --hwc-checkbox-disabled-color: #F6F8FF;
   --hwc-checkbox-disabled-inner-color: #E1E6F9;
   --hwx-checkbox-label-margin: 0px 0px 0px 10px;
