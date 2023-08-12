@@ -100,8 +100,18 @@
               </span>
             </hwc-text-field>
           </div>
+          <div style="margin-top: 20px;">
+            <hwc-checkbox
+              name="terms"
+              color="purple-darken-2"
+              rules="required"
+            >
+              Accept terms & conditions
+            </hwc-checkbox>
+          </div>
           <hr />
-          <hwc-button type="submit">Submit</hwc-button>
+          <hwc-button appearance="text" type="reset" color="purple-darken-2">Reset</hwc-button>
+          <hwc-button type="submit" color="purple-darken-2">Submit</hwc-button>
         </form>
 
         <script>
@@ -111,6 +121,12 @@
             ev.preventDefault();
 
             console.log($form.checkValidity());
+
+            const formdata = new FormData($form);
+
+            [...formdata].forEach((value) => {
+              console.log(value)
+            })
           });
 
           const $fullname = document.querySelector("hwc-text-field");

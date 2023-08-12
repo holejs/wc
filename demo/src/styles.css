@@ -9,4 +9,7 @@ body.dark {
   /* Cards */
   --hwc-card-bg: #505050;
   --hwc-card-text-color: white;
+
+  /* Checkboxes */
+  --hwc-checkbox-text-color: white;
 }
