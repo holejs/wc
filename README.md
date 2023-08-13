@@ -76,7 +76,7 @@
     - [Custom validations](#custom-validations)
     - [CSS Custom Properties](#css-custom-properties-5)
   - [Checkboxes](#checkboxes)
-  - [Usage](#usage-5)
+    - [Usage](#usage-5)
     - [Color](#color-3)
     - [Name](#name-1)
     - [Value](#value)
@@ -1014,7 +1014,7 @@ Ready, this way we can define our own validations with their feedback messages. 
 
 The `<hwc-checkbox>` component is a custom component for creating stylized checkboxes. This component offers a series of properties that allow you to customize its appearance and behavior to suit different use cases.
 
-## Usage
+### Usage
 
 To use the `<hwc-checkbox>` component, simply include tag in your HTML. You can adjust the properties to customize the appearance and behavior of the checkbox.
 
