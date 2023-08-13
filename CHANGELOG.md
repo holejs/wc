@@ -1,3 +1,12 @@
+## [0.7.1](https://github.com/holejs/wc/compare/v0.7.0...v0.7.1) (2023-08-13)
+
+
+### Bug Fixes
+
+* **checkbox:** Added support to "reset" and corrections in validations ([34f838b](https://github.com/holejs/wc/commit/34f838bc2813f38ee7f952fdcd3480f229860222))
+
+
+
 # [0.7.0](https://github.com/holejs/wc/compare/v0.6.1...v0.7.0) (2023-08-12)
 
 
