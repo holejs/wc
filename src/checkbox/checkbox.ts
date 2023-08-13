@@ -9,7 +9,8 @@ import {
   isValidColorFormat,
   parseRules
 } from '../utils'
-import { createValidationControl, validationsMap } from '../validations'
+import { Feedback, createValidationControl, validationsMap } from '../validations'
+import { when } from 'lit/directives/when.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -26,7 +27,9 @@ export default class Checkbox extends LitElement {
 
   readonly internals = this.attachInternals()
 
-  // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
+  /**
+   * More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
+   */
   static formAssociated = true
 
   @property({ type: String }) color!: string
@@ -50,6 +53,8 @@ export default class Checkbox extends LitElement {
 
   @state() private _hasDirty = false
 
+  @state() private _errorFeedback: Feedback | null = null
+
   private _validator = createValidationControl()
 
   connectedCallback (): void {
@@ -61,6 +66,8 @@ export default class Checkbox extends LitElement {
   }
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    this.internals.form?.addEventListener('reset', () => this.reset())
+
     this._setValue(this.value)
 
     this._configureRules()
@@ -95,11 +102,22 @@ export default class Checkbox extends LitElement {
    * Indicates if the field has been modified.
    */
   get hasDirty (): boolean {
-    return (this._hasDirty || !!this.value) && !this.hasBlur
+    return this._hasDirty
   }
 
-  private get _errorMessage () {
-    return this.$input?.validationMessage
+  /**
+   * Resets the state of the component.
+   */
+  reset (): void {
+    this.checked = false
+
+    this.$input.checked = false
+
+    this._hasBlur = false
+
+    this._hasDirty = false
+
+    this._onValidation()
   }
 
   private _setValue (value: string): void {
@@ -152,11 +170,14 @@ export default class Checkbox extends LitElement {
 
     // If there are no errors, reset the feedback and validity.
     if (!hasError) {
+      this._errorFeedback = null
       return this.internals.setValidity({})
     }
 
     // Get the first error from the errors array.
     const [error] = errors
+
+    this._errorFeedback = error
 
     // Set the validity on the input element with the error message and customError flag.
     this.internals.setValidity(
@@ -185,21 +206,40 @@ export default class Checkbox extends LitElement {
   }
 
   protected render (): unknown {
+    const showError = (this.hasBlur || this.hasDirty) && this._errorFeedback
+
     return html`
-      <div class="checkbox ${this._errorMessage ? 'error' : null}">
-        <input
-          id=${this.uniqueId}
-          type="checkbox"
-          name=${this.name}
-          .value=${this.value}
-          ?checked=${this.checked}
-          ?disabled=${this.disabled}
-          @change=${this._handleChange}
-          @blur=${this._handleBlur}
-        >
-        <label class="checkbox__label" for=${this.uniqueId}>
-          <slot></slot>
-        </label>
+      <div class="checkbox ${showError ? 'error' : null}">
+        <div class="checkbox__wrapper">
+          <!-- Main content -->
+          <div class="checkbox__content">
+            <input
+              id=${this.uniqueId}
+              type="checkbox"
+              name=${this.name}
+              .value=${this.value}
+              ?checked=${this.checked}
+              ?disabled=${this.disabled}
+              @change=${this._handleChange}
+              @blur=${this._handleBlur}
+            >
+            <label class="checkbox__label" for=${this.uniqueId}>
+              <slot></slot>
+            </label>
+          </div>
+
+          <!-- Details -->
+          ${
+            when(
+              showError,
+              () => html`
+                <div class="checkbox__details">
+                  <span>${showError ? this._errorFeedback?.message : null}</span>
+                </div>
+              `
+            )
+          }
+        </div>
       </div>
     `
   }

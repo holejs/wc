@@ -130,6 +130,13 @@
   font-family: var(--hwc-checkbox-font-family);
 }
 
+.checkbox__details {
+  margin-top: 10px;
+  font-family: var(--hwc-checkbox-font-family);
+  color: var(--hwc-checkbox-error-color);
+  font-size: 12px;
+}
+
 /* Erros */
 .checkbox.error {
   --hwc-checkbox-error-color: var(--hwc-red-darken-2);
