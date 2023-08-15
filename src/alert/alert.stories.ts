@@ -1,7 +1,11 @@
 import type { StoryObj } from '@storybook/web-components'
+import { within } from '@storybook/testing-library'
+import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import './alert.js'
+
+const ALERT_TEXT_CONTENT = "I'm an Alert Usage Example!"
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 const meta = {
@@ -10,12 +14,10 @@ const meta = {
   render: (args: any) => html`
     <hwc-alert
       appearance=${args.appearance}
-      type=${args.type}
+      .type=${args.type}
       .color=${args.color}
       ?dismissible=${args.dismissible}
-    >
-      I'm an Alert Usage Example!
-    </hwc-alert>
+    >${ALERT_TEXT_CONTENT}</hwc-alert>
   `,
   argTypes: {
     appearance: {
@@ -42,11 +44,29 @@ const meta = {
 export default meta
 
 // eslint-disable-next-line no-undef
-type Story = StoryObj<HTMLElementTagNameMap['hwc-alert']>;
+type HWCAlert = HTMLElementTagNameMap['hwc-alert']
+
+type Story = StoryObj<HWCAlert>;
 
 // More on writing stories with args: https://storybook.js.org/docs/web-components/writing-stories/args
 export const Filled: Story = {
-  args: {}
+  args: {
+    appearance: 'filled'
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const $alert = canvas.getByText<HWCAlert>(ALERT_TEXT_CONTENT)
+
+    const $button = $alert.shadowRoot?.querySelector('hwc-button')
+
+    expect($alert).toBeInTheDocument()
+    expect($button).toBeNull()
+    expect($alert.appearance).toBe('filled')
+    expect($alert.type).toBeUndefined()
+    expect($alert.color).toBeUndefined()
+    expect($alert.dismissible).toBeFalsy()
+  }
 }
 
 export const Outlined: Story = {
