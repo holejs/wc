@@ -1,5 +1,5 @@
+import { userEvent, within } from '@storybook/testing-library'
 import type { StoryObj } from '@storybook/web-components'
-import { within } from '@storybook/testing-library'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
@@ -87,6 +87,22 @@ export const Dismissible: Story = {
   args: {
     type: 'error',
     dismissible: true
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const $alert = canvas.getByText<HWCAlert>(ALERT_TEXT_CONTENT)
+
+    expect($alert).toBeInTheDocument()
+    expect($alert.type).toBe('error')
+
+    const $button = $alert.shadowRoot?.querySelector('hwc-button')
+
+    expect($button).toBeInTheDocument()
+
+    await userEvent.click($button!)
+
+    expect(document.querySelector('hwc-alert')).toBeNull()
   }
 }
 
