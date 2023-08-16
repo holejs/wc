@@ -21,7 +21,7 @@ declare global {
 
 export type ButtonType = 'button' | 'submit' | 'reset' | 'menu'
 
-export type ButtonAppearance = 'outlined' | 'text' | 'fab' | 'icon'
+export type ButtonAppearance = 'raised' | 'outlined' | 'text' | 'fab' | 'icon'
 
 export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 
@@ -35,7 +35,7 @@ export default class Button extends LitElement {
   // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
   static formAssociated = true
 
-  @property({ type: String }) appearance!: ButtonAppearance
+  @property({ type: String }) appearance: ButtonAppearance = 'raised'
 
   @property({ type: String }) type: ButtonType = 'button'
 
