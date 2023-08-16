@@ -110,7 +110,7 @@ export const Basic: Story = {
     const $button = $hwcbutton.shadowRoot?.querySelector('button')
 
     expect($button).toBeInTheDocument()
-    expect($button?.type).toBe('button')
+    expect($button).toHaveAttribute('type', 'button')
   }
 }
 
@@ -118,6 +118,27 @@ export const Outlined: Story = {
   args: {
     appearance: 'outlined',
     color: 'orange-darken-2'
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const $hwcbutton = canvas.getByText<HWCButton>(BUTTON_TEXT_CONTENT)
+
+    expect($hwcbutton).toBeInTheDocument()
+    expect($hwcbutton.textContent?.trim()).toBe(BUTTON_TEXT_CONTENT)
+    expect($hwcbutton.appearance).toBe('outlined')
+
+    const $button = $hwcbutton.shadowRoot?.querySelector('button')
+
+    expect($button).toBeInTheDocument()
+    expect($button).toHaveAttribute('type', 'button')
+    expect($button).toHaveStyle({
+      'background-color': 'rgba(0, 0, 0, 0)',
+      color: 'rgb(245, 124, 0)',
+      'border-width': '2px',
+      'border-style': 'solid',
+      'border-color': 'rgb(245, 124, 0)'
+    })
   }
 }
 
@@ -154,6 +175,14 @@ export const Fullwidth: Story = {
     expect($button).toBeInTheDocument()
     expect($button).toHaveStyle({ 'background-color': 'rgb(211, 47, 47)' })
   }
+}
+
+export const Ripple: Story = {
+  args: {
+    color: 'pink-darken-2',
+    rounded: true,
+    _ripple: true
+  } as any
 }
 
 export const Fab: Story = {
