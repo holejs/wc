@@ -40,7 +40,10 @@ export default defineConfig({
   },
   plugins: [
     // Generate d.ts.
-    dts({ outDir: './dist/types' }),
+    dts({
+      outDir: './dist/types',
+      exclude: 'src/**/*.stories.ts'
+    }),
 
     // Generate static files.
     viteStaticCopy({
