@@ -40,7 +40,7 @@ export default class Card extends LitElement {
     if (_changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
-      this.style.setProperty('--hwc-card-color', color)
+      this.style.setProperty('--hwc-card-bg', color)
     }
 
     if (_changedProperties.has('elevation')) {
