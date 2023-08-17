@@ -1,8 +1,9 @@
 import type { StoryObj } from '@storybook/web-components'
-// import { within } from '@storybook/testing-library'
-// import { when } from 'lit/directives/when.js'
-// import { expect } from '@storybook/jest'
+import { within } from '@storybook/testing-library'
+import { expect } from '@storybook/jest'
 import { html } from 'lit'
+
+import U2Image from './fixtures/u2.png'
 
 import '../button/button.js'
 import './card.js'
@@ -100,7 +101,7 @@ export const Gradient: Story = {
         <section class="card__body">
           <figure class="card__picture">
             <img
-              src="https://www.billboard.com/wp-content/uploads/2022/07/U2-2022-press-Olaf-Heine-billboard-1548.jpg?w=942&h=623&crop=1"
+              src=${U2Image}
               class="card__image"
               alt="U2 Band"
             >
@@ -136,5 +137,34 @@ export const Gradient: Story = {
         </section>
       </hwc-card>
     </div>
-  `
+  `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const $title = canvas.getByText('U2')
+
+    expect($title).toBeInTheDocument()
+
+    const $subtitle = canvas.getByText('U2 is an alternative rock band originally from Dublin, formed in 1976.')
+
+    expect($subtitle).toBeInTheDocument()
+
+    const $img = canvas.getByRole('img', { name: 'U2 Band' })
+
+    expect($img).toBeInTheDocument()
+    expect($img).toHaveAttribute('src', U2Image)
+    expect($img).toHaveAttribute('alt', 'U2 Band')
+
+    const $website = canvas.getByRole('link', { name: 'Website' })
+
+    expect($website).toBeInTheDocument()
+    expect($website).toHaveAttribute('href', 'https://www.u2.com/')
+    expect($website).toHaveAttribute('target', '_blank')
+
+    const $spotify = canvas.getByRole('link', { name: 'Spotify' })
+
+    expect($spotify).toBeInTheDocument()
+    expect($spotify).toHaveAttribute('href', 'https://open.spotify.com/intl-es/artist/51Blml2LZPmy7TTiAg47vQ')
+    expect($spotify).toHaveAttribute('target', '_blank')
+  }
 }
