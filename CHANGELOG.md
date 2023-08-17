@@ -1,3 +1,12 @@
+## [0.7.2](https://github.com/holejs/wc/compare/v0.7.1...v0.7.2) (2023-08-17)
+
+
+### Bug Fixes
+
+* **card:** Fixed color mapping ([24d88c3](https://github.com/holejs/wc/commit/24d88c3348895e26c663a61f1e6ee3ef15b519fd))
+
+
+
 ## [0.7.1](https://github.com/holejs/wc/compare/v0.7.0...v0.7.1) (2023-08-13)
 
 
