@@ -10,7 +10,7 @@ type HWCChip = HTMLElementTagNameMap['hwc-chip']
 
 type Story = StoryObj<HWCChip>;
 
-const CHIP_TEXT_CONTENT = "Gun's ans Roses" as const
+const CHIP_TEXT_CONTENT = "Guns N' Roses" as const
 
 const meta = {
   title: 'Example/Chip',
