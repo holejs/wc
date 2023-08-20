@@ -1,7 +1,6 @@
+import { userEvent, within } from '@storybook/testing-library'
 import type { StoryObj } from '@storybook/web-components'
-// import { within } from '@storybook/testing-library'
-// import { when } from 'lit/directives/when.js'
-// import { expect } from '@storybook/jest'
+import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import './chip.js'
@@ -10,6 +9,8 @@ import './chip.js'
 type HWCChip = HTMLElementTagNameMap['hwc-chip']
 
 type Story = StoryObj<HWCChip>;
+
+const CHIP_TEXT_CONTENT = "Gun's ans Roses" as const
 
 const meta = {
   title: 'Example/Chip',
@@ -21,7 +22,7 @@ const meta = {
       .color=${args.color}
       ?rounded=${args.rounded}
       ?closable=${args.closable}
-    >Chip</hwc-chip>
+    >${CHIP_TEXT_CONTENT}</hwc-chip>
   `,
   argTypes: {
     appearance: {
@@ -52,7 +53,18 @@ const meta = {
 export default meta
 
 export const Basic: Story = {
-  args: {}
+  args: {},
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const $chip = canvas.getByText<HWCChip>(CHIP_TEXT_CONTENT)
+
+    expect($chip).toBeInTheDocument()
+    expect($chip.appearance).toBe('filled')
+    expect($chip.rounded).toBeFalsy()
+    expect($chip.closable).toBeFalsy()
+    expect($chip.color).toBeUndefined()
+  }
 }
 
 export const Outlined: Story = {
@@ -75,5 +87,26 @@ export const Closable: Story = {
     rounded: true,
     closable: true,
     color: 'purple-darken-2'
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const $chip = canvas.getByText<HWCChip>(CHIP_TEXT_CONTENT)
+
+    expect($chip).toBeInTheDocument()
+    expect($chip.appearance).toBe('filled')
+    expect($chip.color).toBe('purple-darken-2')
+    expect($chip.rounded).toBeTruthy()
+    expect($chip.closable).toBeTruthy()
+
+    const $hwcbutton = $chip.shadowRoot?.querySelector('hwc-button')
+    const $svg = $hwcbutton?.querySelector('svg')
+
+    expect($hwcbutton).toBeInTheDocument()
+    expect($svg).toBeInTheDocument()
+
+    await userEvent.click($hwcbutton!)
+
+    expect($chip).not.toBeInTheDocument()
   }
 }
