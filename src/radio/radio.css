@@ -1,0 +1,48 @@
+.radio-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.radio-button input[type="radio"] {
+  display: none;
+}
+
+.radio-checkmark {
+  display: inline-block;
+  position: relative;
+  width: var(--hwc-radio-width, 16px);
+  height: var(--hwc-radio-height, 16px);
+  margin-right: 10px;
+  border-style: var(--hwc-radio-border-style, solid);
+  border-width: var(--hwc-radio-border-width, 2px);
+  border-color: var(--hwc-grey-darken-1);
+  border-radius: 50%;
+}
+
+.radio-checkmark:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: var(--hwc-radio-checkmark-width, 10px);
+  height: var(--hwc-radio-checkmark-height, 10px);
+  border-radius: 50%;
+  background-color: var(--hwc-radio-color, var(--hwc-blue-darken-2));
+  transition: all 0.2s ease-in-out;
+}
+
+.radio-button input[type="radio"]:checked ~ .radio-checkmark:before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.radio-button input[type="radio"]:checked ~ .radio-checkmark {
+  border-color: var(--hwc-radio-color, var(--hwc-blue-darken-2));
+}
+
+.radio-label {
+  font-size: var(--hwc-radio-font-size, 16px);
+  font-family: var(--hwc-radio-font-family, "Poppins", sans-serif);
+}
