@@ -1,15 +1,22 @@
-.radio-button {
+.radio__button {
   display: flex;
   align-items: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-.radio-button input[type="radio"] {
-  display: none;
+.radio__button input[type="radio"] {
+  position: absolute;
+  display: flex;
+  width: calc(var(--hwc-radio-width, 16px) + var(--hwc-radio-border-width, 2px) * 2);
+  height: calc(var(--hwc-radio-height, 16px) + var(--hwc-radio-border-width, 2px) * 2);
+  z-index: -1;
+  appearance: none;
+  border-radius: 50%;
+  margin: 0;
 }
 
-.radio-checkmark {
+.radio__checkmark {
   display: inline-block;
   position: relative;
   width: var(--hwc-radio-width, 16px);
@@ -17,32 +24,42 @@
   margin-right: 10px;
   border-style: var(--hwc-radio-border-style, solid);
   border-width: var(--hwc-radio-border-width, 2px);
-  border-color: var(--hwc-grey-darken-1);
+  border-color: var(--hwc-radio-border-color, var(--hwc-grey-darken-1));
   border-radius: 50%;
 }
 
-.radio-checkmark:before {
+.radio__checkmark:before {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  width: var(--hwc-radio-checkmark-width, 10px);
-  height: var(--hwc-radio-checkmark-height, 10px);
+  width: var(--hwc-radio__checkmark-width, 10px);
+  height: var(--hwc-radio__checkmark-height, 10px);
   border-radius: 50%;
   background-color: var(--hwc-radio-color, var(--hwc-blue-darken-2));
   transition: all 0.2s ease-in-out;
 }
 
-.radio-button input[type="radio"]:checked ~ .radio-checkmark:before {
+.radio__button input[type="radio"]:checked ~ .radio__checkmark:before {
   transform: translate(-50%, -50%) scale(1);
 }
 
-.radio-button input[type="radio"]:checked ~ .radio-checkmark {
-  border-color: var(--hwc-radio-color, var(--hwc-blue-darken-2));
+.radio__button input[type="radio"]:checked ~ .radio__checkmark {
+  --hwc-radio-border-color: var(--hwc-radio-color, var(--hwc-blue-darken-2));
 }
 
-.radio-label {
+.radio__label {
   font-size: var(--hwc-radio-font-size, 16px);
+  color: var(--hwc-radio-text-color, currentColor);
   font-family: var(--hwc-radio-font-family, "Poppins", sans-serif);
+}
+
+/* Erros */
+.radio__wrapper.error {
+  --hwc-radio-error-color: var(--hwc-red-darken-2);
+
+  --hwc-radio-border-color: var(--hwc-radio-error-color);
+  --hwc-radio-focus-shadow: 1px var(--hwc-radio-error-color);
+  --hwc-radio-border-hover-color: var(--hwc-radio-error-color);
 }
