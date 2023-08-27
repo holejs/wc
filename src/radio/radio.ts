@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
 import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
+import { customElement, property, query, state } from 'lit/decorators.js'
 
 import styles from './radio.css?inline'
 
-import { generateHash, isValidColorFormat } from '../utils'
+import { generateHash, getDataAttributes, isValidColorFormat, parseRules } from '../utils'
+import { Feedback, createValidationControl, validationsMap } from '../validations'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -22,6 +23,8 @@ export default class Radio extends LitElement {
   // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
   static formAssociated = true
 
+  @query('input[type="radio"]') $input!: HTMLInputElement
+
   @property({ type: String }) value = 'on'
 
   @property({ type: String }) color!: string
@@ -32,14 +35,50 @@ export default class Radio extends LitElement {
 
   @property({ type: Boolean }) disabled = false
 
+  @property({ type: String }) rules!: string
+
   @state() private _uniqueId = generateHash()
+
+  @state() private _hasBlur = false
+
+  @state() private _hasDirty = false
+
+  @state() private _errorFeedback: Feedback | null = null
 
   private _root: ParentNode | null = null
 
-  connectedCallback () {
+  private _validator = createValidationControl()
+
+  connectedCallback (): void {
     super.connectedCallback()
 
+    // When any radio is found that is checked,
+    // the form validation message is automatically removed.
+    this.addEventListener('change', () => {
+      const $radios = this._getNamedRadios()
+
+      const $radio = $radios.find($radio => $radio.checked)
+
+      if ($radio) {
+        $radios.forEach($radio => {
+          $radio.internals.setValidity({})
+        })
+      }
+    })
+
     this._root = this.getRootNode() as ParentNode
+
+    const ruleItems = parseRules(this.rules)
+
+    ruleItems.forEach(({ key }) => this._applyValidation(key))
+  }
+
+  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    this._setValue(this.value)
+
+    this._configureRules()
+
+    this._onValidation()
   }
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -58,59 +97,148 @@ export default class Radio extends LitElement {
     }
   }
 
-  get form () {
+  get form (): HTMLFormElement | null {
     return this.internals?.form || null
   }
 
-  get labels () {
-    return this.internals?.labels || null
+  get labels (): NodeList {
+    return this.internals?.labels
   }
 
-  private _setValue (value: string | null) {
+  /**
+   * Indicates if the field has lost focus.
+   */
+  get hasBlur (): boolean {
+    return this._hasBlur
+  }
+
+  /**
+   * Indicates if the field has been modified.
+   */
+  get hasDirty (): boolean {
+    return this._hasDirty
+  }
+
+  private _configureRules (): void {
+    const ruleItems = parseRules(this.rules)
+
+    this._applyDataAttributes(this)
+
+    ruleItems.forEach(({ key, value }) => {
+      this._applyInputAttribute(key, value)
+    })
+  }
+
+  private _applyDataAttributes (el: HTMLElement): void {
+    getDataAttributes(el).forEach((value, key) => this._applyInputAttribute(key, value))
+  }
+
+  private _applyInputAttribute (key: string, value: string | null): void {
+    this.$input.setAttribute(key, value || '')
+  }
+
+  private _applyValidation (key: string): void {
+    const validation = validationsMap.get(key)
+
+    if (!validation) return
+
+    this._validator.setValidation(key, validation)
+  }
+
+  /**
+   * Handle validation on input events.
+   */
+  private async _onValidation (): Promise<void> {
+    const $input = this.$input
+
+    // Validate the input event using the _validator.
+    const errors = await this._validator.validate({
+      input: $input
+    })
+
+    // Check if there are any errors.
+    const hasError = errors.length
+
+    // If there are no errors, reset the feedback and validity.
+    if (!hasError) {
+      this._errorFeedback = null
+      return this.internals.setValidity({})
+    }
+
+    // Get the first error from the errors array.
+    const [error] = errors
+
+    this._errorFeedback = error
+
+    // Set the validity on the input element with the error message and customError flag.
+    this.internals.setValidity(
+      { customError: true },
+      error.message,
+      $input
+    )
+  }
+
+  private _setValue (value: string | null): void {
     this.internals.setFormValue(this.checked ? value : null)
   }
 
+  /**
+   * Get all radios with the same name.
+   * @private
+   */
   private _getNamedRadios () {
     const name = this.getAttribute('name')
 
     if (!name || !this._root) return []
 
-    return Array.from(this._root?.querySelectorAll<Radio>(`[name="${name}"]`))
+    const $radioNodes = this._root.querySelectorAll<Radio>(`[name="${name}"]`)
+
+    return Array.from($radioNodes)
   }
 
-  private _uncheckRadios () {
-    const $radios = this._getNamedRadios()
-
-    for (const $radio of $radios) {
-      if ($radio !== this) {
-        $radio.checked = false
-      }
-    }
+  /**
+   * Uncheck all radios with the same name.
+   * @private
+   */
+  private _uncheckRadios (): void {
+    this._getNamedRadios()
+      .filter($radio => $radio !== this)
+      .forEach($radio => { $radio.checked = false })
   }
 
-  private _handleChange (_ev: Event) {
+  private _handleChange (_ev: Event): void {
+    const $input = this.$input
+
     this.checked = true
 
+    this._hasDirty = true
+
     this._uncheckRadios()
+
+    this._setValue($input.value)
+
+    this._onValidation()
 
     this.dispatchEvent(new Event('change', { bubbles: true }))
   }
 
   protected render (): unknown {
+    const showError = (this.hasBlur || this.hasDirty) && this._errorFeedback
+
     return html`
-      <div class="radio-wrapper">
-        <label for=${this._uniqueId} class="radio-button">
+      <div class="radio__wrapper ${showError ? 'error' : null}">
+        <label for=${this._uniqueId} class="radio__button">
           <input
-            id=${this._uniqueId}
-            name=${this.name}
             type="radio"
+            name=${this.name}
+            id=${this._uniqueId}
             .value=${this.value}
             .checked=${this.checked}
             ?disabled=${this.disabled}
             @change=${this._handleChange}
           >
-          <span class="radio-checkmark"></span>
-          <span class="radio-label">
+          <span class="radio__checkmark"></span>
+          <span class="radio__label">
             <slot></slot>
           </span>
         </label>

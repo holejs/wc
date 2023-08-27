@@ -19,6 +19,8 @@ const _handleSubmit = (event: Event) => {
 
   const form = event.target as HTMLFormElement
 
+  console.log(form.checkValidity())
+
   const formData = new FormData(form)
 
   formData.forEach((value, key) => {
@@ -33,15 +35,15 @@ const meta = {
   render: (args: any) => html`
     <main>
       <form @submit=${_handleSubmit}>
-        <hwc-radio name="color" color=${args.color}  value="green">
+        <hwc-radio name="color" color=${args.color} value="green" rules="required">
           Green
         </hwc-radio>
   
-        <hwc-radio name="color" color=${args.color} value="blue">
+        <hwc-radio name="color" color=${args.color} value="blue" rules="required">
           Blue
         </hwc-radio>
   
-        <hwc-radio name="color" color=${args.color} value="yellow">
+        <hwc-radio name="color" color=${args.color} value="yellow" rules="required">
           Yellow
         </hwc-radio>
 
