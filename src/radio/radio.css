@@ -55,7 +55,14 @@
   font-family: var(--hwc-radio-font-family, "Poppins", sans-serif);
 }
 
-/* Erros */
+.radio__details {
+  margin-top: 5px;
+  font-family: var(--hwc-radio-font-family, "Poppins", sans-serif);
+  color: var(--hwc-radio-error-color);
+  font-size: 12px;
+}
+
+/* Errors */
 .radio__wrapper.error {
   --hwc-radio-error-color: var(--hwc-red-darken-2);
 

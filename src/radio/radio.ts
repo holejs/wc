@@ -6,6 +6,7 @@ import styles from './radio.css?inline'
 
 import { generateHash, getDataAttributes, isValidColorFormat, parseRules } from '../utils'
 import { Feedback, createValidationControl, validationsMap } from '../validations'
+import { when } from 'lit/directives/when.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -13,6 +14,13 @@ declare global {
     'hwc-radio': HWCRadio;
   }
 }
+
+/**
+ * TODO: List of things to do:
+ *
+ * - [] Simplify the code.
+ * - [] Change the form validation message to be displayed in the details element.
+ */
 
 @customElement('hwc-radio')
 export default class Radio extends LitElement {
@@ -62,6 +70,7 @@ export default class Radio extends LitElement {
       if ($radio) {
         $radios.forEach($radio => {
           $radio.internals.setValidity({})
+          $radio._errorFeedback = null
         })
       }
     })
@@ -71,6 +80,10 @@ export default class Radio extends LitElement {
     const ruleItems = parseRules(this.rules)
 
     ruleItems.forEach(({ key }) => this._applyValidation(key))
+
+    this.addEventListener('focusin', this._handleFocusin)
+
+    this.addEventListener('focusout', this._handleFocusout)
   }
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -156,6 +169,8 @@ export default class Radio extends LitElement {
       input: $input
     })
 
+    console.log(errors)
+
     // Check if there are any errors.
     const hasError = errors.length
 
@@ -222,8 +237,20 @@ export default class Radio extends LitElement {
     this.dispatchEvent(new Event('change', { bubbles: true }))
   }
 
+  private _handleFocusin (): void {
+    console.log('focusin')
+  }
+
+  private _handleFocusout (): void {
+    this._hasBlur = true
+
+    this._onValidation()
+
+    this.dispatchEvent(new Event('change', { bubbles: true }))
+  }
+
   protected render (): unknown {
-    const showError = (this.hasBlur || this.hasDirty) && this._errorFeedback
+    const showError = this.hasBlur && this._errorFeedback
 
     return html`
       <div class="radio__wrapper ${showError ? 'error' : null}">
@@ -242,6 +269,18 @@ export default class Radio extends LitElement {
             <slot></slot>
           </span>
         </label>
+
+          <!-- Details -->
+          ${
+            when(
+              showError,
+              () => html`
+                <div class="radio__details">
+                  <span>${showError ? this._errorFeedback?.message : null}</span>
+                </div>
+              `
+            )
+          }
       </div>
     `
   }
