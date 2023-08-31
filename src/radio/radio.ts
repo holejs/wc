@@ -30,8 +30,9 @@ declare global {
 /**
  * TODO's:
  *
- * - [] Simplify the code.
- * - [] Change the form validation message to be displayed in the details element.
+ * - [ ] Add support for `disable` state.
+ * - [x] Prevent the user select many radios with the same name via attributes.
+ * - [ ] Simplify the code and remove unnecessary code.
  */
 
 @customElement('hwc-radio')
@@ -110,8 +111,20 @@ export default class Radio extends LitElement {
       this.style.setProperty('--hwc-radio-color', color)
     }
 
-    if (_changedProperties.has('checked') || _changedProperties.has('value')) {
+    if (_changedProperties.has('value')) {
       this._setValue(this.value)
+    }
+
+    if (_changedProperties.has('checked')) {
+      if (!this.checked) {
+        return this.internals.setFormValue(null)
+      }
+
+      this._uncheckRadios()
+
+      this._setValue(this.value)
+
+      this._onValidation()
     }
   }
 
@@ -206,8 +219,6 @@ export default class Radio extends LitElement {
     const _value = this.checked ? value : null
 
     this.internals.setFormValue(_value)
-
-    this.dispatchEvent(new Event('change', { bubbles: true }))
   }
 
   /**
@@ -230,8 +241,11 @@ export default class Radio extends LitElement {
    */
   private _uncheckRadios (): void {
     this._getNamedRadios()
-      .filter($radio => $radio !== this)
-      .forEach($radio => { $radio.checked = false })
+      .filter(($radio) => $radio !== this)
+      .forEach(($radio) => {
+        $radio.removeAttribute('checked')
+        $radio.checked = false
+      })
   }
 
   /**
