@@ -1,12 +1,24 @@
 /* eslint-disable no-undef */
-import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
+import {
+  PropertyValueMap,
+  CSSResultGroup,
+  LitElement,
+  unsafeCSS,
+  css,
+  html
+} from 'lit'
 import { customElement, property, query, state } from 'lit/decorators.js'
+import { when } from 'lit/directives/when.js'
 
 import styles from './radio.css?inline'
 
-import { generateHash, getDataAttributes, isValidColorFormat, parseRules } from '../utils'
+import {
+  isValidColorFormat,
+  getDataAttributes,
+  generateHash,
+  parseRules
+} from '../utils'
 import { Feedback, createValidationControl, validationsMap } from '../validations'
-import { when } from 'lit/directives/when.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -16,7 +28,7 @@ declare global {
 }
 
 /**
- * TODO: List of things to do:
+ * TODO's:
  *
  * - [] Simplify the code.
  * - [] Change the form validation message to be displayed in the details element.
@@ -60,20 +72,7 @@ export default class Radio extends LitElement {
   connectedCallback (): void {
     super.connectedCallback()
 
-    // When any radio is found that is checked,
-    // the form validation message is automatically removed.
-    this.addEventListener('change', () => {
-      const $radios = this._getNamedRadios()
-
-      const $radio = $radios.find($radio => $radio.checked)
-
-      if ($radio) {
-        $radios.forEach($radio => {
-          $radio.internals.setValidity({})
-          $radio._errorFeedback = null
-        })
-      }
-    })
+    this.addEventListener('change', this._resetRadiosValidity)
 
     this._root = this.getRootNode() as ParentNode
 
@@ -81,9 +80,15 @@ export default class Radio extends LitElement {
 
     ruleItems.forEach(({ key }) => this._applyValidation(key))
 
-    this.addEventListener('focusin', this._handleFocusin)
-
     this.addEventListener('focusout', this._handleFocusout)
+  }
+
+  disconnectedCallback (): void {
+    super.disconnectedCallback()
+
+    this.removeEventListener('change', this._resetRadiosValidity)
+
+    this.removeEventListener('focusout', this._handleFocusout)
   }
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -92,6 +97,10 @@ export default class Radio extends LitElement {
     this._configureRules()
 
     this._onValidation()
+
+    if (this.checked) {
+      this._uncheckRadios()
+    }
   }
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -101,11 +110,7 @@ export default class Radio extends LitElement {
       this.style.setProperty('--hwc-radio-color', color)
     }
 
-    if (_changedProperties.has('checked')) {
-      this._setValue(this.value)
-    }
-
-    if (_changedProperties.has('value')) {
+    if (_changedProperties.has('checked') || _changedProperties.has('value')) {
       this._setValue(this.value)
     }
   }
@@ -162,14 +167,12 @@ export default class Radio extends LitElement {
    * Handle validation on input events.
    */
   private async _onValidation (): Promise<void> {
-    const $input = this.$input
-
     // Validate the input event using the _validator.
     const errors = await this._validator.validate({
-      input: $input
+      input: this.$input
     })
 
-    console.log(errors)
+    const ev = new Event('change', { bubbles: true })
 
     // Check if there are any errors.
     const hasError = errors.length
@@ -177,7 +180,11 @@ export default class Radio extends LitElement {
     // If there are no errors, reset the feedback and validity.
     if (!hasError) {
       this._errorFeedback = null
-      return this.internals.setValidity({})
+      this.internals.setValidity({})
+
+      this.dispatchEvent(ev)
+
+      return
     }
 
     // Get the first error from the errors array.
@@ -189,12 +196,18 @@ export default class Radio extends LitElement {
     this.internals.setValidity(
       { customError: true },
       error.message,
-      $input
+      this.$input
     )
+
+    this.dispatchEvent(ev)
   }
 
   private _setValue (value: string | null): void {
-    this.internals.setFormValue(this.checked ? value : null)
+    const _value = this.checked ? value : null
+
+    this.internals.setFormValue(_value)
+
+    this.dispatchEvent(new Event('change', { bubbles: true }))
   }
 
   /**
@@ -221,32 +234,39 @@ export default class Radio extends LitElement {
       .forEach($radio => { $radio.checked = false })
   }
 
-  private _handleChange (_ev: Event): void {
-    const $input = this.$input
+  /**
+   * Reset the validity of all radios with the same name.
+   * @private
+   */
+  private _resetRadiosValidity (): void {
+    const $radios = this._getNamedRadios()
 
+    const $checkedRadio = $radios.find(($radio) => $radio.checked)
+
+    if (!($checkedRadio || this.checked)) return
+
+    $radios.forEach($radio => {
+      $radio.internals.setValidity({})
+      $radio._errorFeedback = null
+    })
+  }
+
+  private _handleChange (_ev: Event): void {
     this.checked = true
 
     this._hasDirty = true
 
     this._uncheckRadios()
 
-    this._setValue($input.value)
+    this._setValue(this.$input.value)
 
     this._onValidation()
-
-    this.dispatchEvent(new Event('change', { bubbles: true }))
-  }
-
-  private _handleFocusin (): void {
-    console.log('focusin')
   }
 
   private _handleFocusout (): void {
     this._hasBlur = true
 
     this._onValidation()
-
-    this.dispatchEvent(new Event('change', { bubbles: true }))
   }
 
   protected render (): unknown {
