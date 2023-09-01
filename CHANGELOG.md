@@ -1,3 +1,21 @@
+# [0.8.0](https://github.com/holejs/wc/compare/v0.7.2...v0.8.0) (2023-09-01)
+
+
+### Bug Fixes
+
+* **radio:** Fixed multiple selection via attributes ([7df17ae](https://github.com/holejs/wc/commit/7df17ae835dc73ddb25ebc31b67db0f5f775af42))
+
+
+### Features
+
+* **radio:** Added the association to the form ([ac0fb19](https://github.com/holejs/wc/commit/ac0fb191b0532af44069aef4c3cceec27aa14994))
+* **radio:** define base component ([e432282](https://github.com/holejs/wc/commit/e4322828a848a0b9f3fb119bcee654ad2f373764))
+* **radio:** error messages are displayed ([8a8eefc](https://github.com/holejs/wc/commit/8a8eefcebf67b81b7579667125551655b2dbf513))
+* **radio:** prevent multiple selection in the first instance ([81bd4f4](https://github.com/holejs/wc/commit/81bd4f49d6a2f3b15bdd771abc5522b06a8b3665))
+* the native messages of the input fields are taken as a second option ([5c2356a](https://github.com/holejs/wc/commit/5c2356a90f85383ae223384a5a80d76e9c0f0f70))
+
+
+
 ## [0.7.2](https://github.com/holejs/wc/compare/v0.7.1...v0.7.2) (2023-08-17)
 
 
