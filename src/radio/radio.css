@@ -39,8 +39,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  width: var(--hwc-radio__checkmark-width, 10px);
-  height: var(--hwc-radio__checkmark-height, 10px);
+  width: var(--hwc-radio-checkmark-width, 10px);
+  height: var(--hwc-radio-checkmark-height, 10px);
   border-radius: 50%;
   background-color: var(--hwc-radio-color, var(--hwc-blue-darken-2));
   transition: all 0.2s ease-in-out;
