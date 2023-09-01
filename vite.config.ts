@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
@@ -15,6 +13,7 @@ export default defineConfig({
         path.resolve(__dirname, './src/card/card.ts'),
         path.resolve(__dirname, './src/checkbox/checkbox.ts'),
         path.resolve(__dirname, './src/chip/chip.ts'),
+        path.resolve(__dirname, './src/radio/radio.ts'),
         path.resolve(__dirname, './src/ripple/ripple.ts'),
         path.resolve(__dirname, './src/text-field/text-field.ts'),
         path.resolve(__dirname, './src/index.ts')
@@ -33,10 +32,6 @@ export default defineConfig({
         }
       }
     }
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom'
   },
   plugins: [
     // Generate d.ts.
