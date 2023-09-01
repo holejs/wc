@@ -30,7 +30,7 @@ declare global {
 /**
  * TODO's:
  *
- * - [ ] Add support for `disable` state.
+ * - [x] Add support for `disable` state.
  * - [x] Prevent the user select many radios with the same name via attributes.
  * - [ ] Simplify the code and remove unnecessary code.
  */
