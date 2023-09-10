@@ -90,9 +90,13 @@ export default class Radio extends LitElement {
     this.removeEventListener('change', this._resetRadiosValidity)
 
     this.removeEventListener('focusout', this._handleFocusout)
+
+    this.form?.removeEventListener('reset', this._onHandleReset)
   }
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    this.form?.addEventListener('reset', this._onHandleReset.bind(this))
+
     this._setValue(this.value)
 
     this._configureRules()
@@ -174,6 +178,15 @@ export default class Radio extends LitElement {
     if (!validation) return
 
     this._validator.setValidation(key, validation)
+  }
+
+  private _onHandleReset (): void {
+    this._hasBlur = false
+    this._hasDirty = false
+    this._errorFeedback = null
+
+    this._uncheckRadios()
+    this._onValidation()
   }
 
   /**

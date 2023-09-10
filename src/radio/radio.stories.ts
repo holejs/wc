@@ -47,6 +47,8 @@ const meta = {
           Yellow
         </hwc-radio>
 
+        <hwc-button appearance="text" type="reset">Reset</hwc-button>
+
         <hwc-button type="submit">Submit</hwc-button>
       </form>
     </main>
