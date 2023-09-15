@@ -94,6 +94,8 @@ export default class TextField extends LitElement {
 
   @property({ type: String }) placeholder!: string
 
+  @property({ type: String, reflect: true }) role = 'textbox'
+
   @property({ type: String }) color!: string
 
   @property({ type: String }) hint!: string
@@ -112,6 +114,8 @@ export default class TextField extends LitElement {
 
   connectedCallback (): void {
     super.connectedCallback()
+
+    this.setAttribute('aria-label', this.label || '')
 
     const ruleItems = parseRules(this.rules)
 
@@ -381,9 +385,16 @@ export default class TextField extends LitElement {
           </div>
 
           <!-- Details -->
-          <div class="text-field__details">
-            <span>${this._feedback?.message || this.hint}</span>
-          </div>
+          ${
+            when(
+              this._feedback?.message || this.hint,
+              () => html`
+                <div class="text-field__details">
+                  <span>${this._feedback?.message || this.hint}</span>
+                </div>
+              `
+            )
+          }
         </div>
       </div>
     `
