@@ -345,16 +345,14 @@ export default class TextField extends LitElement {
         <div class="text-field__wrapper">
           <!-- Main content -->
           <div class="text-field__content">
-            <div>
-              <!-- Label -->
-              ${when(
-                this.label,
-                () => html`<label
-                  for=${this._uniqueId}
-                  class="text-field__label"
-                >${this.label}</label>`
-              )}
-            </div>
+            <!-- Label -->
+            ${when(
+              this.label,
+              () => html`<label
+                for=${this._uniqueId}
+                class="text-field__label"
+              >${this.label}</label>`
+            )}
 
             <div class="text-field__control">
               <!-- Prepend inner -->
