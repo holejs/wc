@@ -1,4 +1,6 @@
+import { waitFor, within } from '@storybook/testing-library'
 import type { StoryObj } from '@storybook/web-components'
+import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import '../button/button.js'
@@ -136,23 +138,29 @@ export const Errors: Story = {
   args: {},
   render: (_args: any) => html`
     <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
         <form @submit=${_onHandleSubmit}>
           <div class="row">
-            <div class="col-12 col-md-6 py-2">
+            <div class="col-12 col-sm-6 py-2">
               <hwc-text-field
                 name="first_name"
                 label="First Name"
                 rules="required|minlength:3|maxlength:10"
+                data-error-message-required="This field is required."
+                data-error-message-minlength="The field must have at least 3 characters."
+                data-error-message-maxlength="The field must have a maximum of 10 characters."
                 autofocus
               ></hwc-text-field>
             </div>
   
-            <div class="col-12 col-md-6 py-2">
+            <div class="col-12 col-sm-6 py-2">
               <hwc-text-field
                 name="last_name"
                 label="Last Name"
                 rules="required|minlength:3|maxlength:10"
+                data-error-message-required="This field is required."
+                data-error-message-minlength="The field must have at least 3 characters."
+                data-error-message-maxlength="The field must have a maximum of 10 characters."
               ></hwc-text-field>
             </div>
 
@@ -162,6 +170,8 @@ export const Errors: Story = {
                 name="email"
                 label="Email"
                 rules="required|email"
+                data-error-message-required="This field is required."
+                data-error-message-email="The email is not valid."
               ></hwc-text-field>
             </div>
 
@@ -171,6 +181,7 @@ export const Errors: Story = {
                 name="password"
                 label="Password"
                 rules="required|pattern:^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$"
+                data-error-message-required="This field is required."
                 data-error-message-pattern="The password must have at least 8 characters, a capital letter, a symbol and a number."
               ></hwc-text-field>
             </div>
@@ -183,5 +194,45 @@ export const Errors: Story = {
         </form>
       </div>
     </div>
-  `
+  `,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const $firstName = canvas.getByRole<HWCTextField>('textbox', { name: 'First Name' })
+    const $lastName = canvas.getByRole<HWCTextField>('textbox', { name: 'Last Name' })
+    const $email = canvas.getByRole<HWCTextField>('textbox', { name: 'Email' })
+    const $password = canvas.getByRole<HWCTextField>('textbox', { name: 'Password' })
+
+    // Verify that the text field is visible
+    expect($firstName).toBeInTheDocument()
+    expect($lastName).toBeInTheDocument()
+    expect($email).toBeInTheDocument()
+    expect($password).toBeInTheDocument()
+
+    // Verify that the text field contains errors
+    $firstName.value = 'Iv'
+    $lastName.value = 'Gu'
+    $email.value = 'ivan@'
+    $password.value = '12345'
+
+    await waitFor(() => {
+      expect($firstName.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The field must have at least 3 characters.')
+      expect($lastName.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The field must have at least 3 characters.')
+      expect($email.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The email is not valid.')
+      expect($password.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The password must have at least 8 characters, a capital letter, a symbol and a number.')
+    })
+
+    // Verify that the text field does not contain errors
+    $firstName.value = 'Ivan'
+    $lastName.value = 'Guevara'
+    $email.value = 'ivan.guevara@domain.com'
+    $password.value = 'Hello123@'
+
+    await waitFor(() => {
+      expect($firstName.shadowRoot?.querySelector('.text-field__details span')).toBeNull()
+      expect($lastName.shadowRoot?.querySelector('.text-field__details span')).toBeNull()
+      expect($email.shadowRoot?.querySelector('.text-field__details span')).toBeNull()
+      expect($password.shadowRoot?.querySelector('.text-field__details span')).toBeNull()
+    })
+  }
 }
