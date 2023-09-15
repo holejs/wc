@@ -17,16 +17,16 @@
   --hwc-text-field-font-family: Poppins, sans-serif;
 
   --hwc-text-field-input-text-color: unset;
-  --hwc-text-field-input-font-size: 16px;
+  --hwc-text-field-input-font-size: .875rem;
 
-  --hwc-text-field-label-font-size: 14px;
+  --hwc-text-field-label-font-size: .875rem;
   --hwc-text-field-label-text-color: unset;
 
-  --hwc-text-field-details-font-size: 12px;
+  --hwc-text-field-details-font-size: .875rem;
   --hwc-text-field-details-text-color: unset;
 
   /* Paddings */
-  /* --hwc-text-field-padding: 12px 15px; */
+  --hwc-text-field-padding: 0px 16px;
 
   /* Margins */
   --hwc-text-field-prepend-inner-margin: 0px 10px 0px 0px;
@@ -42,6 +42,14 @@
   --hwc-text-field-transition: 200ms all ease;
 }
 
+.text-field__label {
+  font-family: var(--hwc-text-field-font-family);
+  font-size: var(--hwc-text-field-label-font-size);
+  color: var(--hwc-text-field-label-text-color, var(--hwc-text-field-color, var(--hwc-grey-darken-3)));
+  transition: var(--hwc-text-field-transition);
+  font-weight: 600;
+}
+
 .text-field__control {
   min-height: 48px;
   border-width: var(--hwc-text-field-border-width);
@@ -55,14 +63,7 @@
   display: flex;
   align-items: center;
   cursor: text;
-}
-
-.text-field__label {
-  font-family: var(--hwc-text-field-font-family);
-  font-size: var(--hwc-text-field-label-font-size);
-  color: var(--hwc-text-field-label-text-color, var(--hwc-text-field-color, var(--hwc-grey-darken-3)));
-  transition: var(--hwc-text-field-transition);
-  font-weight: 600;
+  padding: var(--hwc-text-field-padding);
 }
 
 .text-field__input {
@@ -74,7 +75,6 @@
   caret-color: var(--hwc-text-field-caret-color);
   background: transparent;
   width: 100%;
-  margin: 0px 16px;
 }
 
 .text-field__input::placeholder {
@@ -110,6 +110,9 @@
 }
 
 /* Appearance: Underline */
+:host([appearance="underline"]) {
+  --hwc-text-field-padding: 0;
+}
 
 :host([appearance="underline"]) .text-field__control {
   border: none;
@@ -117,7 +120,7 @@
   border-bottom-width: var(--hwc-text-field-border-width);
   border-bottom-color: var(--hwc-text-field-border-color, var(--hwc-text-field-color, var(--hwc-grey-lighten-2)));
   border-bottom-style: var(--hwc-text-field-border-style);
-  /* padding: var(--hwc-text-field-padding); */
+  padding: var(--hwc-text-field-padding);
   min-height: 32px;
   margin: 0;
 }
