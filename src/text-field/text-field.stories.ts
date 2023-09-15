@@ -131,7 +131,12 @@ const _onHandleSubmit = (e: Event) => {
 }
 
 export const Basic: Story = {
-  args: {}
+  args: {
+    label: 'Fullname',
+    placeholder: 'Example: Ivan Guevara',
+    name: 'fullname',
+    hint: 'Enter your fullname'
+  }
 }
 
 export const Errors: Story = {
@@ -145,23 +150,55 @@ export const Errors: Story = {
               <hwc-text-field
                 name="first_name"
                 label="First Name"
+                placeholder="Example: Ivan"
+                hint="Enter your first name"
                 rules="required|minlength:3|maxlength:10"
                 data-error-message-required="This field is required."
                 data-error-message-minlength="The field must have at least 3 characters."
                 data-error-message-maxlength="The field must have a maximum of 10 characters."
                 autofocus
-              ></hwc-text-field>
+              >
+                <span style="display: flex" slot="prepend-inner">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-person-circle"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                  </svg>
+                </span>
+              </hwc-text-field>
             </div>
   
             <div class="col-12 col-sm-6 py-2">
               <hwc-text-field
                 name="last_name"
                 label="Last Name"
+                placeholder="Example: Guevara"
+                hint="Enter your last name"
                 rules="required|minlength:3|maxlength:10"
                 data-error-message-required="This field is required."
                 data-error-message-minlength="The field must have at least 3 characters."
                 data-error-message-maxlength="The field must have a maximum of 10 characters."
-              ></hwc-text-field>
+              >
+                <span style="display: flex" slot="prepend-inner">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-person-circle"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                  </svg>
+                </span>
+              </hwc-text-field>
             </div>
 
             <div class="col-12 py-2">
@@ -169,10 +206,25 @@ export const Errors: Story = {
                 type="email"
                 name="email"
                 label="Email"
+                placeholder="Example: ivan.guevara@domain.com"
+                hint="Enter your email"
                 rules="required|email"
                 data-error-message-required="This field is required."
                 data-error-message-email="The email is not valid."
-              ></hwc-text-field>
+              >
+                <span style="display: flex" slot="prepend-inner">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-envelope-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                  </svg>
+                </span>
+              </hwc-text-field>
             </div>
 
             <div class="col-12 py-2">
@@ -180,10 +232,24 @@ export const Errors: Story = {
                 type="password"
                 name="password"
                 label="Password"
+                hint="Enter your password"
                 rules="required|pattern:^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$"
                 data-error-message-required="This field is required."
                 data-error-message-pattern="The password must have at least 8 characters, a capital letter, a symbol and a number."
-              ></hwc-text-field>
+              >
+                <span style="display: flex" slot="prepend-inner">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-lock-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                  </svg>
+                </span>
+              </hwc-text-field>
             </div>
 
             <div class="col-12 py-2">
@@ -229,10 +295,10 @@ export const Errors: Story = {
     $password.value = 'Hello123@'
 
     await waitFor(() => {
-      expect($firstName.shadowRoot?.querySelector('.text-field__details span')).toBeNull()
-      expect($lastName.shadowRoot?.querySelector('.text-field__details span')).toBeNull()
-      expect($email.shadowRoot?.querySelector('.text-field__details span')).toBeNull()
-      expect($password.shadowRoot?.querySelector('.text-field__details span')).toBeNull()
+      expect($firstName.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The field must have at least 3 characters.')
+      expect($lastName.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The field must have at least 3 characters.')
+      expect($email.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The email is not valid.')
+      expect($password.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The password must have at least 8 characters, a capital letter, a symbol and a number.')
     })
   }
 }
