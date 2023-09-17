@@ -24,6 +24,8 @@ const meta = {
       name=${args.name || ''}
       ?autofocus=${args.autofocus || false}
       ?clearable=${args.clearable || false}
+      ?disabled=${args.disabled || false}
+      ?readonly=${args.readonly || false}
       .value=${args.value || ''}
       hint=${args.hint || ''}
       rules=${args.rules || ''}
@@ -55,6 +57,14 @@ const meta = {
     placeholder: {
       control: 'text',
       description: 'Defines the placeholder of the text field.'
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Defines if the text field is disabled.'
+    },
+    readonly: {
+      control: 'boolean',
+      description: 'Defines if the text field is readonly.'
     },
     type: {
       control: 'inline-radio',

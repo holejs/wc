@@ -120,6 +120,13 @@
   display: block;
 }
 
+/* Disabled */
+:host([disabled]) {
+  opacity: .5;
+  pointer-events: none;
+  user-select: none;
+}
+
 /* Appearance: Underline */
 :host([appearance="underline"]) {
   --hwc-text-field-padding: 0;

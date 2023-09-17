@@ -106,6 +106,10 @@ export default class TextField extends LitElement {
 
   @property({ type: Boolean }) clearable = false
 
+  @property({ type: Boolean }) disabled = false
+
+  @property({ type: Boolean }) readonly = false
+
   @state() private readonly _uniqueId = `text-field-${generateHash()}`
 
   @state() private _feedback: Partial<Feedback> | null = null
@@ -344,6 +348,8 @@ export default class TextField extends LitElement {
   }
 
   protected render (): unknown {
+    const showClearableButton = this.clearable && this.value && !this.disabled && !this.readonly
+
     return html`
       <div class="text-field ${this._feedback ? 'error' : null}">
         <div class="text-field__wrapper">
@@ -371,6 +377,8 @@ export default class TextField extends LitElement {
                 autocomplete=${this.autocomplete}
                 placeholder=${this.placeholder}
                 ?autofocus=${this.autofocus}
+                ?disabled=${this.disabled}
+                ?readonly=${this.readonly}
                 .value=${this.value}
                 type=${this.type}
                 name=${this.name}
@@ -386,7 +394,7 @@ export default class TextField extends LitElement {
 
               <!-- Clear button -->
               ${when(
-                this.clearable && this.value,
+                showClearableButton,
                 () => html`
                   <hwc-button
                     appearance="icon"
