@@ -50,6 +50,16 @@ const ALLOWED_TEXTFIELD_TYPES = [
   'url'
 ]
 
+const _validateType = (value: string | null) => {
+  const message = `The type "${value}" is invalid. Use the following values: ${ALLOWED_TEXTFIELD_TYPES.join(', ')}.`
+
+  if (!ALLOWED_TEXTFIELD_TYPES.includes(value || '')) {
+    throw new TextFieldError(message)
+  }
+
+  return value
+}
+
 @customElement('hwc-text-field')
 export default class TextField extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
@@ -72,15 +82,7 @@ export default class TextField extends LitElement {
   @property({
     type: String,
     reflect: true,
-    converter: (value) => {
-      const message = `The type "${value}" is invalid. Use the following values: ${ALLOWED_TEXTFIELD_TYPES.join(', ')}.`
-
-      if (!ALLOWED_TEXTFIELD_TYPES.includes(value || '')) {
-        throw new TextFieldError(message)
-      }
-
-      return value
-    }
+    converter: _validateType
   })
     type: TextFieldType = 'text'
 
@@ -131,13 +133,15 @@ export default class TextField extends LitElement {
   }
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    // Add event listeners
+    this.$control.addEventListener('click', this._onFocus.bind(this))
+
+    this.form?.addEventListener('reset', this._onReset.bind(this))
+
+    // Remove inner slots if not used
     if (this._hasElementSlot('slot[name="prepend-inner"]')) this.$prependInner.remove()
 
     if (this._hasElementSlot('slot[name="append-inner"]')) this.$appendInner.remove()
-
-    this.$control.addEventListener('click', () => this.$input.focus())
-
-    this.internals.form?.addEventListener('reset', () => this.reset())
 
     this._setValue(this.value)
 
@@ -158,6 +162,15 @@ export default class TextField extends LitElement {
 
       this._onValidation()
     }
+  }
+
+  disconnectedCallback (): void {
+    super.disconnectedCallback()
+
+    // Remove event listeners
+    this.$control.removeEventListener('click', this._onFocus.bind(this))
+
+    this.form?.removeEventListener('reset', this._onReset.bind(this))
   }
 
   /**
@@ -181,6 +194,10 @@ export default class TextField extends LitElement {
    */
   get validations (): { name: string; handler: ValidationFn }[] {
     return this._validator.getAllValidations()
+  }
+
+  get form (): HTMLFormElement | null {
+    return this.internals.form
   }
 
   /**
@@ -345,6 +362,14 @@ export default class TextField extends LitElement {
     if (!$form) return
 
     $form.requestSubmit()
+  }
+
+  private _onReset (): void {
+    this.reset()
+  }
+
+  private _onFocus (): void {
+    this.$input.focus()
   }
 
   protected render (): unknown {
