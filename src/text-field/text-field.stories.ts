@@ -23,6 +23,8 @@ const meta = {
       type=${args.type || 'text'}
       name=${args.name || ''}
       ?autofocus=${args.autofocus || false}
+      ?clearable=${args.clearable || false}
+      .value=${args.value || ''}
       hint=${args.hint || ''}
       rules=${args.rules || ''}
       data-error-message-required=${args['data-error-message-required'] || ''}
@@ -33,6 +35,10 @@ const meta = {
     ></hwc-text-field>
   `,
   argTypes: {
+    value: {
+      control: 'text',
+      description: 'Defines the value of the text field.'
+    },
     appearance: {
       control: 'inline-radio',
       options: ['underline', 'outlined'],
@@ -80,6 +86,10 @@ const meta = {
     hint: {
       control: 'text',
       description: 'Provides a hint or instruction to help the user complete the field.'
+    },
+    clearable: {
+      control: 'boolean',
+      description: 'Defines if the text field has a clear button.'
     },
     rules: {
       control: 'text',
@@ -211,6 +221,7 @@ export const Errors: Story = {
                 rules="required|email"
                 data-error-message-required="This field is required."
                 data-error-message-email="The email is not valid."
+                clearable
               >
                 <span style="display: flex" slot="prepend-inner">
                   <svg
@@ -236,6 +247,7 @@ export const Errors: Story = {
                 rules="required|pattern:^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$"
                 data-error-message-required="This field is required."
                 data-error-message-pattern="The password must have at least 8 characters, a capital letter, a symbol and a number."
+                clearable
               >
                 <span style="display: flex" slot="prepend-inner">
                   <svg
