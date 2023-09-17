@@ -1,3 +1,13 @@
+# [0.11.0](https://github.com/holejs/wc/compare/v0.10.0...v0.11.0) (2023-09-17)
+
+
+### Features
+
+* **text-field:** Add clearable functionality ([471c2f8](https://github.com/holejs/wc/commit/471c2f89aad0e6a6ecfec640a4ffdf4d307a5c24))
+* **text-field:** Added "disable" and "readonly" functionality ([7f1740d](https://github.com/holejs/wc/commit/7f1740d3c73e346591ce3313cf17cb07a036893c))
+
+
+
 # [0.10.0](https://github.com/holejs/wc/compare/v0.9.0...v0.10.0) (2023-09-15)
 
 
