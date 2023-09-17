@@ -69,7 +69,10 @@
     - [Type](#type-1)
     - [Name](#name)
     - [Autofocus](#autofocus)
+    - [Disabled](#disabled-1)
+    - [Readonly](#readonly)
     - [Hint](#hint)
+    - [Clearable](#clearable)
     - [Slots: prepend-inner \& append-inner](#slots-prepend-inner--append-inner)
     - [Validations](#validations)
     - [Error messages](#error-messages)
@@ -81,7 +84,7 @@
     - [Name](#name-1)
     - [Value](#value)
     - [Checked](#checked)
-    - [Disabled](#disabled-1)
+    - [Disabled](#disabled-2)
     - [Validations \& Error Messages](#validations--error-messages)
     - [CSS Custom Properties](#css-custom-properties-6)
     - [Additionals](#additionals)
@@ -92,7 +95,7 @@
     - [Name](#name-2)
     - [Value](#value-1)
     - [Checked](#checked-1)
-    - [Disabled](#disabled-2)
+    - [Disabled](#disabled-3)
     - [Validations \& Error Messages](#validations--error-messages-1)
     - [CSS Custom Properties](#css-custom-properties-7)
   - [Advance](#advance)
@@ -833,12 +836,36 @@ If this property is set, the text field will automatically get focus when the pa
 <hwc-text-field autofocus></hwc-text-field>
 ```
 
+### Disabled
+
+If this property is set, the text field will be disabled and the user will not be able to interact with it.
+
+```html
+<hwc-text-field disabled></hwc-text-field>
+```
+
+### Readonly
+
+If this property is set, the text field will be read-only and the user will not be able to modify its value.
+
+```html
+<hwc-text-field readonly></hwc-text-field>
+```
+
 ### Hint
 
 Provides a hint or instruction to help the user complete the field.
 
 ```html
 <hwc-text-field hint="Enter your email. For example: ivan@gmail.com"></hwc-text-field>
+```
+
+### Clearable
+
+If this property is set, a button will be displayed that allows the user to clear the value of the text field.
+
+```html
+<hwc-text-field clearable></hwc-text-field>
 ```
 
 ### Slots: prepend-inner & append-inner
