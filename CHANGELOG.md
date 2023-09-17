@@ -1,3 +1,13 @@
+## [0.11.1](https://github.com/holejs/wc/compare/v0.11.0...v0.11.1) (2023-09-17)
+
+
+### Bug Fixes
+
+* **text-field:** EventListeners are removed when the component is removed from the DOM ([8f4af47](https://github.com/holejs/wc/commit/8f4af47f0ab561fa6d13e217cfebb135c65037ca))
+* **text-field:** Updated the style of the clear button in text fields ([f7989b9](https://github.com/holejs/wc/commit/f7989b99101e79b43302b045586a228ce0da7dca))
+
+
+
 # [0.11.0](https://github.com/holejs/wc/compare/v0.10.0...v0.11.0) (2023-09-17)
 
 
