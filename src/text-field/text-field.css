@@ -105,7 +105,7 @@
   display: none;
   --hwc-button-height: 26px;
   --hwc-button-width: 26px;
-  --hwc-button-color: var(--hwc-text-field-border-color, var(--hwc-grey-darken-1));
+  --hwc-button-color: var(--hwc-text-field-inner-color, var(--hwc-grey-darken-1));
 }
 
 /* Focus */
