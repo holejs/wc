@@ -7,7 +7,7 @@
 > **Warning**
 > This package is under development and is not suitable for production environments due to possible changes in future versions. Thanks for your understanding. ❤️
 
-## Installation
+## Installation.
 
 To start using the suite of components it is necessary to install the package.
 
@@ -15,7 +15,7 @@ To start using the suite of components it is necessary to install the package.
 npm i @holejs/wc
 ```
 
-## Setup
+## Setup.
 
 Import the component suite into your main input file. Generally the `index.ts` is used.
 
@@ -35,7 +35,7 @@ import 'https://unpkg.com/@holejs/wc?module'
 import 'https://unpkg.com/@holejs/wc@0.11.1/dist/button.js?module'
 ```
 
-## Usage
+## Usage.
 
 Once the components are imported, they can be used in the HTML file.
 
@@ -47,6 +47,28 @@ Once the components are imported, they can be used in the HTML file.
 <hwc-button appearance="text" color="#468D5A">Click me!</hwc-button>
 ```
 
-## Components
+## Components.
 
 Bellow you can see the list of components that are currently available.
+
+- [Alerts](/docs/components/alerts.md)
+- [Buttons](/docs/components/button.md)
+- [Cards](/docs/components/cards.md)
+- [Checkboxes](/docs/components/checkboxes.md)
+- [Chips](/docs/components/chips.md)
+- [Radios](/docs/components/radios.md)
+- [Ripples](/docs/components/ripples.md)
+- [TextFields](/docs/components/text-fields.md)
+
+## Additional info.
+
+- [Dark mode](/docs/advance/dark-mode.md)
+- [Customize design](/docs/advance/customize-design.md)
+
+## Stay in touch.
+
+- [Creator](https://twitter.com/thebug404)
+
+## License.
+
+This project is licensed under the terms of the [MIT license](/LICENSE).
