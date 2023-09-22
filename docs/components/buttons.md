@@ -49,6 +49,14 @@ This property allows you to modify the layout of the component. The possible val
 </hwc-button>
 ```
 
+## Disabled
+
+This property allows you to disable the component.
+
+```html
+<hwc-button disabled>Click me!</hwc-button>
+```
+
 ## Colors
 
 The color property allows you to modify the color of the component.
