@@ -104,6 +104,13 @@
   justify-content: center;
 }
 
+/* Disabled */
+:host([disabled]) {
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.5;
+}
+
 /* Appearance: Outlined */
 :host([appearance="outlined"]) {
   --hwc-button-border-width: 2px;

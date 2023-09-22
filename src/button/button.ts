@@ -43,15 +43,19 @@ export default class Button extends LitElement {
 
   @property({ type: String, reflect: true }) elevation!: ButtonElevation
 
-  @property({ type: Boolean }) lowercase: boolean = false
+  @property({ type: String, reflect: true }) role = 'button'
 
-  @property({ type: Boolean }) uppercase: boolean = false
+  @property({ type: Boolean }) lowercase = false
 
-  @property({ type: Boolean }) capitalize: boolean = false
+  @property({ type: Boolean }) uppercase = false
 
-  @property({ type: Boolean }) rounded: boolean = false
+  @property({ type: Boolean }) capitalize = false
 
-  @property({ type: Boolean }) fullwidth: boolean = false
+  @property({ type: Boolean }) rounded = false
+
+  @property({ type: Boolean }) fullwidth = false
+
+  @property({ type: Boolean }) disabled = false
 
   @query('.button') $button!: HTMLButtonElement
 
@@ -72,8 +76,16 @@ export default class Button extends LitElement {
         `var(--hwc-box-shadow-${this.elevation})`
       )
     }
+
+    if (_changedProperties.has('disabled')) {
+      this.setAttribute('aria-disabled', `${this.disabled}`)
+      this.setAttribute('tabindex', this.disabled ? '-1' : '0')
+    }
   }
 
+  /**
+   * Returns the associated form element. More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals
+   */
   get form (): HTMLFormElement | null {
     return this.internals.form
   }
@@ -116,6 +128,7 @@ export default class Button extends LitElement {
       <button
         class="button"
         type=${this.type}
+        ?disabled=${this.disabled}
         @click=${this._onHandleClick}
       >
         <div class="button__wrapper">

@@ -29,6 +29,7 @@ const meta = {
       ?uppercase=${args.uppercase}
       ?lowercase=${args.lowercase}
       ?capitalize=${args.capitalize}
+      ?disabled=${args.disabled}
     >
       ${when(args._ripple, () => html`<hwc-ripple></hwc-ripple>`)}
 
@@ -64,6 +65,10 @@ const meta = {
     type: {
       control: 'inline-radio',
       options: ['button', 'submit', 'reset', 'menu']
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'This Boolean attribute prevents the user from interacting with the button: it cannot be pressed or focused.'
     },
     fullwidth: {
       control: 'boolean',
@@ -196,5 +201,32 @@ export const Icon: Story = {
   args: {
     appearance: 'icon',
     color: 'indigo-darken-2'
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    color: 'brown-darken-2'
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const $hwcbutton = canvas.getByRole('button', { name: BUTTON_TEXT_CONTENT })
+
+    expect($hwcbutton).toBeInTheDocument()
+    expect($hwcbutton).toHaveAttribute('disabled')
+    expect($hwcbutton).toHaveAttribute('tabindex', '-1')
+    expect($hwcbutton).toHaveAttribute('aria-disabled', 'true')
+    expect($hwcbutton).toHaveStyle({
+      opacity: '0.5',
+      'pointer-events': 'none',
+      'user-select': 'none'
+    })
+
+    const $button = $hwcbutton.shadowRoot?.querySelector('button')
+
+    expect($button).toBeInTheDocument()
+    expect($button).toHaveAttribute('disabled')
   }
 }
