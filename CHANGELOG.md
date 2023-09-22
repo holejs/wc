@@ -1,3 +1,12 @@
+# [0.12.0](https://github.com/holejs/wc/compare/v0.11.1...v0.12.0) (2023-09-22)
+
+
+### Features
+
+* **button:** Added support for the "disabled" property ([f3829e9](https://github.com/holejs/wc/commit/f3829e97e5227d37eecdc37ba1f3d3fdaca907aa))
+
+
+
 ## [0.11.1](https://github.com/holejs/wc/compare/v0.11.0...v0.11.1) (2023-09-17)
 
 
