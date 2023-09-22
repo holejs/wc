@@ -10,7 +10,7 @@ import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './button.css?inline'
 
-import { getAllAriaProps, hasAttr, isValidColorFormat } from '../utils'
+import { getAllAriaProps, isValidColorFormat } from '../utils'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -30,7 +30,7 @@ export default class Button extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   // eslint-disable-next-line no-undef
-  private readonly internals: ElementInternals | null = null
+  private readonly internals = this.attachInternals()
 
   // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
   static formAssociated = true
@@ -55,14 +55,6 @@ export default class Button extends LitElement {
 
   @query('.button') $button!: HTMLButtonElement
 
-  constructor () {
-    super()
-
-    if (hasAttr(this, 'attachInternals')) {
-      this.internals = this.attachInternals()
-    }
-  }
-
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     getAllAriaProps(this).forEach((attr) => this.$button.setAttribute(attr.name, attr.value))
   }
@@ -82,6 +74,10 @@ export default class Button extends LitElement {
     }
   }
 
+  get form (): HTMLFormElement | null {
+    return this.internals.form
+  }
+
   /**
    * Handles the click event on the custom `hwc-button`.
    *
@@ -90,7 +86,7 @@ export default class Button extends LitElement {
    *
    * @param {MouseEvent} _event - The click event of the button.
    */
-  private _handleClick (_event: MouseEvent): void {
+  private _onHandleClick (_event: MouseEvent): void {
     const { type, internals } = this
 
     if (!internals) return
@@ -103,7 +99,7 @@ export default class Button extends LitElement {
     if (!(isSubmit || isReset)) return
 
     // Get the form associated with the `hwc-button` component.
-    const { form: $form } = internals
+    const $form = this.form
 
     // If there is no associated form, do nothing.
     if (!$form) return
@@ -120,7 +116,7 @@ export default class Button extends LitElement {
       <button
         class="button"
         type=${this.type}
-        @click=${this._handleClick}
+        @click=${this._onHandleClick}
       >
         <div class="button__wrapper">
           <slot></slot>
