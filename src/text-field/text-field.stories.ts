@@ -161,7 +161,7 @@ export const Basic: Story = {
 
 export const Errors: Story = {
   args: {},
-  render: (_args: any) => html`
+  render: (args: any) => html`
     <div class="row justify-content-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6">
         <form @submit=${_onHandleSubmit}>
@@ -177,6 +177,8 @@ export const Errors: Story = {
                 data-error-message-minlength="The field must have at least 3 characters."
                 data-error-message-maxlength="The field must have a maximum of 10 characters."
                 autofocus
+                appearance=${args.appearance || 'outlined'}
+                color=${args.color || 'blue-darken-2'}
               >
                 <span style="display: flex" slot="prepend-inner">
                   <svg
@@ -204,6 +206,8 @@ export const Errors: Story = {
                 data-error-message-required="This field is required."
                 data-error-message-minlength="The field must have at least 3 characters."
                 data-error-message-maxlength="The field must have a maximum of 10 characters."
+                appearance=${args.appearance || 'outlined'}
+                color=${args.color || 'blue-darken-2'}
               >
                 <span style="display: flex" slot="prepend-inner">
                   <svg
@@ -231,6 +235,8 @@ export const Errors: Story = {
                 rules="required|email"
                 data-error-message-required="This field is required."
                 data-error-message-email="The email is not valid."
+                appearance=${args.appearance || 'outlined'}
+                color=${args.color || 'blue-darken-2'}
                 clearable
               >
                 <span style="display: flex" slot="prepend-inner">
@@ -257,6 +263,8 @@ export const Errors: Story = {
                 rules="required|pattern:^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$"
                 data-error-message-required="This field is required."
                 data-error-message-pattern="The password must have at least 8 characters, a capital letter, a symbol and a number."
+                appearance=${args.appearance || 'outlined'}
+                color=${args.color || 'blue-darken-2'}
                 clearable
               >
                 <span style="display: flex" slot="prepend-inner">
