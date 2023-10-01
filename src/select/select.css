@@ -37,7 +37,7 @@
   font-size: var(--hwc-select-font-size, 1rem);
 }
 
-.select__control:focus-within {
+:host([aria-expanded="true"]) .select__control {
   outline: none;
   border-color: var(--hwc-select-primary-color, var(--hwc-blue-darken-2));
 }

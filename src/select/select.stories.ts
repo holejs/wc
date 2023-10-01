@@ -22,7 +22,7 @@ const _onHandleSubmit = (ev: Event): void => {
 const meta = {
   title: 'Example/Selects',
   tags: ['autodocs'],
-  render: (_args: any) => html`
+  render: ({ name, multiple = false }: any) => html`
     <div>
       <style>
         .container__option {
@@ -45,7 +45,7 @@ const meta = {
             <form @submit=${_onHandleSubmit}>
               <div class="row">
                 <div class="col-12 py-3">
-                  <hwc-select name="users">
+                  <hwc-select name=${name} ?multiple=${multiple}>
                     <hwc-select-option value="violet" selected>
                       <div class="container__option">
                         <span style="background: #963ec5;"></span>
@@ -78,11 +78,33 @@ const meta = {
       </div>
     </div>
   `,
-  argTypes: {}
+  argTypes: {
+    name: {
+      control: 'text',
+      description: 'The name of the select.'
+    },
+    color: {
+      control: 'color',
+      description: 'The color of the select.'
+    },
+    multiple: {
+      control: 'boolean',
+      description: 'If true, the user can select multiple options.'
+    }
+  }
 }
 
 export default meta
 
 export const Basic: Story = {
-  args: {}
+  args: {
+    name: 'colors'
+  }
+}
+
+export const Multiple: Story = {
+  args: {
+    name: 'colors',
+    multiple: true
+  }
 }

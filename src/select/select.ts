@@ -32,6 +32,8 @@ export class HWCSelect extends LitElement {
 
   @property({ type: String }) color!: string
 
+  @property({ type: Boolean }) multiple!: Boolean
+
   @property({ attribute: false }) options: string[] = []
 
   @property({ type: Boolean, attribute: false }) expanded = false
@@ -95,7 +97,9 @@ export class HWCSelect extends LitElement {
    * @returns {void}
    */
   appendOption (value: string): void {
-    this.options = [value]
+    this.multiple
+      ? this.options.push(value)
+      : this.options = [value]
 
     this.requestUpdate('options')
   }
@@ -224,22 +228,27 @@ export class HWCOption extends LitElement {
   private _onHandleClick (_ev: Event): void {
     const $select = this._getSelectNode()
 
-    // TODO: Remove this code if you want to allow multiple selections.
-    // if (this.selected) {
-    //   this.selected = false
+    if (!$select) {
+      throw new Error('The option must be inside a select.')
+    }
 
-    //   $select?.removeOption(this.value)
+    const isSingleSelect = !$select.multiple
 
-    //   return $select?.close()
-    // }
+    if (isSingleSelect) {
+      this._unselectOptions()
+    }
 
-    this._unselectOptions()
+    if (this.selected) {
+      this.selected = false
+      $select?.removeOption(this.value)
+    } else {
+      this.selected = true
+      $select?.appendOption(this.value)
+    }
 
-    this.selected = true
-
-    $select?.appendOption(this.value)
-
-    $select?.close()
+    if (isSingleSelect) {
+      $select?.close()
+    }
   }
 
   protected render (): unknown {
