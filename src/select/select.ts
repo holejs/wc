@@ -6,6 +6,8 @@ import { map } from 'lit/directives/map.js'
 
 import styles from './select.css?inline'
 
+import { isValidColorFormat } from '../utils'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
@@ -28,9 +30,11 @@ export class HWCSelect extends LitElement {
 
   @property({ type: String }) name!: string
 
+  @property({ type: String }) color!: string
+
   @property({ attribute: false }) options: string[] = []
 
-  @property({ type: Boolean, attribute: false }) open = false
+  @property({ type: Boolean, attribute: false }) expanded = false
 
   connectedCallback (): void {
     super.connectedCallback()
@@ -40,6 +44,16 @@ export class HWCSelect extends LitElement {
     this.setAttribute('aria-expanded', 'false')
 
     this.form?.addEventListener('reset', this._onHandleReset.bind(this))
+
+    document.addEventListener('click', this._handleDocumentClick.bind(this))
+  }
+
+  private _handleDocumentClick (ev: Event): void {
+    const isClickInside = this.contains(ev.target as Node)
+
+    if (!isClickInside) {
+      this.close()
+    }
   }
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -51,8 +65,14 @@ export class HWCSelect extends LitElement {
       this.internals.setFormValue(formData)
     }
 
-    if (_changedProperties.has('open')) {
-      this._toggleAriaExpanded(this.open)
+    if (_changedProperties.has('expanded')) {
+      this._toggleAriaExpanded()
+    }
+
+    if (_changedProperties.has('color')) {
+      const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
+
+      this.style.setProperty('--hwc-select-primary-color', color)
     }
   }
 
@@ -60,6 +80,8 @@ export class HWCSelect extends LitElement {
     super.disconnectedCallback()
 
     this.form?.removeEventListener('reset', this._onHandleReset.bind(this))
+
+    document.removeEventListener('click', this._handleDocumentClick.bind(this))
   }
 
   get form (): HTMLFormElement | null {
@@ -89,24 +111,28 @@ export class HWCSelect extends LitElement {
     this.requestUpdate('options')
   }
 
-  public close (): void {
-    this.open = false
-    this.requestUpdate('open')
+  close (): void {
+    if (this.expanded === false) return
+
+    this.expanded = false
+
+    this.requestUpdate('expanded')
+  }
+
+  open (): void {
+    if (this.expanded === true) return
+
+    this.expanded = true
+
+    this.requestUpdate('expanded')
   }
 
   private _getOptionsNode (): NodeListOf<HWCOption> {
     return this.querySelectorAll('hwc-select-option')
   }
 
-  private _toggleAriaExpanded (state?: boolean): void {
-    this.setAttribute(
-      'aria-expanded',
-      state === undefined
-        ? this.getAttribute('aria-expanded') === 'true'
-          ? 'false'
-          : 'true'
-        : state.toString()
-    )
+  private _toggleAriaExpanded (_state?: boolean): void {
+    this.setAttribute('aria-expanded', String(this.expanded))
   }
 
   private _onHandleReset (): void {
@@ -118,7 +144,9 @@ export class HWCSelect extends LitElement {
   }
 
   private _onHandleClick (): void {
-    this._toggleAriaExpanded()
+    this.expanded === false
+      ? this.open()
+      : this.close()
   }
 
   protected render (): unknown {
