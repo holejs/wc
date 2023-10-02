@@ -24,7 +24,15 @@ const _onHandleSubmit = (ev: Event): void => {
 const meta = {
   title: 'Example/Selects',
   tags: ['autodocs'],
-  render: ({ name, label, color, hint, multiple = false }: any) => html`
+  render: ({
+    name,
+    label,
+    color,
+    hint,
+    multiple = false,
+    disabled = false,
+    readonly = false
+  }: any) => html`
     <div>
       <style>
         .container__option {
@@ -53,6 +61,8 @@ const meta = {
                     color=${color}
                     hint=${hint}
                     ?multiple=${multiple}
+                    ?disabled=${disabled}
+                    ?readonly=${readonly}
                   >
                     <hwc-select-option value="violet" selected>
                       <div class="container__option">
@@ -106,6 +116,14 @@ const meta = {
     multiple: {
       control: 'boolean',
       description: 'If true, the user can select multiple options.'
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'If true, the select is disabled.'
+    },
+    readonly: {
+      control: 'boolean',
+      description: 'If true, the select is readonly.'
     }
   }
 }

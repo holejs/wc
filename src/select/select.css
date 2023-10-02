@@ -63,6 +63,13 @@
   color: var(--hwc-select-details-text-color, var(--hwc-text-field-color, var(--hwc-grey-lighten-1)));
 }
 
+/* Disabled */
+:host([disabled]) {
+  cursor: not-allowed;
+  user-select: none;
+  opacity: 0.5;
+}
+
 /* Options */
 .select__options {
   position: absolute;

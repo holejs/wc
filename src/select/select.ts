@@ -3,13 +3,13 @@
 import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
 import { map } from 'lit/directives/map.js'
+import { when } from 'lit/directives/when.js'
 
 import styles from './select.css?inline'
 
 import { HWCSelectOption } from './select-option.js'
 
 import { generateHash, isValidColorFormat } from '../utils.js'
-import { when } from 'lit/directives/when.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -38,7 +38,11 @@ export class HWCSelect extends LitElement {
 
   @property({ type: String }) color!: string
 
-  @property({ type: Boolean }) multiple!: Boolean
+  @property({ type: Boolean }) multiple: Boolean = false
+
+  @property({ type: Boolean }) disabled = false
+
+  @property({ type: Boolean }) readonly = false
 
   @property({ attribute: false }) options: string[] = []
 
@@ -76,14 +80,18 @@ export class HWCSelect extends LitElement {
       this.internals.setFormValue(formData)
     }
 
-    if (_changedProperties.has('expanded')) {
-      this._toggleAriaExpanded()
-    }
-
     if (_changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
       this.style.setProperty('--hwc-select-primary-color', color)
+    }
+
+    if (_changedProperties.has('expanded')) {
+      this.ariaExpanded = String(this.expanded)
+    }
+
+    if (_changedProperties.has('disabled')) {
+      this.ariaDisabled = String(this.disabled)
     }
   }
 
@@ -125,28 +133,34 @@ export class HWCSelect extends LitElement {
     this.requestUpdate('options')
   }
 
+  /**
+   * Close the menu of the select if it is expanded.
+   *
+   * @returns {void}
+   */
   close (): void {
-    if (this.expanded === false) return
+    if (!this.expanded) return
 
     this.expanded = false
-
     this.requestUpdate('expanded')
   }
 
+  /**
+   * Open the menu of the select if it is not expanded.
+   *
+   * @returns {void}
+   */
   open (): void {
-    if (this.expanded === true) return
+    const isDisabled = this.readonly || this.disabled
+
+    if (this.expanded || isDisabled) return
 
     this.expanded = true
-
     this.requestUpdate('expanded')
   }
 
   private _getOptionsNode (): NodeListOf<HWCSelectOption> {
     return this.querySelectorAll('hwc-select-option')
-  }
-
-  private _toggleAriaExpanded (): void {
-    this.ariaExpanded = String(this.expanded)
   }
 
   private _onHandleReset (): void {
@@ -185,6 +199,7 @@ export class HWCSelect extends LitElement {
               type="button"
               id=${this._uniqueId}
               class="select__control"
+              ?disabled=${this.disabled}
               @click=${this._onHandleClick}
             >
               ${map(this.options, (option, index) => {
