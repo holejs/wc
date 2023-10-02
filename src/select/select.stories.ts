@@ -2,6 +2,8 @@ import type { StoryObj } from '@storybook/web-components'
 import { html } from 'lit'
 
 import '../button/button.js'
+
+import './select-option.js'
 import './select.js'
 
 // eslint-disable-next-line no-undef

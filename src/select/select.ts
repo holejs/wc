@@ -6,13 +6,14 @@ import { map } from 'lit/directives/map.js'
 
 import styles from './select.css?inline'
 
-import { isValidColorFormat } from '../utils'
+import { HWCSelectOption } from './select-option.js'
+
+import { isValidColorFormat } from '../utils.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
     'hwc-select': HWCSelect;
-    'hwc-select-option': HWCOption;
   }
 }
 
@@ -41,10 +42,11 @@ export class HWCSelect extends LitElement {
   connectedCallback (): void {
     super.connectedCallback()
 
-    this.setAttribute('role', 'combobox')
-    this.setAttribute('aria-haspopup', 'listbox')
-    this.setAttribute('aria-expanded', 'false')
+    // Initialize aria attributes.
+    this.role = 'combobox'
+    this.ariaHasPopup = 'listbox'
 
+    // Initialize the event listeners.
     this.form?.addEventListener('reset', this._onHandleReset.bind(this))
 
     document.addEventListener('click', this._handleDocumentClick.bind(this))
@@ -81,6 +83,7 @@ export class HWCSelect extends LitElement {
   disconnectedCallback (): void {
     super.disconnectedCallback()
 
+    // Remove the event listeners.
     this.form?.removeEventListener('reset', this._onHandleReset.bind(this))
 
     document.removeEventListener('click', this._handleDocumentClick.bind(this))
@@ -131,12 +134,12 @@ export class HWCSelect extends LitElement {
     this.requestUpdate('expanded')
   }
 
-  private _getOptionsNode (): NodeListOf<HWCOption> {
+  private _getOptionsNode (): NodeListOf<HWCSelectOption> {
     return this.querySelectorAll('hwc-select-option')
   }
 
-  private _toggleAriaExpanded (_state?: boolean): void {
-    this.setAttribute('aria-expanded', String(this.expanded))
+  private _toggleAriaExpanded (): void {
+    this.ariaExpanded = String(this.expanded)
   }
 
   private _onHandleReset (): void {
@@ -178,86 +181,6 @@ export class HWCSelect extends LitElement {
           </div>
         </div>
       </div>
-    `
-  }
-}
-
-@customElement('hwc-select-option')
-export class HWCOption extends LitElement {
-  static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
-
-  @property({ type: String }) value!: string
-
-  @property({ type: Boolean, reflect: true }) selected = false
-
-  private _root: ParentNode | null = null
-
-  connectedCallback (): void {
-    super.connectedCallback()
-
-    this._root = this.getRootNode() as ParentNode
-  }
-
-  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (this.selected) {
-      this._getSelectNode()?.appendOption(this.value)
-    }
-  }
-
-  private _getSelectOptionsNode (): HWCOption[] {
-    return Array.from(this._root?.querySelectorAll('hwc-select-option') as NodeListOf<HWCOption>)
-  }
-
-  private _unselectOptions (): void {
-    const $select = this._getSelectNode()
-
-    this._getSelectOptionsNode().forEach(($option) => {
-      $option.selected = false
-      $select?.removeOption($option.value)
-    })
-  }
-
-  /**
-   * This method is used to get the parent node of the option.
-   * In this case, the parent node is the `<hwc-select>`.
-   */
-  private _getSelectNode (): HWCSelect | null {
-    return this.closest('hwc-select')
-  }
-
-  private _onHandleClick (_ev: Event): void {
-    const $select = this._getSelectNode()
-
-    if (!$select) {
-      throw new Error('The option must be inside a select.')
-    }
-
-    const isSingleSelect = !$select.multiple
-
-    if (isSingleSelect) {
-      this._unselectOptions()
-    }
-
-    if (this.selected) {
-      this.selected = false
-      $select?.removeOption(this.value)
-    } else {
-      this.selected = true
-      $select?.appendOption(this.value)
-    }
-
-    if (isSingleSelect) {
-      $select?.close()
-    }
-  }
-
-  protected render (): unknown {
-    return html`
-      <li @click=${this._onHandleClick} class="select-suggestions__item">
-        <button class="select-suggestion__button">
-          <slot></slot>
-        </button>
-      </li>
     `
   }
 }
