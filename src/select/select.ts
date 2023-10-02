@@ -8,7 +8,8 @@ import styles from './select.css?inline'
 
 import { HWCSelectOption } from './select-option.js'
 
-import { isValidColorFormat } from '../utils.js'
+import { generateHash, isValidColorFormat } from '../utils.js'
+import { when } from 'lit/directives/when.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -31,6 +32,8 @@ export class HWCSelect extends LitElement {
 
   @property({ type: String }) name!: string
 
+  @property({ type: String }) label!: string
+
   @property({ type: String }) color!: string
 
   @property({ type: Boolean }) multiple!: Boolean
@@ -38,6 +41,8 @@ export class HWCSelect extends LitElement {
   @property({ attribute: false }) options: string[] = []
 
   @property({ type: Boolean, attribute: false }) expanded = false
+
+  private _uniqueId = generateHash()
 
   connectedCallback (): void {
     super.connectedCallback()
@@ -161,8 +166,22 @@ export class HWCSelect extends LitElement {
       <div class="select">
         <div class="select__wrapper">
           <div class="select__content">
+            <!-- Label -->
+            ${
+              when(
+                this.label,
+                () => html`
+                  <label
+                    for=${this._uniqueId}
+                    class="select__label"
+                  >${this.label}</label>
+                `
+              )
+            }
+
             <button
               type="button"
+              id=${this._uniqueId}
               class="select__control"
               @click=${this._onHandleClick}
             >
