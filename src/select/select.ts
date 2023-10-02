@@ -34,6 +34,8 @@ export class HWCSelect extends LitElement {
 
   @property({ type: String }) label!: string
 
+  @property({ type: String }) hint!: string
+
   @property({ type: String }) color!: string
 
   @property({ type: Boolean }) multiple!: Boolean
@@ -199,6 +201,18 @@ export class HWCSelect extends LitElement {
             </ul>
           </div>
         </div>
+
+        <!-- Details -->
+        ${
+          when(
+            this.hint,
+            () => html`
+              <div class="select__details">
+                <span>${this.hint}</span>
+              </div>
+            `
+          )
+        }
       </div>
     `
   }

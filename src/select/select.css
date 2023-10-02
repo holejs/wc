@@ -55,6 +55,15 @@
   color: var(--hwc-select-primary-color, var(--hwc-blue-darken-2));
 }
 
+/* Details */
+.select__details {
+  margin-top: 5px;
+  font-size: var(--hwc-select-details-font-size, var(--hwc-select-font-size, 1rem));
+  font-family: var(--hwc-select-font-family, 'Nunito Sans', sans-serif);
+  color: var(--hwc-select-details-text-color, var(--hwc-text-field-color, var(--hwc-grey-lighten-1)));
+}
+
+/* Options */
 .select__options {
   position: absolute;
   display: none;

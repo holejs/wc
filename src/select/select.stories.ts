@@ -24,7 +24,7 @@ const _onHandleSubmit = (ev: Event): void => {
 const meta = {
   title: 'Example/Selects',
   tags: ['autodocs'],
-  render: ({ name, label, color, multiple = false }: any) => html`
+  render: ({ name, label, color, hint, multiple = false }: any) => html`
     <div>
       <style>
         .container__option {
@@ -51,6 +51,7 @@ const meta = {
                     name=${name}
                     label=${label}
                     color=${color}
+                    hint=${hint}
                     ?multiple=${multiple}
                   >
                     <hwc-select-option value="violet" selected>
@@ -94,6 +95,10 @@ const meta = {
       control: 'text',
       description: 'The label of the select.'
     },
+    hint: {
+      control: 'text',
+      description: 'Provides a hint or instruction to help the user complete the field.'
+    },
     color: {
       control: 'color',
       description: 'The color of the select.'
@@ -110,7 +115,8 @@ export default meta
 export const Basic: Story = {
   args: {
     name: 'colors',
-    label: 'Color'
+    label: 'Color',
+    hint: 'Select your favorite color.'
   }
 }
 
@@ -118,6 +124,7 @@ export const Multiple: Story = {
   args: {
     name: 'colors',
     label: 'Color',
-    multiple: true
+    multiple: true,
+    hint: 'Select your favorite color.'
   }
 }
