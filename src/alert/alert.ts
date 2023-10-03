@@ -11,7 +11,7 @@ import '../button/button'
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-alert': Alert;
+    'hwc-alert': HWCAlert;
   }
 }
 
@@ -20,7 +20,7 @@ export type AlertAppearance = 'filled' | 'text' | 'outlined'
 export type AlertType = 'info' | 'success' | 'warning' | 'error'
 
 @customElement('hwc-alert')
-export default class Alert extends LitElement {
+export class HWCAlert extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   @property({ type: String }) appearance: AlertAppearance = 'filled'
@@ -116,5 +116,3 @@ export default class Alert extends LitElement {
     `
   }
 }
-
-export class HWCAlert extends Alert {}

@@ -27,16 +27,8 @@ declare global {
   }
 }
 
-/**
- * TODO's:
- *
- * - [x] Add support for `disable` state.
- * - [x] Prevent the user select many radios with the same name via attributes.
- * - [ ] Simplify the code and remove unnecessary code.
- */
-
 @customElement('hwc-radio')
-export default class Radio extends LitElement {
+export class HWCRadio extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   readonly internals = this.attachInternals()
@@ -243,7 +235,7 @@ export default class Radio extends LitElement {
 
     if (!name || !this._root) return []
 
-    const $radioNodes = this._root.querySelectorAll<Radio>(`[name="${name}"]`)
+    const $radioNodes = this._root.querySelectorAll<HWCRadio>(`[name="${name}"]`)
 
     return Array.from($radioNodes)
   }
@@ -332,5 +324,3 @@ export default class Radio extends LitElement {
     `
   }
 }
-
-export class HWCRadio extends Radio {}

@@ -26,7 +26,7 @@ import '../button/button'
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-text-field': TextField;
+    'hwc-text-field': HWCTextField;
   }
 }
 
@@ -61,7 +61,7 @@ const _validateType = (value: string | null) => {
 }
 
 @customElement('hwc-text-field')
-export default class TextField extends LitElement {
+export class HWCTextField extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   @query('input') $input!: HTMLInputElement
@@ -458,5 +458,3 @@ export default class TextField extends LitElement {
     `
   }
 }
-
-export class HWCTextField extends TextField {}

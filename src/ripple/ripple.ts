@@ -8,12 +8,12 @@ import { isValidColorFormat } from '../utils'
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-ripple': Ripple;
+    'hwc-ripple': HWCRipple;
   }
 }
 
 @customElement('hwc-ripple')
-export default class Ripple extends LitElement {
+export class HWCRipple extends LitElement {
   static styles = css`${unsafeCSS(styles)}`
 
   @property({ type: String }) color!: string
@@ -66,5 +66,3 @@ export default class Ripple extends LitElement {
     return html`<slot></slot>`
   }
 }
-
-export class HWCRipple extends Ripple {}

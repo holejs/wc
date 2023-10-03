@@ -8,14 +8,14 @@ import { isValidColorFormat } from '../utils'
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-card': Card;
+    'hwc-card': HWCCard;
   }
 }
 
 export type CardElevation = '0' | '1' | '2' | '3' | '4' | '5'
 
 @customElement('hwc-card')
-export default class Card extends LitElement {
+export class HWCCard extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   @query('.card__header') private $cardHeader!: HTMLElement
@@ -86,5 +86,3 @@ export default class Card extends LitElement {
     `
   }
 }
-
-export class HWCCard extends Card {}

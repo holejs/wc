@@ -15,12 +15,12 @@ import { when } from 'lit/directives/when.js'
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-checkbox': Checkbox;
+    'hwc-checkbox': HWCCheckbox;
   }
 }
 
 @customElement('hwc-checkbox')
-export default class Checkbox extends LitElement {
+export class HWCCheckbox extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   @query('input') $input!: HTMLInputElement
@@ -244,5 +244,3 @@ export default class Checkbox extends LitElement {
     `
   }
 }
-
-export class HWCCheckbox extends Checkbox {}

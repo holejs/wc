@@ -15,7 +15,7 @@ import { getAllAriaProps, isValidColorFormat } from '../utils'
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-button': Button;
+    'hwc-button': HWCButton;
   }
 }
 
@@ -26,7 +26,7 @@ export type ButtonAppearance = 'raised' | 'outlined' | 'text' | 'fab' | 'icon'
 export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 
 @customElement('hwc-button')
-export default class Button extends LitElement {
+export class HWCButton extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   // eslint-disable-next-line no-undef
@@ -137,5 +137,3 @@ export default class Button extends LitElement {
     `
   }
 }
-
-export class HWCButton extends Button {}

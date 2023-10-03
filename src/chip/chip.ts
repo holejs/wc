@@ -11,7 +11,7 @@ import '../button/button'
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-chip': Chip;
+    'hwc-chip': HWCChip;
   }
 }
 
@@ -20,7 +20,7 @@ export type ChipAppearence = 'filled' | 'outlined' | 'text'
 export type ChipSize = 'x-small' | 'small' | 'regular' | 'large' | 'x-large'
 
 @customElement('hwc-chip')
-export default class Chip extends LitElement {
+export class HWCChip extends LitElement {
   static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
 
   @property({ type: String, reflect: true }) appearance: ChipAppearence = 'filled'
@@ -92,5 +92,3 @@ export default class Chip extends LitElement {
     `
   }
 }
-
-export class HWCChip extends Chip {}
