@@ -79,7 +79,6 @@ export default class Button extends LitElement {
 
     if (_changedProperties.has('disabled')) {
       this.setAttribute('aria-disabled', `${this.disabled}`)
-      this.setAttribute('tabindex', this.disabled ? '-1' : '0')
     }
   }
 
