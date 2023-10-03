@@ -6,6 +6,8 @@
 
 :host {
   display: inline-block;
+  position: relative;
+  z-index: var(--hwc-button-z-index, 0);
   width: auto;
   height: auto;
 

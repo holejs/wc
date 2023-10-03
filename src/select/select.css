@@ -77,6 +77,7 @@
   width: 100%;
   right: 0;
   left: 0;
+  z-index: var(--hwc-select-z-index, 10);
 }
 
 .select-options__wrapper {
@@ -85,7 +86,6 @@
   background: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.18);
   border-radius: 0.75rem;
-  z-index: 1;
 }
 
 :host([aria-expanded='true']) .select__options {
