@@ -10,7 +10,8 @@ import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './button.css?inline'
 
-import { getAllAriaProps, isValidColorFormat } from '../utils'
+import { isValidColorFormat } from '../utils/isValidColorFormat.js'
+import { getAllAriaProps } from '../utils/getAllAriaProps.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

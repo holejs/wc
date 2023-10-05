@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js'
 
 import styles from './ripple.css?inline'
 
-import { isValidColorFormat } from '../utils'
+import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

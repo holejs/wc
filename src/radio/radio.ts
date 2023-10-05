@@ -12,13 +12,12 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './radio.css?inline'
 
-import {
-  isValidColorFormat,
-  getDataAttributes,
-  generateHash,
-  parseRules
-} from '../utils'
-import { Feedback, createValidationControl, validationsMap } from '../validations'
+import { Feedback, createValidationControl, validationsMap } from '../validations.js'
+
+import { isValidColorFormat } from '../utils/isValidColorFormat.js'
+import { getDataAttributes } from '../utils/getDataAtrributes.js'
+import { generateHash } from '../utils/generateHash.js'
+import { parseRules } from '../utils/parseRules.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

@@ -2,14 +2,15 @@
 /* eslint-disable no-undef */
 import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
-import { map } from 'lit/directives/map.js'
 import { when } from 'lit/directives/when.js'
+import { map } from 'lit/directives/map.js'
 
 import styles from './select.css?inline'
 
 import { HWCSelectOption } from './select-option.js'
 
-import { generateHash, isValidColorFormat } from '../utils.js'
+import { isValidColorFormat } from '../utils/isValidColorFormat.js'
+import { generateHash } from '../utils/generateHash.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

@@ -1,16 +1,15 @@
 import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
 import { customElement, property, query, state } from 'lit/decorators.js'
+import { when } from 'lit/directives/when.js'
 
 import styles from './checkbox.css?inline'
 
-import {
-  generateHash,
-  getDataAttributes,
-  isValidColorFormat,
-  parseRules
-} from '../utils'
-import { Feedback, createValidationControl, validationsMap } from '../validations'
-import { when } from 'lit/directives/when.js'
+import { isValidColorFormat } from '../utils/isValidColorFormat.js'
+import { getDataAttributes } from '../utils/getDataAtrributes.js'
+import { generateHash } from '../utils/generateHash.js'
+import { parseRules } from '../utils/parseRules.js'
+
+import { Feedback, createValidationControl, validationsMap } from '../validations.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

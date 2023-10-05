@@ -1,12 +1,20 @@
-import { CSSResultGroup, LitElement, PropertyValueMap, TemplateResult, css, html, unsafeCSS } from 'lit'
+import {
+  PropertyValueMap,
+  CSSResultGroup,
+  TemplateResult,
+  LitElement,
+  unsafeCSS,
+  html,
+  css
+} from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
 
 import styles from './alert.css?inline'
 
-import { isValidColorFormat } from '../utils'
+import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
-import '../button/button'
+import '../button/button.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

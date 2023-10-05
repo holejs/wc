@@ -4,9 +4,9 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './chip.css?inline'
 
-import { isValidColorFormat } from '../utils'
+import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
-import '../button/button'
+import '../button/button.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

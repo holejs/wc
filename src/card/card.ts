@@ -3,7 +3,7 @@ import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './card.css?inline'
 
-import { isValidColorFormat } from '../utils'
+import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
