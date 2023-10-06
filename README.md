@@ -58,6 +58,7 @@ Bellow you can see the list of components that are currently available.
 - [Chips](/docs/components/chips.md)
 - [Radios](/docs/components/radios.md)
 - [Ripples](/docs/components/ripples.md)
+- [Selects](/docs/components/selects.md)
 - [TextFields](/docs/components/text-fields.md)
 
 ## Additional info.
