@@ -1,21 +1,3 @@
-/**
-  --hwc-select-primary-color: #3f51b5;
-  --hwc-select-secondary-color: #f50057;
-  --hwc-select-error-color: #f44336;
-
-  --hwc-select-height: 52px;
-  --hwc-select-background: white;
-
-  --hwc-select-border-width: 2px;
-  --hwc-select-border-style: solid;
-  --hwc-select-border-color: var(--hwc-grey-lighten-2);
-
-  --hwc-select-border-radius: 0.75rem;
-
-  --hwc-select-font-family: 'Nunito Sans', sans-serif;
-  --hwc-select-font-size: 1rem;
-*/
-
 .select__wrapper {
   position: relative;
 }
@@ -89,7 +71,7 @@
   margin: 0;
   padding: 0;
   max-height: var(--hwc-select-options-max-height, 200px);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 :host([aria-expanded='true']) .select__options {
