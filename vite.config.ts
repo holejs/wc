@@ -15,6 +15,10 @@ export default defineConfig({
         path.resolve(__dirname, './src/chip/chip.ts'),
         path.resolve(__dirname, './src/radio/radio.ts'),
         path.resolve(__dirname, './src/ripple/ripple.ts'),
+
+        path.resolve(__dirname, './src/select/select-option.ts'),
+        path.resolve(__dirname, './src/select/select.ts'),
+
         path.resolve(__dirname, './src/text-field/text-field.ts'),
         path.resolve(__dirname, './src/index.ts')
       ],

@@ -70,6 +70,14 @@
       "types": "./dist/types/ripple/ripple.d.ts",
       "default": "./dist/ripple.js"
     },
+    "./select/select-option.js": {
+      "types": "./dist/types/select/select-option.d.ts",
+      "default": "./dist/select-option.js"
+    },
+    "./select/select.js": {
+      "types": "./dist/types/select/select.d.ts",
+      "default": "./dist/select.js"
+    },
     "./text-field/text-field.js": {
       "types": "./dist/types/text-field/text-field.d.ts",
       "default": "./dist/text-field.js"
