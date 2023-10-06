@@ -26,7 +26,7 @@
   border-width: var(--hwc-select-border-width, 2px);
   border-style: var(--hwc-select-border-style, solid);
   border-color: var(--hwc-select-border-color, var(--hwc-grey-lighten-2));
-  border-radius: var(--hwc-select-border-radius, 0.75rem);
+  border-radius: var(--hwc-select-border-radius, 0.625rem);
   width: 100%;
   display: flex;
   align-items: center;
@@ -78,14 +78,18 @@
   right: 0;
   left: 0;
   z-index: var(--hwc-select-z-index, 10);
+  padding: 0.625rem;
+  background: white;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.18);
+  border-radius: var(--hwc-select-border-radius, 0.625rem);
 }
 
 .select-options__wrapper {
   margin: 0;
-  padding: 10px;
-  background: white;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.18);
-  border-radius: 0.75rem;
+  padding: 0;
+  max-height: var(--hwc-select-options-max-height, 200px);
+  overflow-y: scroll;
 }
 
 :host([aria-expanded='true']) .select__options {

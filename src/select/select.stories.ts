@@ -82,6 +82,18 @@ const meta = {
                         <p>Turquoise</p>
                       </div>
                     </hwc-select-option>
+                    <hwc-select-option value="red">
+                      <div class="container__option">
+                        <span style="background: #c53e43;"></span>
+                        <p>Redsunset</p>
+                      </div>
+                    </hwc-select-option>
+                    <hwc-select-option value="red">
+                      <div class="container__option">
+                        <span style="background: #c53e43;"></span>
+                        <p>Redsunset</p>
+                      </div>
+                    </hwc-select-option>
                   </hwc-select>
                 </div>
 

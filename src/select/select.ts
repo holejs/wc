@@ -45,6 +45,15 @@ export class HWCSelect extends LitElement {
 
   @property({ type: Boolean }) readonly = false
 
+  @property({ type: String, reflect: true }) role = 'combobox'
+
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'aria-haspopup'
+  })
+    ariaHasPopup = 'listbox'
+
   @property({ attribute: false }) options: string[] = []
 
   @property({ type: Boolean, attribute: false }) expanded = false
@@ -53,10 +62,6 @@ export class HWCSelect extends LitElement {
 
   connectedCallback (): void {
     super.connectedCallback()
-
-    // Initialize aria attributes.
-    this.role = 'combobox'
-    this.ariaHasPopup = 'listbox'
 
     // Initialize the event listeners.
     this.form?.addEventListener('reset', this._onHandleReset.bind(this))
