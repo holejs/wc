@@ -1,3 +1,26 @@
+# [0.13.0](https://github.com/holejs/wc/compare/v0.12.0...v0.13.0) (2023-10-06)
+
+
+### Bug Fixes
+
+* Fixed overlapping of items ([2d5c99e](https://github.com/holejs/wc/commit/2d5c99e5bbe96cf6c22bcbdb2c708a8434d55a34))
+
+
+### Features
+
+* Add imports and exports of individual components ([4a886d2](https://github.com/holejs/wc/commit/4a886d2d8b83734f62d7a71a4597d80217f57a04))
+* Added import and export of components ([425502d](https://github.com/holejs/wc/commit/425502d1df84a6cc99ace43ea8ee32e8429b600a))
+* **select:** "Multiple selection" was integrated into the component ([c17f495](https://github.com/holejs/wc/commit/c17f495eef0d92dfea9a9228639253bc728ee06f))
+* **select:** Added "hint" property ([062feda](https://github.com/holejs/wc/commit/062feda1c8d7d8f85df8f301b4eb961980911b4d))
+* **select:** Added basic functionality ([dca5cd6](https://github.com/holejs/wc/commit/dca5cd65a30f856dd3ec5cb5f486d4ff227694db))
+* **select:** Added new CSS custom props ([2df1593](https://github.com/holejs/wc/commit/2df15933b79aea56dff9ac0680470434280a9f0f))
+* **select:** Added support for the "disabled" and "readonly" property ([54fc234](https://github.com/holejs/wc/commit/54fc23463b0aa8be5e8a83e0c413338d643c9ca8))
+* **select:** Added the "color" property and corrected the expansion functionality ([7fb2c2a](https://github.com/holejs/wc/commit/7fb2c2a4da3449c8cccf2d9b3d2c71db6dc3a1fd))
+* **select:** Added the "label" property ([8245ba5](https://github.com/holejs/wc/commit/8245ba557124b0405fbaf14886cbb26c2a83220c))
+* **select:** Implement semantic control for expanding and collapsing options menu ([f8de8be](https://github.com/holejs/wc/commit/f8de8bebc847d7613c668d0d7291cd197a263e2c))
+
+
+
 # [0.12.0](https://github.com/holejs/wc/compare/v0.11.1...v0.12.0) (2023-09-22)
 
 
