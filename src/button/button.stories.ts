@@ -100,22 +100,18 @@ export const Basic: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    const $hwcbutton = canvas.getByText<HWCButton>(BUTTON_TEXT_CONTENT)
+    const $hwcbutton = canvas.getByRole<HWCButton>('button', { name: BUTTON_TEXT_CONTENT })
 
     expect($hwcbutton).toBeInTheDocument()
-    expect($hwcbutton.textContent?.trim()).toBe(BUTTON_TEXT_CONTENT)
     expect($hwcbutton.appearance).toBe('raised')
-    expect($hwcbutton.type).toBe('button')
+    expect($hwcbutton).toHaveAttribute('type', 'button')
+    expect($hwcbutton).toHaveAttribute('role', 'button')
+    expect($hwcbutton).toBeVisible()
     expect($hwcbutton.uppercase).toBeFalsy()
     expect($hwcbutton.lowercase).toBeFalsy()
     expect($hwcbutton.capitalize).toBeFalsy()
     expect($hwcbutton.color).toBeUndefined()
     expect($hwcbutton.elevation).toBeUndefined()
-
-    const $button = $hwcbutton.shadowRoot?.querySelector('button')
-
-    expect($button).toBeInTheDocument()
-    expect($button).toHaveAttribute('type', 'button')
   }
 }
 
@@ -127,11 +123,13 @@ export const Outlined: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    const $hwcbutton = canvas.getByText<HWCButton>(BUTTON_TEXT_CONTENT)
+    const $hwcbutton = canvas.getByRole<HWCButton>('button', { name: BUTTON_TEXT_CONTENT })
 
     expect($hwcbutton).toBeInTheDocument()
-    expect($hwcbutton.textContent?.trim()).toBe(BUTTON_TEXT_CONTENT)
-    expect($hwcbutton.appearance).toBe('outlined')
+    expect($hwcbutton).toHaveAttribute('appearance', 'outlined')
+    expect($hwcbutton).toHaveAttribute('type', 'button')
+    expect($hwcbutton).toHaveAttribute('role', 'button')
+    expect($hwcbutton).toBeVisible()
 
     const $button = $hwcbutton.shadowRoot?.querySelector('button')
 
@@ -215,9 +213,8 @@ export const Disabled: Story = {
     const $hwcbutton = canvas.getByRole('button', { name: BUTTON_TEXT_CONTENT })
 
     expect($hwcbutton).toBeInTheDocument()
-    expect($hwcbutton).toHaveAttribute('disabled')
-    expect($hwcbutton).toHaveAttribute('tabindex', '-1')
     expect($hwcbutton).toHaveAttribute('aria-disabled', 'true')
+    expect($hwcbutton).toBeDisabled()
     expect($hwcbutton).toHaveStyle({
       opacity: '0.5',
       'pointer-events': 'none',

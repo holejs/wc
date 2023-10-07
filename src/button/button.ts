@@ -1,17 +1,9 @@
-import {
-  PropertyValueMap,
-  CSSResultGroup,
-  LitElement,
-  unsafeCSS,
-  html,
-  css
-} from 'lit'
+import { PropertyValueMap, LitElement, unsafeCSS, html, css } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './button.css?inline'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
-import { getAllAriaProps } from '../utils/getAllAriaProps.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -28,7 +20,7 @@ export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 
 @customElement('hwc-button')
 export class HWCButton extends LitElement {
-  static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
+  static styles = css`${unsafeCSS(styles)}`
 
   // eslint-disable-next-line no-undef
   private readonly internals = this.attachInternals()
@@ -38,7 +30,7 @@ export class HWCButton extends LitElement {
 
   @property({ type: String }) appearance: ButtonAppearance = 'raised'
 
-  @property({ type: String }) type: ButtonType = 'button'
+  @property({ type: String, reflect: true }) type: ButtonType = 'button'
 
   @property({ type: String }) color!: string
 
@@ -60,10 +52,6 @@ export class HWCButton extends LitElement {
 
   @query('.button') $button!: HTMLButtonElement
 
-  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    getAllAriaProps(this).forEach((attr) => this.$button.setAttribute(attr.name, attr.value))
-  }
-
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
@@ -79,7 +67,7 @@ export class HWCButton extends LitElement {
     }
 
     if (_changedProperties.has('disabled')) {
-      this.setAttribute('aria-disabled', `${this.disabled}`)
+      this.setAttribute('aria-disabled', String(this.disabled))
     }
   }
 
