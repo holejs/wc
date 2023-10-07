@@ -1,30 +1,18 @@
-import {
-  PropertyValueMap,
-  CSSResultGroup,
-  unsafeCSS,
-  LitElement,
-  html,
-  css
-} from 'lit'
 import { customElement, property, query, state } from 'lit/decorators.js'
+import { PropertyValueMap, unsafeCSS, html, css } from 'lit'
 import { when } from 'lit/directives/when.js'
 
 import styles from './text-field.css?inline'
 
 import { TextFieldError } from '../error.js'
 
-import {
-  Feedback,
-  Validation,
-  ValidationFn,
-  createValidationControl,
-  validationsMap
-} from '../validations.js'
+import { ValidationFn, validationsMap } from '../validations.js'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
-import { getDataAttributes } from '../utils/getDataAtrributes.js'
 import { generateHash } from '../utils/generateHash.js'
 import { parseRules } from '../utils/parseRules.js'
+
+import { InputField } from '../internals/input-field.js'
 
 import '../button/button.js'
 
@@ -35,30 +23,30 @@ declare global {
   }
 }
 
-export type TextFieldType = 'date' | 'datetime' | 'datetime-local' | 'email' | 'hidden' | 'month' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'time' | 'url'
-
-export type TextFieldAppearance = 'underline' | 'outlined'
-
 const ALLOWED_TEXTFIELD_TYPES = [
-  'date',
-  'datetime',
-  'datetime-local',
+  'text',
   'email',
-  'hidden',
-  'month',
-  'number',
   'password',
+  'number',
   'search',
   'tel',
-  'text',
+  'url',
+  'date',
   'time',
-  'url'
-]
+  'datetime-local',
+  'month',
+  'hidden',
+  'datetime'
+] as const
+
+export type TextFieldType = typeof ALLOWED_TEXTFIELD_TYPES[number]
+
+export type TextFieldAppearance = 'underline' | 'outlined'
 
 const _validateType = (value: string | null) => {
   const message = `The type "${value}" is invalid. Use the following values: ${ALLOWED_TEXTFIELD_TYPES.join(', ')}.`
 
-  if (!ALLOWED_TEXTFIELD_TYPES.includes(value || '')) {
+  if (!ALLOWED_TEXTFIELD_TYPES.includes((value || '') as TextFieldType)) {
     throw new TextFieldError(message)
   }
 
@@ -66,21 +54,14 @@ const _validateType = (value: string | null) => {
 }
 
 @customElement('hwc-text-field')
-export class HWCTextField extends LitElement {
-  static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
-
-  @query('input') $input!: HTMLInputElement
+export class HWCTextField extends InputField {
+  static styles = css`${unsafeCSS(styles)}`
 
   @query('.text-field__control') $control!: HTMLDivElement
 
   @query('.prepend-inner__control') $prependInner!: HTMLDivElement
 
   @query('.append-inner__control') $appendInner!: HTMLDivElement
-
-  readonly internals = this.attachInternals()
-
-  // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
-  static formAssociated = true
 
   @property({ type: String, reflect: true }) appearance: TextFieldAppearance = 'outlined'
 
@@ -90,8 +71,6 @@ export class HWCTextField extends LitElement {
     converter: _validateType
   })
     type: TextFieldType = 'text'
-
-  @property({ type: String }) name!: string
 
   @property({ type: String }) value: string = ''
 
@@ -113,31 +92,20 @@ export class HWCTextField extends LitElement {
 
   @property({ type: Boolean }) clearable = false
 
-  @property({ type: Boolean }) disabled = false
-
-  @property({ type: Boolean }) readonly = false
-
   @state() private readonly _uniqueId = `text-field-${generateHash()}`
-
-  @state() private _feedback: Partial<Feedback> | null = null
-
-  @state() _hasDirty = false
-
-  @state() _hasBlur = false
-
-  private readonly _validator = createValidationControl()
 
   connectedCallback (): void {
     super.connectedCallback()
 
-    this.setAttribute('aria-label', this.label || '')
-
-    const ruleItems = parseRules(this.rules)
-
-    ruleItems.forEach(({ key }) => this._applyValidation(key))
+    parseRules(this.rules).forEach(({ key }) => {
+      this.addRule({
+        name: key,
+        handler: validationsMap.get(key) as ValidationFn
+      })
+    })
   }
 
-  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+  protected firstUpdated (): void {
     // Add event listeners
     this.$control.addEventListener('click', this._onFocus.bind(this))
 
@@ -148,24 +116,28 @@ export class HWCTextField extends LitElement {
 
     if (this._hasElementSlot('slot[name="append-inner"]')) this.$appendInner.remove()
 
-    this._setValue(this.value)
-
     this._configureRules()
 
-    this._onValidation()
+    this.triggerValidation()
   }
 
-  protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (_changedProperties.has('color')) {
+  protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    super.updated(changedProperties)
+
+    if (changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
       this.style.setProperty('--hwc-text-field-focused-color', color)
     }
 
-    if (_changedProperties.has('value')) {
+    if (changedProperties.has('value')) {
       this._setValue(this.value)
 
-      this._onValidation()
+      this.triggerValidation()
+    }
+
+    if (changedProperties.has('label')) {
+      this.setAttribute('aria-label', this.label || '')
     }
   }
 
@@ -179,66 +151,18 @@ export class HWCTextField extends LitElement {
   }
 
   /**
-   * Indicates if the field has lost focus.
-   */
-  get hasBlur (): boolean {
-    return this._hasBlur
-  }
-
-  /**
-   * Indicates if the field has been modified.
-   */
-  get hasDirty (): boolean {
-    return (this._hasDirty || !!this.value) && !this.hasBlur
-  }
-
-  /**
-   * Retrieves an array of all registered validation functions.
-   *
-   * @returns {Array<{ name: string, handler: ValidationFn }>} An array containing objects with `name` and `handler` properties representing registered validation functions.
-   */
-  get validations (): { name: string; handler: ValidationFn }[] {
-    return this._validator.getAllValidations()
-  }
-
-  get form (): HTMLFormElement | null {
-    return this.internals.form
-  }
-
-  /**
    * Reset the text field
    */
   reset (): void {
+    this.touched = false
+
+    this.dirty = false
+
     this._setValue('')
 
-    this._feedback = null
+    this.setValidity(null)
 
-    this._hasBlur = false
-
-    this._hasDirty = false
-
-    this._onValidation()
-  }
-
-  /**
-   * Sets a validation function for a specific name.
-   *
-   * @param {string} name - The name associated with the validation function.
-   * @param {ValidationFn} validation - The validation function to set.
-   * @returns {void}
-   */
-  setValidation (name: string, validation: ValidationFn): void {
-    this._validator.setValidation(name, validation)
-  }
-
-  /**
-   * Gets the validation function associated with a specific name.
-   *
-   * @param {string} name - The name associated with the validation function to retrieve.
-   * @returns {Validation|undefined} The validation function corresponding to the name, or undefined if not found.
-   */
-  getValidation (name: string): Validation | undefined {
-    return this._validator.getValidation(name)
+    this.triggerValidation()
   }
 
   private _hasElementSlot (query: string): boolean {
@@ -265,64 +189,10 @@ export class HWCTextField extends LitElement {
     // Parse the rules into key-value pairs.
     const ruleItems = parseRules(this.rules)
 
-    // Set data attributes (data-*) in the native input.
-    this._applyDataAttributes(this)
-
+    // Set attribute native input.
     ruleItems.forEach(({ key, value }) => {
-      // Set attribute native input.
-      this._applyInputAttribute(key, value)
+      this.$input.setAttribute(key, value || '')
     })
-  }
-
-  private _applyValidation (key: string): void {
-    const validation = validationsMap.get(key)
-
-    if (!validation) return
-
-    this._validator.setValidation(key, validation)
-  }
-
-  private _applyDataAttributes (el: HTMLElement): void {
-    getDataAttributes(el).forEach((value, key) => this._applyInputAttribute(key, value))
-  }
-
-  private _applyInputAttribute (key: string, value: string | null): void {
-    this.$input.setAttribute(key, value || '')
-  }
-
-  /**
-   * Handle validation on input events.
-   */
-  private async _onValidation (): Promise<void> {
-    // Validate the input event using the _validator.
-    const errors = await this._validator.validate({
-      input: this.$input
-    })
-
-    // Check if there are any errors.
-    const hasError = errors.length
-
-    // If there are no errors, reset the feedback and validity.
-    if (!hasError) {
-      this._feedback = null
-      this.internals.setValidity({})
-      return
-    }
-
-    const $input = this.$input
-
-    // Get the first error from the errors array.
-    const [error] = errors
-
-    // Update the feedback based on _hasBlur and _hasDirty flags.
-    this._feedback = this.hasBlur || this.hasDirty ? errors[0] : null
-
-    // Set the validity on the input element with the error message and customError flag.
-    this.internals.setValidity(
-      { ...$input.validity, customError: true },
-      error.message,
-      $input
-    )
   }
 
   /**
@@ -332,8 +202,9 @@ export class HWCTextField extends LitElement {
    * @param {InputEvent} _ev - The input event triggered.
    */
   private _onBlur (_ev: InputEvent): void {
-    this._hasBlur = true
-    this._onValidation()
+    this.touched = true
+
+    this.triggerValidation()
   }
 
   /**
@@ -347,9 +218,9 @@ export class HWCTextField extends LitElement {
 
     this._setValue($input.value)
 
-    this._hasDirty = true
+    this.dirty = true
 
-    this._onValidation()
+    this.triggerValidation()
   }
 
   /**
@@ -378,10 +249,13 @@ export class HWCTextField extends LitElement {
   }
 
   protected render (): unknown {
-    const showClearableButton = this.clearable && this.value && !this.disabled && !this.readonly
+    const showClearableButton = this.clearable &&
+      this.value &&
+      !this.disabled &&
+      !this.readonly
 
     return html`
-      <div class="text-field ${this._feedback ? 'error' : null}">
+      <div class="text-field">
         <div class="text-field__wrapper">
           <!-- Main content -->
           <div class="text-field__content">
@@ -450,10 +324,10 @@ export class HWCTextField extends LitElement {
           <!-- Details -->
           ${
             when(
-              this._feedback?.message || this.hint,
+              this.validationMessage || this.hint,
               () => html`
                 <div class="text-field__details">
-                  <span>${this._feedback?.message || this.hint}</span>
+                  <span>${this.validationMessage || this.hint}</span>
                 </div>
               `
             )

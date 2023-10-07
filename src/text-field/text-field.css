@@ -148,7 +148,7 @@
 }
 
 /* Erros */
-.text-field.error {
+:host([aria-invalid="true"]) .text-field {
   --hwc-text-field-error-color: var(--hwc-red-darken-2);
 
   --hwc-text-field-border-color: var(--hwc-text-field-error-color);

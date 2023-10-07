@@ -32,48 +32,58 @@ export const VALIDATION_MIN_KEY = 'min'
 
 export const VALIDATION_MAX_KEY = 'max'
 
-export const required: ValidationFn = async ({ input }: ValidationContext) => {
+export const required: ValidationFn = async ({ input, el }: ValidationContext) => {
   const { valueMissing } = input.validity
 
-  const message = input.getAttribute('data-error-message-required') || input.validationMessage || 'This field is required.'
+  const message = (el as any).getAttribute('data-error-message-required') ||
+    input.validationMessage ||
+    'This field is required.'
 
   if (valueMissing) return { status: 'invalid', message }
 
   return { status: 'complete' }
 }
 
-export const email: ValidationFn = async ({ input }: ValidationContext) => {
+export const email: ValidationFn = async ({ input, el }: ValidationContext) => {
   const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(input.value)
 
-  const message = input.getAttribute('data-error-message-email') || input.validationMessage || 'Email is invalid.'
+  const message = (el as any).getAttribute('data-error-message-email') ||
+    input.validationMessage ||
+    'Email is invalid.'
 
   if (!isValid) return { status: 'invalid', message }
 
   return { status: 'complete' }
 }
 
-export const minlength: ValidationFn = async ({ input }: ValidationContext) => {
+export const minlength: ValidationFn = async ({ input, el }: ValidationContext) => {
   const { value, minLength } = input
 
-  const message = input.getAttribute('data-error-message-minlength') || input.validationMessage || `It must contain at least ${minLength} characters.`
+  const message = (el as any).getAttribute('data-error-message-minlength') ||
+  input.validationMessage ||
+  `It must contain at least ${minLength} characters.`
 
   if (!(value.length >= minLength)) return { status: 'invalid', message }
 
   return { status: 'complete' }
 }
 
-export const maxlength: ValidationFn = async ({ input }: ValidationContext) => {
+export const maxlength: ValidationFn = async ({ input, el }: ValidationContext) => {
   const { value, maxLength } = input
 
-  const message = input.getAttribute('data-error-message-maxlength') || input.validationMessage || `It must contain a maximum of ${maxLength} characters.`
+  const message = (el as any).getAttribute('data-error-message-maxlength') ||
+  input.validationMessage ||
+  `It must contain a maximum of ${maxLength} characters.`
 
   if (!(value.length <= maxLength)) return { status: 'invalid', message }
 
   return { status: 'complete' }
 }
 
-export const min: ValidationFn = async ({ input }: ValidationContext) => {
-  const message = input.getAttribute('data-error-message-min') || input.validationMessage || `The value must be greater than or equal to ${input.min}.`
+export const min: ValidationFn = async ({ input, el }: ValidationContext) => {
+  const message = (el as any).getAttribute('data-error-message-min') ||
+  input.validationMessage ||
+  `The value must be greater than or equal to ${input.min}.`
 
   const { rangeUnderflow } = input.validity || {}
 
@@ -82,8 +92,10 @@ export const min: ValidationFn = async ({ input }: ValidationContext) => {
   return { status: 'complete' }
 }
 
-export const max: ValidationFn = async ({ input }: ValidationContext) => {
-  const message = input.getAttribute('data-error-message-max') || input.validationMessage || `The value must be less than or equal to ${input.max}.`
+export const max: ValidationFn = async ({ input, el }: ValidationContext) => {
+  const message = (el as any).getAttribute('data-error-message-max') ||
+  input.validationMessage ||
+  `The value must be less than or equal to ${input.max}.`
 
   const { rangeOverflow } = input.validity || {}
 
@@ -92,8 +104,10 @@ export const max: ValidationFn = async ({ input }: ValidationContext) => {
   return { status: 'complete' }
 }
 
-export const pattern: ValidationFn = async ({ input }: ValidationContext) => {
-  const message = input.getAttribute('data-error-message-pattern') || input.validationMessage || 'The value does not comply with the valid format.'
+export const pattern: ValidationFn = async ({ input, el }: ValidationContext) => {
+  const message = (el as any).getAttribute('data-error-message-pattern') ||
+  input.validationMessage ||
+  'The value does not comply with the valid format.'
 
   const { patternMismatch } = input.validity || {}
 
