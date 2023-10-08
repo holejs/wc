@@ -1,4 +1,4 @@
-import { customElement, property, query, state } from 'lit/decorators.js'
+import { customElement, property, query } from 'lit/decorators.js'
 import { PropertyValueMap, unsafeCSS, html, css } from 'lit'
 import { when } from 'lit/directives/when.js'
 
@@ -6,11 +6,8 @@ import styles from './text-field.css?inline'
 
 import { TextFieldError } from '../error.js'
 
-import { ValidationFn, validationsMap } from '../validations.js'
-
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
-import { parseRules } from '../utils/parseRules.js'
 
 import { InputField } from '../internals/input-field.js'
 
@@ -65,16 +62,12 @@ export class HWCTextField extends InputField {
 
   @property({ type: String, reflect: true }) appearance: TextFieldAppearance = 'outlined'
 
-  @property({
-    type: String,
-    reflect: true,
-    converter: _validateType
-  })
+  @property({ type: String, converter: _validateType, reflect: true })
     type: TextFieldType = 'text'
 
-  @property({ type: String }) value: string = ''
+  @property({ type: String }) value = ''
 
-  @property({ type: String, reflect: true }) autocomplete: 'on' | 'off' = 'on'
+  @property({ type: String }) autocomplete: 'on' | 'off' = 'on'
 
   @property({ type: String }) label: string | null = null
 
@@ -92,33 +85,20 @@ export class HWCTextField extends InputField {
 
   @property({ type: Boolean }) clearable = false
 
-  @state() private readonly _uniqueId = `text-field-${generateHash()}`
+  private readonly _uniqueId = `text-field-${generateHash()}`
 
-  connectedCallback (): void {
-    super.connectedCallback()
+  protected firstUpdated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    super.firstUpdated(changedProperties)
 
-    parseRules(this.rules).forEach(({ key }) => {
-      this.addRule({
-        name: key,
-        handler: validationsMap.get(key) as ValidationFn
-      })
-    })
-  }
-
-  protected firstUpdated (): void {
-    // Add event listeners
+    // Add event listeners.
     this.$control.addEventListener('click', this._onFocus.bind(this))
 
     this.form?.addEventListener('reset', this._onReset.bind(this))
 
-    // Remove inner slots if not used
+    // Remove inner slots if not used.
     if (this._hasElementSlot('slot[name="prepend-inner"]')) this.$prependInner.remove()
 
     if (this._hasElementSlot('slot[name="append-inner"]')) this.$appendInner.remove()
-
-    this._configureRules()
-
-    this.triggerValidation()
   }
 
   protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -177,22 +157,6 @@ export class HWCTextField extends InputField {
     this.$input.value = value
 
     this.internals.setFormValue(value)
-  }
-
-  /**
-   * Configures the validation rules for the input element.
-   * Parses the rules from the component's 'rules' property,
-   * sets corresponding attributes on the native input element,
-   * and associates validators based on the defined rules.
-   */
-  private _configureRules (): void {
-    // Parse the rules into key-value pairs.
-    const ruleItems = parseRules(this.rules)
-
-    // Set attribute native input.
-    ruleItems.forEach(({ key, value }) => {
-      this.$input.setAttribute(key, value || '')
-    })
   }
 
   /**
@@ -262,10 +226,11 @@ export class HWCTextField extends InputField {
             <!-- Label -->
             ${when(
               this.label,
-              () => html`<label
-                for=${this._uniqueId}
-                class="text-field__label"
-              >${this.label}</label>`
+              () => html`
+                <label for=${this._uniqueId} class="text-field__label">
+                  ${this.label}
+                </label>
+              `
             )}
 
             <div class="text-field__control">
@@ -318,20 +283,18 @@ export class HWCTextField extends InputField {
                   </hwc-button>
                 `
               )}
-              </div>
+            </div>
           </div>
 
           <!-- Details -->
-          ${
-            when(
-              this.validationMessage || this.hint,
-              () => html`
-                <div class="text-field__details">
-                  <span>${this.validationMessage || this.hint}</span>
-                </div>
-              `
-            )
-          }
+          ${when(
+            this.validationMessage || this.hint,
+            () => html`
+              <div class="text-field__details">
+                <span>${this.validationMessage || this.hint}</span>
+              </div>
+            `
+          )}
         </div>
       </div>
     `

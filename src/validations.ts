@@ -18,6 +18,10 @@ export type ValidationFn = (ctx: ValidationContext) => Promise<Feedback>
 
 export type Validation = { name: string; handler: ValidationFn };
 
+export type RuleHandler = (ctx: ValidationContext) => Promise<Feedback>
+
+export type RuleEntity = { name: string; handler: RuleHandler }
+
 export const VALIDATION_REQUIRED_KEY = 'required'
 
 export const VALIDATION_MINLENGTH_KEY = 'minlength'
@@ -31,6 +35,18 @@ export const VALIDATION_EMAIL_KEY = 'email'
 export const VALIDATION_MIN_KEY = 'min'
 
 export const VALIDATION_MAX_KEY = 'max'
+
+export const RULES_MAP = {
+  Required: 'required',
+  MinLength: 'minlength',
+  MaxLength: 'maxlength',
+  Email: 'email',
+  Min: 'min',
+  Max: 'max',
+  Pattern: 'pattern'
+} as const
+
+export type RuleMethods = typeof RULES_MAP[keyof typeof RULES_MAP]
 
 export const required: ValidationFn = async ({ input, el }: ValidationContext) => {
   const { valueMissing } = input.validity
@@ -200,3 +216,13 @@ export const validationsMap = new Map([
   [VALIDATION_MAX_KEY, max],
   [VALIDATION_PATTERN_KEY, pattern]
 ])
+
+export const Validations: Record<RuleMethods, RuleHandler> = {
+  required,
+  minlength,
+  maxlength,
+  email,
+  min,
+  max,
+  pattern
+}

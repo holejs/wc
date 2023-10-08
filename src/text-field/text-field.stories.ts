@@ -1,4 +1,4 @@
-import { waitFor, within } from '@storybook/testing-library'
+import { userEvent, within } from '@storybook/testing-library'
 import type { StoryObj } from '@storybook/web-components'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
@@ -291,44 +291,91 @@ export const Errors: Story = {
       </div>
     </div>
   `,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement)
 
-    const $firstName = canvas.getByRole<HWCTextField>('textbox', { name: 'First Name' })
-    const $lastName = canvas.getByRole<HWCTextField>('textbox', { name: 'Last Name' })
-    const $email = canvas.getByRole<HWCTextField>('textbox', { name: 'Email' })
-    const $password = canvas.getByRole<HWCTextField>('textbox', { name: 'Password' })
+    const $form = document.querySelector('form') as HTMLFormElement
 
-    // Verify that the text field is visible
-    expect($firstName).toBeInTheDocument()
-    expect($lastName).toBeInTheDocument()
-    expect($email).toBeInTheDocument()
-    expect($password).toBeInTheDocument()
+    const $firstName = canvas.getByRole('textbox', { name: /first name/i })
+    const $lastName = canvas.getByRole('textbox', { name: /last name/i })
+    const $email = canvas.getByRole('textbox', { name: /email/i })
+    const $password = canvas.getByRole('textbox', { name: /password/i })
 
-    // Verify that the text field contains errors
-    $firstName.value = 'Iv'
-    $lastName.value = 'Gu'
-    $email.value = 'ivan@'
-    $password.value = '12345'
+    await step('Validate that the text fields are in the document.', () => {
+      expect($firstName).toBeInTheDocument()
+      expect($firstName).toBeVisible()
+      expect($firstName).toHaveAttribute('type', 'text')
 
-    await waitFor(() => {
+      expect($lastName).toBeInTheDocument()
+      expect($lastName).toBeVisible()
+      expect($lastName).toHaveAttribute('type', 'text')
+
+      expect($email).toBeInTheDocument()
+      expect($email).toBeVisible()
+      expect($email).toHaveAttribute('type', 'email')
+
+      expect($password).toBeInTheDocument()
+      expect($password).toBeVisible()
+      expect($password).toHaveAttribute('type', 'password')
+    })
+
+    // Extract input native input
+    const $firstNameInput = $firstName.shadowRoot?.querySelector('input') as HTMLInputElement
+    const $lastNameInput = $lastName.shadowRoot?.querySelector('input') as HTMLInputElement
+    const $emailInput = $email.shadowRoot?.querySelector('input') as HTMLInputElement
+    const $passwordInput = $password.shadowRoot?.querySelector('input') as HTMLInputElement
+
+    // Complete partial data.
+    await step('Complete partial data.', async () => {
+      await userEvent.type($firstNameInput, 'Iv')
+      await userEvent.type($lastNameInput, 'Gu')
+      await userEvent.type($emailInput, 'ivan.guevara')
+      await userEvent.type($passwordInput, '1234567')
+    })
+
+    // Check the error messages is visible.
+    await step('Check the error messages is visible.', () => {
+      expect($form.checkValidity()).toBeFalsy()
+
       expect($firstName.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The field must have at least 3 characters.')
       expect($lastName.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The field must have at least 3 characters.')
       expect($email.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The email is not valid.')
       expect($password.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The password must have at least 8 characters, a capital letter, a symbol and a number.')
     })
 
-    // Verify that the text field does not contain errors
-    $firstName.value = 'Ivan'
-    $lastName.value = 'Guevara'
-    $email.value = 'ivan.guevara@domain.com'
-    $password.value = 'Hello123@'
+    // Complete the text fields.
+    await step('Complete the text fields.', async () => {
+      await userEvent.type($firstNameInput, 'an')
+      await userEvent.type($lastNameInput, 'evara')
 
-    await waitFor(() => {
+      // await userEvent.type($emailInput, '')
+      await userEvent.type($emailInput, '@domain.com')
+
+      await userEvent.type($passwordInput, 'A!')
+    })
+
+    // Validate that the text fields are valid.
+    await step('Validate that the text fields are valid.', () => {
+      expect($form.checkValidity()).toBeTruthy()
+
       expect($firstName.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The field must have at least 3 characters.')
       expect($lastName.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The field must have at least 3 characters.')
       expect($email.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The email is not valid.')
       expect($password.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The password must have at least 8 characters, a capital letter, a symbol and a number.')
+    })
+
+    // Get the form data.
+    await step('Get the form data.', () => {
+      const formData = new FormData($form)
+
+      const data = Object.fromEntries(formData.entries())
+
+      expect(data).toEqual({
+        first_name: 'Ivan',
+        last_name: 'Guevara',
+        email: 'ivan.guevara@domain.com',
+        password: '1234567A!'
+      })
     })
   }
 }
