@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
+import { userEvent, within } from '@storybook/testing-library'
 import type { StoryObj } from '@storybook/web-components'
-// import { within } from '@storybook/testing-library'
-// import { when } from 'lit/directives/when.js'
-// import { expect } from '@storybook/jest'
+import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import '../button/button.js'
@@ -12,14 +12,10 @@ type HWCRadio = HTMLElementTagNameMap['hwc-radio']
 
 type Story = StoryObj<HWCRadio>;
 
-// const BUTTON_TEXT_CONTENT = 'Click me!'
-
 const _handleSubmit = (event: Event) => {
   event.preventDefault()
 
   const form = event.target as HTMLFormElement
-
-  console.log(form.checkValidity())
 
   const formData = new FormData(form)
 
@@ -32,24 +28,41 @@ const _handleSubmit = (event: Event) => {
 const meta = {
   title: 'Example/Radio',
   tags: ['autodocs'],
-  render: (args: any) => html`
+  render: ({ color }: any) => html`
     <main>
       <form @submit=${_handleSubmit}>
-        <hwc-radio name="color" color=${args.color} value="green" rules="required">
-          Green
+        <hwc-radio
+          name="pet"
+          color=${color}
+          value="dog"
+          rules="required"
+          checked
+          data-error-message-required="Select one of these pets"
+        >
+          Dog. 🐶
         </hwc-radio>
   
-        <hwc-radio name="color" color=${args.color} value="blue" rules="required">
-          Blue
+        <hwc-radio name="pet" color=${color} value="cat" rules="required">
+          Cat. 🐱
         </hwc-radio>
+
+        <hwc-radio name="pet" color=${color} value="bird" rules="required">
+          Bird. 🐦
+        </hwc-radio>
+
+        <hwc-radio name="pet" color=${color} value="fish" rules="required">
+          Fish. 🐠
+        </hwc-radio>
+
+        <hwc-radio name="pet" color=${color} value="hamster" rules="required">
+          Hamster. 🐹
+        </hwc-radio>
+
+        <div style="margin-top: 10px">
+          <hwc-button appearance="text" type="reset" color=${color}>Reset</hwc-button>
   
-        <hwc-radio name="color" color=${args.color} value="yellow" rules="required">
-          Yellow
-        </hwc-radio>
-
-        <hwc-button appearance="text" type="reset">Reset</hwc-button>
-
-        <hwc-button type="submit">Submit</hwc-button>
+          <hwc-button type="submit" color=${color}>Submit</hwc-button>
+        </div>
       </form>
     </main>
   `,
@@ -79,5 +92,86 @@ export const Basic: Story = {
   args: {
     color: 'orange-darken-2',
     name: 'color'
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    const $form = document.querySelector('form') as HTMLFormElement
+    const $reset = canvas.getByRole<HTMLElementTagNameMap['hwc-button']>('button', { name: 'Reset' })
+
+    const $dog = canvas.getByRole<HWCRadio>('radio', { name: 'Dog. 🐶' })
+    const $cat = canvas.getByRole<HWCRadio>('radio', { name: 'Cat. 🐱' })
+    const $bird = canvas.getByRole<HWCRadio>('radio', { name: 'Bird. 🐦' })
+    const $fish = canvas.getByRole<HWCRadio>('radio', { name: 'Fish. 🐠' })
+    const $hamster = canvas.getByRole<HWCRadio>('radio', { name: 'Hamster. 🐹' })
+
+    // Validate that the radio button are in the DOM
+    await step('Validate that the radio button are in the DOM', () => {
+      expect($dog).toBeInTheDocument()
+      expect($cat).toBeInTheDocument()
+      expect($bird).toBeInTheDocument()
+      expect($fish).toBeInTheDocument()
+      expect($hamster).toBeInTheDocument()
+    })
+
+    // Validate that the radio button are checked
+    await step('Validate that the radio button are checked', () => {
+      expect($dog).toBeChecked()
+      expect($cat).not.toBeChecked()
+      expect($bird).not.toBeChecked()
+      expect($fish).not.toBeChecked()
+      expect($hamster).not.toBeChecked()
+    })
+
+    // Validate that the form is valid
+    await step('Validate that the form is valid', () => {
+      expect($form).toBeValid()
+      expect(new FormData($form).get('pet')).toBe('dog')
+    })
+
+    // Reset the form
+    await userEvent.click($reset.shadowRoot?.querySelector('button') as HTMLButtonElement)
+
+    await step('Reset the form', async () => {
+      expect($form).toBeInvalid()
+    })
+
+    // Validate that the radio button are not checked
+    await step('Validate that the radio button are not checked', () => {
+      expect($dog).not.toBeChecked()
+      expect($cat).not.toBeChecked()
+      expect($bird).not.toBeChecked()
+      expect($fish).not.toBeChecked()
+      expect($hamster).not.toBeChecked()
+    })
+
+    // Make focus and blur in the radio button
+    await step('Make focus and blur in the radio button', async () => {
+      $dog.shadowRoot?.querySelector('input')?.focus()
+      $dog.shadowRoot?.querySelector('input')?.blur()
+    })
+
+    // Validate that the radio button are displayed error message
+    await step('Validate that the radio button are displayed error message', () => {
+      expect($dog.shadowRoot?.querySelector('.radio__details span')?.textContent).toBe('Select one of these pets')
+    })
+
+    // Check the radio button
+    await step('Check the radio button', async () => {
+      await userEvent.click($cat.shadowRoot?.querySelector('input') as HTMLInputElement)
+
+      expect($cat).toBeChecked()
+    })
+
+    // Validate that the radio button are not displayed error message
+    await step('Validate that the radio button are not displayed error message', () => {
+      expect($dog.shadowRoot?.querySelector('.radio__details span')).toBeFalsy()
+    })
+
+    // Validate that the form is valid
+    await step('Validate that the form is valid', () => {
+      expect($form).toBeValid()
+      expect(new FormData($form).get('pet')).toBe('cat')
+    })
   }
 }

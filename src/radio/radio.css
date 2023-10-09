@@ -68,7 +68,7 @@
 }
 
 /* Errors */
-.radio__wrapper.error {
+:host([aria-invalid="true"]) .radio__wrapper {
   --hwc-radio-error-color: var(--hwc-red-darken-2);
 
   --hwc-radio-border-color: var(--hwc-radio-error-color);
