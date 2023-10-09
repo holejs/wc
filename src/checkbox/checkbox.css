@@ -22,6 +22,12 @@
   --hwc-checkbox-border-color: var(--hwc-grey-darken-1);
 }
 
+:host([disabled]) {
+  opacity: .5;
+  user-select: none;
+  pointer-events: none;
+}
+
 .checkbox input[type=checkbox] {
   appearance: none;
   height: 21px;
@@ -138,7 +144,7 @@
 }
 
 /* Erros */
-.checkbox.error {
+:host([aria-invalid="true"]) .checkbox {
   --hwc-checkbox-error-color: var(--hwc-red-darken-2);
 
   --hwc-checkbox-border-color: var(--hwc-checkbox-error-color);

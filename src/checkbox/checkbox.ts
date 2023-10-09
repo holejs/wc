@@ -1,15 +1,13 @@
-import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
-import { customElement, property, query, state } from 'lit/decorators.js'
+import { PropertyValueMap, css, html, unsafeCSS } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
 
 import styles from './checkbox.css?inline'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
-import { getDataAttributes } from '../utils/getDataAtrributes.js'
 import { generateHash } from '../utils/generateHash.js'
-import { parseRules } from '../utils/parseRules.js'
 
-import { Feedback, createValidationControl, validationsMap } from '../validations.js'
+import { InputField } from '../internals/input-field.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -19,89 +17,57 @@ declare global {
 }
 
 @customElement('hwc-checkbox')
-export class HWCCheckbox extends LitElement {
-  static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
-
-  @query('input') $input!: HTMLInputElement
-
-  readonly internals = this.attachInternals()
-
-  /**
-   * More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
-   */
-  static formAssociated = true
+export class HWCCheckbox extends InputField {
+  static styles = css`${unsafeCSS(styles)}`
 
   @property({ type: String }) color!: string
 
-  @property({ type: String }) name!: string
-
-  /**
-   * For more information visit: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#additional_attributes
-   */
   @property({ type: String }) value: string = 'on'
 
-  @property({ type: Boolean }) checked = false
+  @property({ type: String, reflect: true }) role = 'checkbox'
+
+  @property({ type: Boolean, reflect: true }) checked = false
 
   @property({ type: Boolean }) disabled = false
 
-  @property({ type: String }) rules!: string
-
-  @state() uniqueId = `checkbox-${generateHash()}`
-
-  @state() private _hasBlur = false
-
-  @state() private _hasDirty = false
-
-  @state() private _errorFeedback: Feedback | null = null
-
-  private _validator = createValidationControl()
+  private readonly _uniqueId = `checkbox-${generateHash()}`
 
   connectedCallback (): void {
     super.connectedCallback()
 
-    const ruleItems = parseRules(this.rules)
-
-    ruleItems.forEach(({ key }) => this._applyValidation(key))
+    this.form?.addEventListener('reset', this._onHandleReset.bind(this))
   }
 
-  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    this.internals.form?.addEventListener('reset', () => this.reset())
+  protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    super.updated(changedProperties)
 
-    this._setValue(this.value)
-
-    this._configureRules()
-
-    this._onValidation()
-  }
-
-  protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (_changedProperties.has('color')) {
+    if (changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
       this.style.setProperty('--hwc-checkbox-color', color)
     }
 
-    if (_changedProperties.has('value')) {
-      this._setValue(this.value)
+    if (changedProperties.has('value') || changedProperties.has('checked')) {
+      this._setValue(this.checked ? this.value : null)
     }
 
-    if (_changedProperties.has('checked')) {
-      this._setValue(this.value)
+    if (changedProperties.has('checked')) {
+      this.ariaChecked = String(this.checked)
+    }
+
+    if (changedProperties.has('disabled')) {
+      this.ariaDisabled = String(this.disabled)
     }
   }
 
-  /**
-   * Indicates if the field has lost focus.
-   */
-  get hasBlur (): boolean {
-    return this._hasBlur
+  disconnectedCallback (): void {
+    super.disconnectedCallback()
+
+    this.form?.removeEventListener('reset', this._onHandleReset.bind(this))
   }
 
-  /**
-   * Indicates if the field has been modified.
-   */
-  get hasDirty (): boolean {
-    return this._hasDirty
+  private _hasError (): boolean {
+    return Boolean(this.validationMessage) && (this.touched || this.dirty)
   }
 
   /**
@@ -112,132 +78,66 @@ export class HWCCheckbox extends LitElement {
 
     this.$input.checked = false
 
-    this._hasBlur = false
+    this.touched = false
 
-    this._hasDirty = false
+    this.dirty = false
 
-    this._onValidation()
+    this.triggerValidation()
   }
 
-  private _setValue (value: string): void {
-    this.value = value
+  private _setValue (value: string | null): void {
+    this.$input.value = value || ''
 
-    this.$input.value = value
-
-    this.internals.setFormValue(this.checked ? value : null)
+    this.internals.setFormValue(value)
   }
 
-  private _configureRules (): void {
-    const ruleItems = parseRules(this.rules)
+  private _onHandleChange (_ev: Event): void {
+    this.checked = this.$input.checked
+    this.dirty = true
 
-    this._applyDataAttributes(this)
-
-    ruleItems.forEach(({ key, value }) => {
-      this._applyInputAttribute(key, value)
-    })
+    this.triggerValidation()
   }
 
-  private _applyDataAttributes (el: HTMLElement): void {
-    getDataAttributes(el).forEach((value, key) => this._applyInputAttribute(key, value))
+  private _onHandleBlur (): void {
+    this.touched = true
+
+    this.triggerValidation()
   }
 
-  private _applyInputAttribute (key: string, value: string | null): void {
-    this.$input.setAttribute(key, value || '')
-  }
-
-  private _applyValidation (key: string): void {
-    const validation = validationsMap.get(key)
-
-    if (!validation) return
-
-    this._validator.setValidation(key, validation)
-  }
-
-  /**
-   * Handle validation on input events.
-   */
-  private async _onValidation (): Promise<void> {
-    const $input = this.$input
-
-    // Validate the input event using the _validator.
-    const errors = await this._validator.validate({
-      input: $input
-    })
-
-    // Check if there are any errors.
-    const hasError = errors.length
-
-    // If there are no errors, reset the feedback and validity.
-    if (!hasError) {
-      this._errorFeedback = null
-      return this.internals.setValidity({})
-    }
-
-    // Get the first error from the errors array.
-    const [error] = errors
-
-    this._errorFeedback = error
-
-    // Set the validity on the input element with the error message and customError flag.
-    this.internals.setValidity(
-      { customError: true },
-      error.message,
-      $input
-    )
-  }
-
-  private _handleChange (_ev: Event): void {
-    const $input = this.$input
-
-    this._hasDirty = true
-
-    this.checked = $input.checked
-
-    this._setValue(this.$input.value)
-
-    this._onValidation()
-  }
-
-  private _handleBlur (): void {
-    this._hasBlur = true
-
-    this._onValidation()
+  private _onHandleReset (): void {
+    this.reset()
   }
 
   protected render (): unknown {
-    const showError = (this.hasBlur || this.hasDirty) && this._errorFeedback
-
     return html`
-      <div class="checkbox ${showError ? 'error' : null}">
+      <div class="checkbox">
         <div class="checkbox__wrapper">
           <!-- Main content -->
           <div class="checkbox__content">
             <input
-              id=${this.uniqueId}
+              id=${this._uniqueId}
               type="checkbox"
               name=${this.name}
               .value=${this.value}
               ?checked=${this.checked}
               ?disabled=${this.disabled}
-              @change=${this._handleChange}
-              @blur=${this._handleBlur}
+              @change=${this._onHandleChange}
+              @blur=${this._onHandleBlur}
             >
-            <label class="checkbox__label" for=${this.uniqueId}>
+            <label class="checkbox__label" for=${this._uniqueId}>
               <slot></slot>
             </label>
           </div>
 
           <!-- Details -->
-          ${
-            when(
-              showError,
-              () => html`
-                <div class="checkbox__details">
-                  <span>${showError ? this._errorFeedback?.message : null}</span>
-                </div>
-              `
-            )
-          }
+          ${when(
+            this._hasError(),
+            () => html`
+              <div class="checkbox__details">
+                <span>${this.validationMessage}</span>
+              </div>
+            `
+          )}
         </div>
       </div>
     `
