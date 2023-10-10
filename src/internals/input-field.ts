@@ -15,6 +15,23 @@ import {
   Feedback
 } from '../validations.js'
 
+/**
+ * Class responsible for adding validations to the input element.
+ *
+ * **Note**: When you extend this class and you need to use [Lifecycles](https://lit.dev/docs/components/lifecycle/)
+ * you need to invoke the parent class.
+ *
+ * @example
+ *
+ * ```ts
+ * class MyInput extends InputField {
+ *  protected firstUpdated (changedProperties: Map<PropertyKey, unknown>): void {
+ *   super.firstUpdated(changedProperties)
+ *
+ *   // Your code here...
+ * }
+ * ```
+ */
 export class InputField extends LitElement {
   @query('input') protected $input!: HTMLInputElement
 
@@ -74,18 +91,30 @@ export class InputField extends LitElement {
     }
   }
 
+  /**
+   * Returns the validation message that would be shown to the user.
+   */
   get validationMessage (): string | null {
     return this._validationMessage
   }
 
+  /**
+   * Returns the form element that the input is associated with.
+   */
   get form (): HTMLFormElement | null {
     return this.internals.form
   }
 
+  /**
+   * Return a list of the validation rules registered to the input.
+   */
   getRules (): Validation[] {
     return [...this._rules].map(([name, handler]) => ({ name, handler }))
   }
 
+  /**
+   * Returns the validation rule with the given name.
+   */
   getRule (name: string): ValidationFn | null {
     const handler = this._rules.get(name)
 
@@ -94,10 +123,20 @@ export class InputField extends LitElement {
     return handler
   }
 
+  /**
+   * Returns true if the input has a validation rule with the given name.
+   *
+   * @param name The name of the rule to check.
+   */
   hasRule (name: string): boolean {
     return this._rules.has(name)
   }
 
+  /**
+   * Adds a validation rule to the input.
+   *
+   * @param validation The validation rule to add.
+   */
   addRule (validation: Validation): void {
     if (this.hasRule(validation.name)) {
       throw new TextFieldError(`The rule "${validation.name}" already exists.`)
@@ -106,6 +145,11 @@ export class InputField extends LitElement {
     this._rules.set(validation.name, validation.handler)
   }
 
+  /**
+   * Removes a validation rule from the input.
+   *
+   * @param name The name of the rule to remove.
+   */
   removeRule (name: string): void {
     if (!this.hasRule(name)) {
       throw new TextFieldError(`The rule "${name}" does not exist.`)
@@ -114,6 +158,11 @@ export class InputField extends LitElement {
     this._rules.delete(name)
   }
 
+  /**
+   * Sets a custom validation message.
+   *
+   * @param message The validation message to set.
+   */
   setValidity (message: string | null): void {
     if (!message) {
       this._validationMessage = null
@@ -150,6 +199,10 @@ export class InputField extends LitElement {
     })
   }
 
+  /**
+   * This method is responsible for validating all the rules
+   * associated with the input element.
+   */
   protected async validate (data: ValidationContext): Promise<Feedback | null> {
     const rules = this.getRules()
 
@@ -173,6 +226,9 @@ export class InputField extends LitElement {
     return _feedback
   }
 
+  /**
+   * This method is responsible for triggering the validation.
+   */
   protected async triggerValidation (): Promise<void> {
     const feedback = await this.validate({
       input: this.$input,
