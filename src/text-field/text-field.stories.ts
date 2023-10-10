@@ -1,4 +1,4 @@
-import { userEvent, within } from '@storybook/testing-library'
+import { fireEvent, userEvent, within } from '@storybook/testing-library'
 import type { StoryObj } from '@storybook/web-components'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
@@ -376,6 +376,130 @@ export const Errors: Story = {
         email: 'ivan.guevara@domain.com',
         password: '1234567A!'
       })
+    })
+  }
+}
+
+export const DynamicErrors: Story = {
+  args: {},
+  render: ({
+    color = 'blue-darken-2',
+    disabled = false
+  }: any) => html`
+    <script>
+      const $firstName = document.querySelector('hwc-text-field[name="email"]')
+
+      $firstName.addRule({
+        name: 'validate-google-email',
+        handler: async ({ el }) => {
+          const value = el.value
+
+          // Regex for validate gmail.
+          const regex = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/
+
+          if (!regex.test(value)) {
+            return { status: 'invalid', message: 'The email is not valid. You must use a gmail account.' }
+          }
+
+          return { status: 'complete' }
+        }
+      })
+
+      const $form = document.querySelector('form')
+
+      $form.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        const formData = new FormData($form)
+
+        console.log('email: ', formData.get('email'))
+      })
+    </script>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+          <form>
+            <hwc-text-field
+              type="email"
+              name="email"
+              label="Email"
+              placeholder="Example: abc@gmail.com"
+              hint="Enter your email"
+              color=${color}
+              ?disabled=${disabled}
+              rules="required"
+              data-error-message-required="This field is required."
+            ></hwc-text-field>
+
+            <div style="margin-top: 20px">
+              <hwc-button type="reset" appearance="text" style="margin-right: 10px">Reset</hwc-button>
+              <hwc-button type="submit">Submit</hwc-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    const $form = document.querySelector('form') as HTMLFormElement
+
+    const $email = canvas.getByRole('textbox', { name: /email/i })
+
+    // Validate that the text field is in the document.
+    await step('Validate that the text field is in the document.', () => {
+      expect($email).toBeInTheDocument()
+      expect($email).toBeVisible()
+      expect($email).toHaveAttribute('aria-disabled', 'false')
+      expect($email).toHaveAttribute('type', 'email')
+    })
+
+    // Validate the form is invalid
+    await step('Validate the form is invalid', () => {
+      expect($form.checkValidity()).toBeFalsy()
+    })
+
+    // Make focus and blur the text field.
+    await step('Make focus and blur the text field.', async () => {
+      fireEvent.focus($email.shadowRoot?.querySelector('input') as HTMLInputElement)
+      fireEvent.blur($email.shadowRoot?.querySelector('input') as HTMLInputElement)
+    })
+
+    // Validate the error message is visible.
+    await step('Validate the error message is visible.', () => {
+      expect($email.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('This field is required.')
+
+      expect($form.checkValidity()).toBeFalsy()
+    })
+
+    // Enter invalid data in the text field.
+    await step('Enter invalid data in the text field.', async () => {
+      await userEvent.type($email.shadowRoot?.querySelector('input') as HTMLInputElement, 'ivan.guevara')
+    })
+
+    // Validate the error message is visible.
+    await step('Validate the error message is visible.', () => {
+      expect($email.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The email is not valid. You must use a gmail account.')
+
+      expect($form.checkValidity()).toBeFalsy()
+    })
+
+    // Enter valid data in the text field.
+    await step('Enter valid data in the text field.', async () => {
+      await userEvent.type($email.shadowRoot?.querySelector('input') as HTMLInputElement, '@gmail.com')
+    })
+
+    // Validate the error message is not visible.
+    await step('Validate the error message is not visible.', () => {
+      expect($email.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The email is not valid. You must use a gmail account.')
+    })
+
+    // Validate the form is valid.
+    await step('Validate the form is valid.', () => {
+      expect($form.checkValidity()).toBeTruthy()
+      expect(new FormData($form).get('email')).toBe('ivan.guevara@gmail.com')
     })
   }
 }
