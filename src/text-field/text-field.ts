@@ -69,7 +69,7 @@ export class HWCTextField extends InputField {
 
   @property({ type: String }) autocomplete: 'on' | 'off' = 'on'
 
-  @property({ type: String }) label: string | null = null
+  @property({ type: String }) label!: string
 
   @property({ type: Boolean }) autofocus!: boolean
 
@@ -80,8 +80,6 @@ export class HWCTextField extends InputField {
   @property({ type: String }) color!: string
 
   @property({ type: String }) hint!: string
-
-  @property({ type: String }) rules!: string
 
   @property({ type: Boolean }) clearable = false
 
