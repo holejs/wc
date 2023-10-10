@@ -150,9 +150,9 @@ export class HWCTextField extends InputField {
   }
 
   private _setValue (value: string): void {
-    this.value = value
+    this.value = value;
 
-    this.$input.value = value
+    (this.$input as HTMLInputElement).value = value
 
     this.internals.setFormValue(value)
   }

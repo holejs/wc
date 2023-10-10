@@ -29,8 +29,7 @@ const meta = {
     name,
     rules,
     color,
-    disabled,
-    'data-error-message-required': errorMessageRequired
+    disabled
   }: any) => html`
     <form @submit=${_onHandleSubmit}>
       <hwc-checkbox
@@ -38,7 +37,7 @@ const meta = {
         rules=${rules}
         color=${color}
         ?disabled=${disabled}
-        data-error-message-required=${errorMessageRequired}
+        data-error-message-required="Accept the terms and conditions to advance."
       >
         Accept terms and conditions.
       </hwc-checkbox>
@@ -75,8 +74,7 @@ export const Basic: Story = {
   args: {
     name: 'terms',
     rules: 'required',
-    color: 'blue-darken-2',
-    'data-error-message-required': 'Accept the terms and conditions to advance.'
+    color: 'blue-darken-2'
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement)

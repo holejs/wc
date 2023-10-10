@@ -81,7 +81,7 @@ export class HWCRadio extends InputField {
   }
 
   private _setValue (value: string | null): void {
-    this.$input.value = value || ''
+    (this.$input as HTMLInputElement).value = value || ''
 
     this.internals.setFormValue(value)
   }

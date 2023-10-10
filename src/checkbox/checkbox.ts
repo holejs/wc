@@ -74,9 +74,9 @@ export class HWCCheckbox extends InputField {
    * Resets the state of the component.
    */
   reset (): void {
-    this.checked = false
+    this.checked = false;
 
-    this.$input.checked = false
+    (this.$input as HTMLInputElement).checked = false
 
     this.touched = false
 
@@ -86,13 +86,13 @@ export class HWCCheckbox extends InputField {
   }
 
   private _setValue (value: string | null): void {
-    this.$input.value = value || ''
+    (this.$input as HTMLInputElement).value = value || ''
 
     this.internals.setFormValue(value)
   }
 
   private _onHandleChange (_ev: Event): void {
-    this.checked = this.$input.checked
+    this.checked = (this.$input as HTMLInputElement).checked
     this.dirty = true
 
     this.triggerValidation()
