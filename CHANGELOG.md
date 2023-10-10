@@ -1,3 +1,18 @@
+# [0.14.0](https://github.com/holejs/wc/compare/v0.13.0...v0.14.0) (2023-10-10)
+
+
+### Bug Fixes
+
+* Fixed a type issue ([ae8337c](https://github.com/holejs/wc/commit/ae8337ca3274483407e5eb72fdab332c6e409995))
+
+
+### Features
+
+* **select:** Added validation support, new a11y attributes ([8247ff5](https://github.com/holejs/wc/commit/8247ff5b69dacd0a349339868a0383e1cd470efa))
+* **text-field:** Added new a11y attributes and refactored validations ([ff32c93](https://github.com/holejs/wc/commit/ff32c93addffe0a36653d8df56300427982ccb30))
+
+
+
 # [0.13.0](https://github.com/holejs/wc/compare/v0.12.0...v0.13.0) (2023-10-06)
 
 
