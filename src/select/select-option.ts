@@ -22,6 +22,8 @@ export class HWCSelectOption extends LitElement {
 
   @property({ type: Boolean, reflect: true }) selected = false
 
+  @property({ type: String, reflect: true }) role = 'option'
+
   private _root: ParentNode | null = null
 
   connectedCallback (): void {

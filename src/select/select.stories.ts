@@ -1,4 +1,6 @@
+import { userEvent, within, fireEvent } from '@storybook/testing-library'
 import type { StoryObj } from '@storybook/web-components'
+import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import '../button/button.js'
@@ -29,6 +31,7 @@ const meta = {
     label,
     color,
     hint,
+    rules,
     multiple = false,
     disabled = false,
     readonly = false
@@ -60,11 +63,13 @@ const meta = {
                     label=${label}
                     color=${color}
                     hint=${hint}
+                    rules=${rules}
                     ?multiple=${multiple}
                     ?disabled=${disabled}
                     ?readonly=${readonly}
+                    data-error-message-required="The field is required."
                   >
-                    <hwc-select-option value="violet" selected>
+                    <hwc-select-option value="violet">
                       <div class="container__option">
                         <span style="background: #963ec5;"></span>
                         <p>Chinese Violet</p>
@@ -123,6 +128,10 @@ const meta = {
       control: 'boolean',
       description: 'If true, the user can select multiple options.'
     },
+    rules: {
+      control: 'string',
+      description: 'The validation rules to apply to the select.'
+    },
     disabled: {
       control: 'boolean',
       description: 'If true, the select is disabled.'
@@ -140,7 +149,92 @@ export const Basic: Story = {
   args: {
     name: 'colors',
     label: 'Color',
-    hint: 'Select your favorite color.'
+    hint: 'Select your favorite color.',
+    rules: 'required'
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    const $form = document.querySelector('form') as HTMLFormElement
+    const $reset = canvas.getByRole('button', { name: 'Reset' })
+
+    const $select = canvas.getByRole('combobox', { name: 'Color' })
+
+    const $options = canvas.getAllByRole('option')
+
+    // Validate the select exist and is visible.
+    await step('Validate the select exist and is visible.', () => {
+      expect($select).toBeInTheDocument()
+      expect($select).toBeVisible()
+      expect($select).toHaveAttribute('aria-expanded', 'false')
+      expect($select).toHaveAttribute('aria-invalid', 'false')
+      expect($select).toHaveAttribute('aria-disabled', 'false')
+    })
+
+    // Validate the form is invalid.
+    await step('Validate the form is invalid.', () => {
+      expect($form.checkValidity()).toBeFalsy()
+    })
+
+    // Expand the select.
+    await step('Expand the select.', async () => {
+      await userEvent.click($select.shadowRoot?.querySelector('button') as HTMLButtonElement)
+      expect($select).toHaveAttribute('aria-expanded', 'true')
+    })
+
+    // Choose the first option.
+    await step('Choose the first option.', async () => {
+      await userEvent.click($options[0].shadowRoot?.querySelector('button') as HTMLButtonElement)
+      expect($select).toHaveAttribute('aria-expanded', 'false')
+      expect($select).toHaveAttribute('aria-invalid', 'false')
+    })
+
+    // Validate the form is valid.
+    await step('Validate the form is valid.', () => {
+      expect($form.checkValidity()).toBeTruthy()
+      expect(new FormData($form).get('colors')).toEqual('violet')
+    })
+
+    // Reset the form
+    await step('Reset the form.', async () => {
+      await userEvent.click($reset.shadowRoot?.querySelector('button') as HTMLButtonElement)
+      expect($select).toHaveAttribute('aria-expanded', 'false')
+      expect($select).toHaveAttribute('aria-invalid', 'false')
+    })
+
+    // Expand and close the select.
+    await step('Expand and close the select.', async () => {
+      await userEvent.click($select.shadowRoot?.querySelector('button') as HTMLButtonElement)
+      expect($select).toHaveAttribute('aria-expanded', 'true')
+
+      await userEvent.click($select.shadowRoot?.querySelector('button') as HTMLButtonElement)
+      fireEvent.blur($select.shadowRoot?.querySelector('button') as HTMLButtonElement)
+
+      expect($select).toHaveAttribute('aria-expanded', 'false')
+    })
+
+    // Validate the select is displayed error message.
+    await step('Validate the select is displayed error message.', () => {
+      expect($select).toHaveAttribute('aria-invalid', 'true')
+
+      expect($select.shadowRoot?.querySelector('.select__details span')).toHaveTextContent('The field is required.')
+    })
+
+    // Expand and select the first option.
+    await step('Expand and select the first option.', async () => {
+      await userEvent.click($select.shadowRoot?.querySelector('button') as HTMLButtonElement)
+      expect($select).toHaveAttribute('aria-expanded', 'true')
+
+      await userEvent.click($options[0].shadowRoot?.querySelector('button') as HTMLButtonElement)
+      expect($select).toHaveAttribute('aria-expanded', 'false')
+      expect($select).toHaveAttribute('aria-invalid', 'false')
+    })
+
+    // Validate the form is valid.
+    await step('Validate the form is valid.', () => {
+      expect($form.checkValidity()).toBeTruthy()
+      expect(new FormData($form).get('colors')).toEqual('violet')
+    })
   }
 }
 
@@ -149,6 +243,7 @@ export const Multiple: Story = {
     name: 'colors',
     label: 'Color',
     multiple: true,
-    hint: 'Select your favorite color.'
+    hint: 'Select your favorite color.',
+    rules: 'required|min:2|max:3'
   }
 }

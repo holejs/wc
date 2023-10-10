@@ -116,3 +116,16 @@
   border-radius: 0.45rem;
   cursor: pointer;
 }
+
+/* Errors */
+:host([aria-invalid="true"]) .select__control {
+  border-color: var(--hwc-select-error-color, var(--hwc-red-darken-2));
+}
+
+:host([aria-invalid="true"]) .select__label {
+  color: var(--hwc-select-error-color, var(--hwc-red-darken-2));
+}
+
+:host([aria-invalid="true"]) .select__details {
+  color: var(--hwc-select-error-color, var(--hwc-red-darken-2));
+}

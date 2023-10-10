@@ -1,16 +1,21 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
+import { PropertyValueMap, css, html, unsafeCSS } from 'lit'
 import { when } from 'lit/directives/when.js'
 import { map } from 'lit/directives/map.js'
 
 import styles from './select.css?inline'
 
-import { HWCSelectOption } from './select-option.js'
-
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
+import { parseRules } from '../utils/parseRules.js'
+
+import { RuleHandler, RuleMethods } from '../validations.js'
+import { InputField } from '../internals/input-field.js'
+import { Validations } from './constants.js'
+
+import { HWCSelectOption } from './select-option.js'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -20,18 +25,10 @@ declare global {
 }
 
 @customElement('hwc-select')
-export class HWCSelect extends LitElement {
-  static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
+export class HWCSelect extends InputField {
+  static styles = css`${unsafeCSS(styles)}`
 
-  @query('button') $button!: HTMLButtonElement
-
-  // eslint-disable-next-line no-undef
-  private readonly internals = this.attachInternals()
-
-  // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
-  static formAssociated = true
-
-  @property({ type: String }) name!: string
+  @query('button') protected $input!: HTMLButtonElement
 
   @property({ type: String }) label!: string
 
@@ -39,26 +36,18 @@ export class HWCSelect extends LitElement {
 
   @property({ type: String }) color!: string
 
-  @property({ type: Boolean }) multiple: Boolean = false
-
-  @property({ type: Boolean }) disabled = false
-
-  @property({ type: Boolean }) readonly = false
+  @property({ type: Boolean }) multiple = false
 
   @property({ type: String, reflect: true }) role = 'combobox'
 
-  @property({
-    type: String,
-    reflect: true,
-    attribute: 'aria-haspopup'
-  })
+  @property({ type: String, reflect: true, attribute: 'aria-haspopup' })
     ariaHasPopup = 'listbox'
 
   @property({ attribute: false }) options: string[] = []
 
   @property({ type: Boolean, attribute: false }) expanded = false
 
-  private _uniqueId = generateHash()
+  private _uniqueId = `select-${generateHash()}`
 
   connectedCallback (): void {
     super.connectedCallback()
@@ -67,37 +56,42 @@ export class HWCSelect extends LitElement {
     this.form?.addEventListener('reset', this._onHandleReset.bind(this))
 
     document.addEventListener('click', this._handleDocumentClick.bind(this))
+
+    parseRules(this.rules).forEach(({ key }) => {
+      // Remove the default rules.
+      this.removeRule(key)
+
+      const handler = Validations[key as RuleMethods] as RuleHandler
+
+      this.addRule({ name: key, handler })
+    })
   }
 
-  private _handleDocumentClick (ev: Event): void {
-    const isClickInside = this.contains(ev.target as Node)
+  protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    super.updated(changedProperties)
 
-    if (!isClickInside) {
-      this.close()
-    }
-  }
-
-  protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (_changedProperties.has('options')) {
+    if (changedProperties.has('options')) {
       const formData = new FormData()
 
       this.options.forEach((_option) => formData.append(this.name, _option))
 
       this.internals.setFormValue(formData)
+
+      this.triggerValidation()
     }
 
-    if (_changedProperties.has('color')) {
+    if (changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
       this.style.setProperty('--hwc-select-primary-color', color)
     }
 
-    if (_changedProperties.has('expanded')) {
+    if (changedProperties.has('expanded')) {
       this.ariaExpanded = String(this.expanded)
     }
 
-    if (_changedProperties.has('disabled')) {
-      this.ariaDisabled = String(this.disabled)
+    if (changedProperties.has('label')) {
+      this.ariaLabel = String(this.label)
     }
   }
 
@@ -110,8 +104,10 @@ export class HWCSelect extends LitElement {
     document.removeEventListener('click', this._handleDocumentClick.bind(this))
   }
 
-  get form (): HTMLFormElement | null {
-    return this.internals.form
+  get value (): string | string[] | null {
+    const value = this.multiple ? this.options : this.options[0]
+
+    return value ?? null
   }
 
   /**
@@ -121,9 +117,9 @@ export class HWCSelect extends LitElement {
    * @returns {void}
    */
   appendOption (value: string): void {
-    this.multiple
-      ? this.options.push(value)
-      : this.options = [value]
+    if (this.dirty || Boolean(value)) this.dirty = true
+
+    this.multiple ? this.options.push(value) : this.options = [value]
 
     this.requestUpdate('options')
   }
@@ -165,11 +161,14 @@ export class HWCSelect extends LitElement {
     this.requestUpdate('expanded')
   }
 
-  private _getOptionsNode (): NodeListOf<HWCSelectOption> {
-    return this.querySelectorAll('hwc-select-option')
-  }
+  /**
+   * Reset the select.
+   */
+  reset (): void {
+    this.dirty = false
+    this.touched = false
 
-  private _onHandleReset (): void {
+    // Reset the options.
     this._getOptionsNode().forEach(($option) => {
       $option.selected = false
     })
@@ -177,10 +176,34 @@ export class HWCSelect extends LitElement {
     this.options = []
   }
 
+  private _getOptionsNode (): NodeListOf<HWCSelectOption> {
+    return this.querySelectorAll('hwc-select-option')
+  }
+
+  private _hasError (): boolean {
+    return Boolean(this.validationMessage) && (this.dirty || this.touched)
+  }
+
+  private _handleDocumentClick (ev: Event): void {
+    const isClickInside = this.contains(ev.target as Node)
+
+    if (!isClickInside) this.close()
+  }
+
+  private _onHandleReset (): void {
+    this.reset()
+  }
+
   private _onHandleClick (): void {
-    this.expanded === false
-      ? this.open()
-      : this.close()
+    !this.expanded ? this.open() : this.close()
+
+    this.triggerValidation()
+  }
+
+  private _onHandleBlur (): void {
+    this.touched = true
+
+    this.triggerValidation()
   }
 
   protected render (): unknown {
@@ -207,6 +230,7 @@ export class HWCSelect extends LitElement {
               class="select__control"
               ?disabled=${this.disabled}
               @click=${this._onHandleClick}
+              @blur=${this._onHandleBlur}
             >
               ${map(this.options, (option, index) => {
                 return index === 0
@@ -226,10 +250,10 @@ export class HWCSelect extends LitElement {
         <!-- Details -->
         ${
           when(
-            this.hint,
+            this._hasError() && this.hint,
             () => html`
               <div class="select__details">
-                <span>${this.hint}</span>
+                <span>${this.validationMessage || this.hint}</span>
               </div>
             `
           )

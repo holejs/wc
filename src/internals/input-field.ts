@@ -33,7 +33,7 @@ import {
  * ```
  */
 export class InputField extends LitElement {
-  @query('input') protected $input!: HTMLInputElement
+  @query('input') protected $input!: HTMLElement
 
   protected readonly internals = this.attachInternals()
 
@@ -231,7 +231,7 @@ export class InputField extends LitElement {
    */
   protected async triggerValidation (): Promise<void> {
     const feedback = await this.validate({
-      input: this.$input,
+      input: this.$input as HTMLInputElement,
       el: this
     })
 
