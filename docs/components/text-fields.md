@@ -251,26 +251,25 @@ These rules can encompass anything from validating the format of a phone number 
 
 Creating our own validation rules is extremely easy. Let's see the following example.
 
-**It validates that the name entered is of a man, since it only accepts names of men.**
+**This rule validates that the email entered by the user is from `gmail.com`**
 
 ```ts
-const $fullname = document.querySelector('hwc-text-field')
+const $firstName = document.querySelector('hwc-text-field[name="email"]')
 
-// Set out validation.
-$fullname.setValidation('gender', async ({ input }) => {
-  const { value } = input
+$firstName.addRule({
+  name: 'validate-google-email',
+  handler: async ({ el }) => {
+    const value = el.value
 
-  const res = await fetch(`https://api.genderize.io/?name=${value}`)
+    // Regex for validate gmail.
+    const regex = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/
 
-  const data = await res.json()
+    if (!regex.test(value)) {
+      return { status: 'invalid', message: 'The email is not valid. You must use a gmail account.' }
+    }
 
-  // Invalid. ⛔
-  if (!data.gender || data.gender === 'female') {
-    return { status: 'invalid', message: 'Only men are allowed.' }
+    return { status: 'complete' }
   }
-
-  // Valid. ✅
-  return { status: 'complete' }
 })
 ```
 

@@ -149,8 +149,37 @@ The `checked` attribute is used to define the options selected.
 
 ## Validations
 
-> **Warning**
-> This functionality is not yet available. This is a feature that will be available in the next version. Thank you for your understanding. 🙏
+The `hwc-select` component has the following validations:
+
+- `required`: The `required` attribute is used to define if the component is required.
+- `min`: The `min` attribute is used to define the minimum number of options that the user must select.
+- `max`: The `max` attribute is used to define the maximum number of options that the user must select.
+
+```html
+<hwc-select
+  name="color"
+  label="Color"
+  rules="required"
+>
+  <hwc-select-option value="blue">Blue</hwc-select-option>
+  <hwc-select-option value="red">Red</hwc-select-option>
+  <hwc-select-option value="orange">Orange</hwc-select-option>
+</hwc-select>
+```
+
+## Error Message
+
+The `hwc-select` component has the following error messages:
+
+```html
+<hwc-select
+  data-error-message-required="This field is required."
+>
+  <hwc-select-option value="blue">Blue</hwc-select-option>
+  <hwc-select-option value="red">Red</hwc-select-option>
+  <hwc-select-option value="orange">Orange</hwc-select-option>
+</hwc-select>
+```
 
 ## CSS Custom Properties
 
@@ -167,3 +196,4 @@ The `checked` attribute is used to define the options selected.
 | `--hwc-select-border-radius`    | Border radius of the select component (default value: 0.75rem) |
 | `--hwc-select-font-family`      | Font family of the select component (default value: 'Nunito Sans', sans-serif) |
 | `--hwc-select-font-size`        | Font size of the select component (default value: 1rem) |
+| `--hwc-select-error-color`      | Error color of the select component (default value: var(--hwc-red-darken-2)) |
