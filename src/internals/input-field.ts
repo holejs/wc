@@ -6,12 +6,12 @@ import { TextFieldError } from '../error.js'
 import { parseRules } from '../utils/parseRules.js'
 
 import {
-  VALIDATION_REQUIRED_KEY,
   ValidationContext,
-  ValidationFn,
+  RuleHandler,
   Validations,
   RuleMethods,
-  Validation,
+  RuleEntity,
+  RULES_MAP,
   Feedback
 } from '../validations.js'
 
@@ -55,7 +55,7 @@ export class InputField extends LitElement {
   @state()
   private _validationMessage: string | null = null
 
-  private _rules = new Map<string, ValidationFn>()
+  private _rules = new Map<string, RuleHandler>()
 
   connectedCallback (): void {
     super.connectedCallback()
@@ -108,14 +108,14 @@ export class InputField extends LitElement {
   /**
    * Return a list of the validation rules registered to the input.
    */
-  getRules (): Validation[] {
+  getRules (): RuleEntity[] {
     return [...this._rules].map(([name, handler]) => ({ name, handler }))
   }
 
   /**
    * Returns the validation rule with the given name.
    */
-  getRule (name: string): ValidationFn | null {
+  getRule (name: string): RuleHandler | null {
     const handler = this._rules.get(name)
 
     if (!handler) return null
@@ -137,7 +137,7 @@ export class InputField extends LitElement {
    *
    * @param validation The validation rule to add.
    */
-  addRule (validation: Validation): void {
+  addRule (validation: RuleEntity): void {
     if (this.hasRule(validation.name)) {
       throw new TextFieldError(`The rule "${validation.name}" already exists.`)
     }
@@ -211,7 +211,7 @@ export class InputField extends LitElement {
     let _feedback: Feedback | null = null
 
     for (const rule of rules) {
-      if (rules.at(0)?.name !== VALIDATION_REQUIRED_KEY && !input.value) {
+      if (rules.at(0)?.name !== RULES_MAP.Required && !input.value) {
         break
       }
 
