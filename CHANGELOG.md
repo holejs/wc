@@ -1,3 +1,13 @@
+## [0.14.1](https://github.com/holejs/wc/compare/v0.14.0...v0.14.1) (2023-10-11)
+
+
+### Bug Fixes
+
+* **select:** Corrected the display of error messages when the "hint" is not defined ([0d67126](https://github.com/holejs/wc/commit/0d6712693dd09e028767d17fddc25f8cbb90b656))
+* **select:** Fixed the base font and added new CSS Custom Props ([25eca70](https://github.com/holejs/wc/commit/25eca70d0c43698eac8d057375657c74b714e3a2))
+
+
+
 # [0.14.0](https://github.com/holejs/wc/compare/v0.13.0...v0.14.0) (2023-10-10)
 
 
