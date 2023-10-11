@@ -250,7 +250,7 @@ export class HWCSelect extends InputField {
         <!-- Details -->
         ${
           when(
-            this._hasError() && this.hint,
+            this._hasError() || this.hint,
             () => html`
               <div class="select__details">
                 <span>${this.validationMessage || this.hint}</span>
