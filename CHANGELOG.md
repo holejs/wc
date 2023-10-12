@@ -1,3 +1,12 @@
+## [0.14.2](https://github.com/holejs/wc/compare/v0.14.1...v0.14.2) (2023-10-12)
+
+
+### Bug Fixes
+
+* **select:** Ensure options are selected within the same x-select. Closes [#1](https://github.com/holejs/wc/issues/1) ([a2defef](https://github.com/holejs/wc/commit/a2defef45389a998f609bd126affe2efc8b4c7b7))
+
+
+
 ## [0.14.1](https://github.com/holejs/wc/compare/v0.14.0...v0.14.1) (2023-10-11)
 
 
