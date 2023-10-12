@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
+import { LitElement, css, html, unsafeCSS } from 'lit'
 
 import styles from './select.css?inline'
 
@@ -16,7 +16,7 @@ declare global {
 
 @customElement('hwc-select-option')
 export class HWCSelectOption extends LitElement {
-  static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
+  static styles = css`${unsafeCSS(styles)}`
 
   @property({ type: String }) value!: string
 
@@ -24,22 +24,19 @@ export class HWCSelectOption extends LitElement {
 
   @property({ type: String, reflect: true }) role = 'option'
 
-  private _root: ParentNode | null = null
-
-  connectedCallback (): void {
-    super.connectedCallback()
-
-    this._root = this.getRootNode() as ParentNode
-  }
-
-  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+  protected firstUpdated (): void {
     if (this.selected) {
-      this._getSelectNode()?.appendOption(this.value)
+      this._getSelectNode().appendOption(this.value)
     }
   }
 
   private _getSelectOptionsNode (): HWCSelectOption[] {
-    return Array.from(this._root?.querySelectorAll('hwc-select-option') as NodeListOf<HWCSelectOption>)
+    // Select all the options inside the select
+    const $select = this._getSelectNode()
+
+    const $options = $select.querySelectorAll('hwc-select-option') as NodeListOf<HWCSelectOption>
+
+    return Array.from($options)
   }
 
   private _unselectOptions (): void {
@@ -55,16 +52,18 @@ export class HWCSelectOption extends LitElement {
    * This method is used to get the parent node of the option.
    * In this case, the parent node is the `<hwc-select>`.
    */
-  private _getSelectNode (): HWCSelect | null {
-    return this.closest('hwc-select')
-  }
-
-  private _onHandleClick (_ev: Event): void {
-    const $select = this._getSelectNode()
+  private _getSelectNode (): HWCSelect {
+    const $select = this.closest('hwc-select')
 
     if (!$select) {
       throw new Error('The option must be inside a select.')
     }
+
+    return $select
+  }
+
+  private _onHandleClick (_ev: Event): void {
+    const $select = this._getSelectNode()
 
     const isSingleSelect = !$select.multiple
 
