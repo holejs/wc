@@ -1,3 +1,13 @@
+## [0.14.3](https://github.com/holejs/wc/compare/v0.14.2...v0.14.3) (2023-10-13)
+
+
+### Bug Fixes
+
+* Fixed message display in input fields ([458ddc3](https://github.com/holejs/wc/commit/458ddc341e139a4592d3ca0d059a53bf1441346c))
+* Parsing error in "rules" attr when defining "pattern". Closes [#2](https://github.com/holejs/wc/issues/2) ([9510728](https://github.com/holejs/wc/commit/95107284b78bf585af5757357465f07ffd957689))
+
+
+
 ## [0.14.2](https://github.com/holejs/wc/compare/v0.14.1...v0.14.2) (2023-10-12)
 
 
