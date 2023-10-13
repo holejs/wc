@@ -180,10 +180,6 @@ export class HWCSelect extends InputField {
     return this.querySelectorAll('hwc-select-option')
   }
 
-  private _hasError (): boolean {
-    return Boolean(this.validationMessage) && (this.dirty || this.touched)
-  }
-
   private _handleDocumentClick (ev: Event): void {
     const isClickInside = this.contains(ev.target as Node)
 
@@ -207,6 +203,8 @@ export class HWCSelect extends InputField {
   }
 
   protected render (): unknown {
+    const isError = this.hasError()
+
     return html`
       <div class="select">
         <div class="select__wrapper">
@@ -250,10 +248,10 @@ export class HWCSelect extends InputField {
         <!-- Details -->
         ${
           when(
-            this._hasError() || this.hint,
+            isError || this.hint,
             () => html`
               <div class="select__details">
-                <span>${this.validationMessage || this.hint}</span>
+                <span>${isError ? this.validationMessage : this.hint}</span>
               </div>
             `
           )

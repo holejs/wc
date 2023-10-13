@@ -66,10 +66,6 @@ export class HWCCheckbox extends InputField {
     this.form?.removeEventListener('reset', this._onHandleReset.bind(this))
   }
 
-  private _hasError (): boolean {
-    return Boolean(this.validationMessage) && (this.touched || this.dirty)
-  }
-
   /**
    * Resets the state of the component.
    */
@@ -131,7 +127,7 @@ export class HWCCheckbox extends InputField {
 
           <!-- Details -->
           ${when(
-            this._hasError(),
+            this.hasError(),
             () => html`
               <div class="checkbox__details">
                 <span>${this.validationMessage}</span>

@@ -91,6 +91,10 @@ export class InputField extends LitElement {
     }
   }
 
+  protected hasError (): boolean {
+    return Boolean(this.validationMessage) && (this.touched || this.dirty)
+  }
+
   /**
    * Returns the validation message that would be shown to the user.
    */

@@ -211,6 +211,8 @@ export class HWCTextField extends InputField {
   }
 
   protected render (): unknown {
+    const isError = this.hasError()
+
     const showClearableButton = this.clearable &&
       this.value &&
       !this.disabled &&
@@ -286,10 +288,10 @@ export class HWCTextField extends InputField {
 
           <!-- Details -->
           ${when(
-            this.validationMessage || this.hint,
+            isError || this.hint,
             () => html`
               <div class="text-field__details">
-                <span>${this.validationMessage || this.hint}</span>
+                <span>${isError ? this.validationMessage : this.hint}</span>
               </div>
             `
           )}

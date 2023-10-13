@@ -86,10 +86,6 @@ export class HWCRadio extends InputField {
     this.internals.setFormValue(value)
   }
 
-  private _hasError (): boolean {
-    return Boolean(this.validationMessage) && (this.dirty || this.touched)
-  }
-
   /**
    * Get all radios with the same name.
    * @private
@@ -169,7 +165,7 @@ export class HWCRadio extends InputField {
 
           <!-- Details -->
           ${when(
-            this._hasError(),
+            this.hasError(),
             () => html`
               <div class="radio__details">
                 <span>${this.validationMessage}</span>
