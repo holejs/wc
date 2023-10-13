@@ -1,3 +1,13 @@
+const RULES_FUNCTIONS = [
+  [/required/, 'required'],
+  [/email/, 'email'],
+  [/min:(\d+)/, 'min'],
+  [/max:(\d+)/, 'max'],
+  [/minlength:(\d+)/, 'minlength'],
+  [/maxlength:(\d+)/, 'maxlength'],
+  [/pattern:(.+)/, 'pattern']
+]
+
 /**
  * Parses a rules string and returns an array of rule items.
  *
@@ -8,15 +18,15 @@
  * @returns {{ key: string; value: string | null }[]} An array of rule items.
  * Each item contains a 'key' property representing the rule name,
  * and an optional 'value' property representing the rule value if provided.
- * If the rule does not have a value, 'value' will be null.
  */
-export const parseRules = (rules: string): { key: string; value: string | null }[] => {
-  if (!rules) return []
+export const parseRules = (rules: string): { key: string; value: string }[] => {
+  return RULES_FUNCTIONS
+    .map(([regex, key]) => {
+      const match = rules.match(regex)
 
-  const _rules = rules.split('|')
+      if (!match) return null
 
-  return _rules.map((rule) => {
-    const [key, value = null] = rule.split(':')
-    return { key, value }
-  })
+      return { key, value: match[1] || '' }
+    })
+    .filter((rule) => rule !== null) as { key: string; value: string }[]
 }
