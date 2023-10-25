@@ -1,3 +1,12 @@
+# [0.15.0](https://github.com/holejs/wc/compare/v0.14.3...v0.15.0) (2023-10-25)
+
+
+### Features
+
+* Added the "change" event to the input fields ([7c63924](https://github.com/holejs/wc/commit/7c63924638a0764f762596cc0906bb33d6df7962))
+
+
+
 ## [0.14.3](https://github.com/holejs/wc/compare/v0.14.2...v0.14.3) (2023-10-13)
 
 
