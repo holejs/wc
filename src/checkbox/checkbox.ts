@@ -92,6 +92,8 @@ export class HWCCheckbox extends InputField {
     this.dirty = true
 
     this.triggerValidation()
+
+    this.dispatchEvent(new Event('change'))
   }
 
   private _onHandleBlur (): void {

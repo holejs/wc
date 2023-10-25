@@ -136,6 +136,8 @@ export class HWCRadio extends InputField {
     this.checked = true
 
     this.triggerValidation()
+
+    this.dispatchEvent(new Event('change'))
   }
 
   private _handleFocusout (): void {

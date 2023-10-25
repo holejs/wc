@@ -21,6 +21,14 @@ const _onHandleSubmit = (event: Event): void => {
   })
 }
 
+const _onHandleChange = (event: Event): void => {
+  const $checkbox = event.target as HWCCheckbox
+
+  const value = $checkbox.checked ? $checkbox.value : null
+
+  console.log('value: ', value)
+}
+
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 const meta = {
   title: 'Example/Checkboxes',
@@ -38,6 +46,7 @@ const meta = {
         color=${color}
         ?disabled=${disabled}
         data-error-message-required="Accept the terms and conditions to advance."
+        @change=${_onHandleChange}
       >
         Accept terms and conditions.
       </hwc-checkbox>

@@ -23,6 +23,14 @@ const _onHandleSubmit = (ev: Event): void => {
   })
 }
 
+const _onHandleChange = (ev: Event): void => {
+  const $select = ev.target as HWCSelect
+
+  const value = $select.value
+
+  console.log('value: ', value)
+}
+
 const meta = {
   title: 'Example/Selects',
   tags: ['autodocs'],
@@ -68,6 +76,7 @@ const meta = {
                     ?disabled=${disabled}
                     ?readonly=${readonly}
                     data-error-message-required="The field is required."
+                    @change=${_onHandleChange}
                   >
                     <hwc-select-option value="violet">
                       <div class="container__option">

@@ -11,6 +11,12 @@ type HWCTextField = HTMLElementTagNameMap['hwc-text-field']
 
 type Story = StoryObj<HWCTextField>;
 
+const _onHandleChange = (e: Event) => {
+  const $textfield = e.target as HWCTextField
+
+  console.log('value: ', $textfield.value)
+}
+
 const meta = {
   title: 'Example/TextFields',
   tags: ['autodocs'],
@@ -34,6 +40,7 @@ const meta = {
       data-error-message-maxlength=${args['data-error-message-maxlength'] || ''}
       data-error-message-pattern=${args['data-error-message-pattern'] || ''}
       data-error-message-email=${args['data-error-message-email'] || ''}
+      @change=${_onHandleChange}
     ></hwc-text-field>
   `,
   argTypes: {

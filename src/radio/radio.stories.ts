@@ -12,6 +12,14 @@ type HWCRadio = HTMLElementTagNameMap['hwc-radio']
 
 type Story = StoryObj<HWCRadio>;
 
+const values = [
+  { value: 'dog', label: 'Dog. 🐶' },
+  { value: 'cat', label: 'Cat. 🐱' },
+  { value: 'bird', label: 'Bird. 🐦' },
+  { value: 'fish', label: 'Fish. 🐠' },
+  { value: 'hamster', label: 'Hamster. 🐹' }
+]
+
 const _handleSubmit = (event: Event) => {
   event.preventDefault()
 
@@ -24,6 +32,14 @@ const _handleSubmit = (event: Event) => {
   })
 }
 
+const _onHandleChange = (event: Event) => {
+  const $radio = event.target as HWCRadio
+
+  const value = $radio.checked ? $radio.value : null
+
+  console.log('value: ', value)
+}
+
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 const meta = {
   title: 'Example/Radio',
@@ -31,32 +47,17 @@ const meta = {
   render: ({ color }: any) => html`
     <main>
       <form @submit=${_handleSubmit}>
-        <hwc-radio
-          name="pet"
-          color=${color}
-          value="dog"
-          rules="required"
-          checked
-          data-error-message-required="Select one of these pets"
-        >
-          Dog. 🐶
-        </hwc-radio>
-  
-        <hwc-radio name="pet" color=${color} value="cat" rules="required">
-          Cat. 🐱
-        </hwc-radio>
-
-        <hwc-radio name="pet" color=${color} value="bird" rules="required">
-          Bird. 🐦
-        </hwc-radio>
-
-        <hwc-radio name="pet" color=${color} value="fish" rules="required">
-          Fish. 🐠
-        </hwc-radio>
-
-        <hwc-radio name="pet" color=${color} value="hamster" rules="required">
-          Hamster. 🐹
-        </hwc-radio>
+        ${values.map(({ value, label }) => html`
+          <hwc-radio
+            name="pet"
+            color=${color}
+            value=${value}
+            rules="required"
+            checked
+            data-error-message-required="Select one of these pets"
+            @change=${_onHandleChange}
+          >${label}</hwc-radio>
+        `)}
 
         <div style="margin-top: 10px">
           <hwc-button appearance="text" type="reset" color=${color}>Reset</hwc-button>

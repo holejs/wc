@@ -78,6 +78,8 @@ export class HWCSelect extends InputField {
       this.internals.setFormValue(formData)
 
       this.triggerValidation()
+
+      this.dispatchEvent(new CustomEvent('change'))
     }
 
     if (changedProperties.has('color')) {

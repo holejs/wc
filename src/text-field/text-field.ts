@@ -183,6 +183,8 @@ export class HWCTextField extends InputField {
     this.dirty = true
 
     this.triggerValidation()
+
+    this.dispatchEvent(new CustomEvent('change'))
   }
 
   /**
@@ -200,6 +202,12 @@ export class HWCTextField extends InputField {
     if (!$form) return
 
     $form.requestSubmit()
+  }
+
+  private _onHandleClearable (): void {
+    this._setValue('')
+
+    this.dispatchEvent(new CustomEvent('change'))
   }
 
   private _onReset (): void {
@@ -268,7 +276,7 @@ export class HWCTextField extends InputField {
                   <hwc-button
                     appearance="icon"
                     class="text-field__clearable"
-                    @click=${() => this._setValue('')}
+                    @click=${this._onHandleClearable}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
