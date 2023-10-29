@@ -1,3 +1,12 @@
+## [0.15.1](https://github.com/holejs/wc/compare/v0.15.0...v0.15.1) (2023-10-29)
+
+
+### Bug Fixes
+
+* **select:** Added new "CSS Custom Props" to modify the color of the options menu ([961bc46](https://github.com/holejs/wc/commit/961bc469b22ef3b5024adf3a2fc12354cbb7688b))
+
+
+
 # [0.15.0](https://github.com/holejs/wc/compare/v0.14.3...v0.15.0) (2023-10-25)
 
 
