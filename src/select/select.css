@@ -61,10 +61,10 @@
   left: 0;
   z-index: var(--hwc-select-z-index, 10);
   padding: var(--hwc-select-options-padding, 0.625rem);
-  background: white;
+  background: var(--hwc-select-options-background, white);
   box-sizing: border-box;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.18);
-  border-radius: var(--hwc-select-border-radius, 0.625rem);
+  border-radius: var(--hwc-select-options-border-radius, 0.625rem);
 }
 
 .select-options__wrapper {

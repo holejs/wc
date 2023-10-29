@@ -199,6 +199,8 @@ The `hwc-select` component has the following error messages:
 | `--hwc-select-margin-top`       | Margin top of the select component (default value: 0.5rem) |
 | `--hwc-select-suggestions-item-padding` | Padding of the suggestions item (default value: 0.0625rem) |
 | `--hwc-select-options-padding` | Padding of the options (default value: 0.625rem)         |
+| `--hwc-select-options-border-radius` | Border radius of the options (default value: 0.75rem) |
+| `--hwc-select-options-background` | Background of the options (default value: white)         |
 | `--hwc-select-transition`      | Transition of the select component (default value: 250ms ease all) |
 | `--hwc-select-font-size`        | Font size of the select component (default value: 1rem) |
 | `--hwc-select-error-color`      | Error color of the select component (default value: var(--hwc-red-darken-2)) |
