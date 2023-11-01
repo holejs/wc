@@ -1,8 +1,8 @@
-import { PropertyValueMap, LitElement, unsafeCSS, html, css } from 'lit'
+import { PropertyValueMap, LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
 
-import styles from './alert.css?inline'
+import styles from './alert.css'
 
 import '../button/button.js'
 
@@ -21,7 +21,7 @@ export type AlertType = 'info' | 'success' | 'warning' | 'error'
 
 @customElement('hwc-alert')
 export class HWCAlert extends LitElement {
-  static styles = css`${unsafeCSS(styles)}`
+  static styles = styles
 
   @property({ type: String }) appearance: AlertAppearance = 'filled'
 

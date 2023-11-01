@@ -1,7 +1,7 @@
-import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
+import { CSSResultGroup, LitElement, PropertyValueMap, html } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
 
-import styles from './card.css?inline'
+import styles from './card.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
@@ -16,7 +16,7 @@ export type CardElevation = '0' | '1' | '2' | '3' | '4' | '5'
 
 @customElement('hwc-card')
 export class HWCCard extends LitElement {
-  static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
+  static styles?: CSSResultGroup | undefined = styles
 
   @query('.card__header') private $cardHeader!: HTMLElement
 

@@ -1,8 +1,8 @@
-import { CSSResultGroup, LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
+import { CSSResultGroup, LitElement, PropertyValueMap, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
 
-import styles from './chip.css?inline'
+import styles from './chip.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
@@ -21,7 +21,7 @@ export type ChipSize = 'x-small' | 'small' | 'regular' | 'large' | 'x-large'
 
 @customElement('hwc-chip')
 export class HWCChip extends LitElement {
-  static styles?: CSSResultGroup | undefined = css`${unsafeCSS(styles)}`
+  static styles?: CSSResultGroup | undefined = styles
 
   @property({ type: String, reflect: true }) appearance: ChipAppearence = 'filled'
 

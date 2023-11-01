@@ -1,7 +1,7 @@
-import { PropertyValueMap, LitElement, unsafeCSS, html, css } from 'lit'
+import { PropertyValueMap, LitElement, html } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
 
-import styles from './button.css?inline'
+import styles from './button.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
@@ -20,7 +20,7 @@ export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 
 @customElement('hwc-button')
 export class HWCButton extends LitElement {
-  static styles = css`${unsafeCSS(styles)}`
+  static styles = styles
 
   // eslint-disable-next-line no-undef
   private readonly internals = this.attachInternals()

@@ -1,11 +1,11 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
 import { customElement, property, query } from 'lit/decorators.js'
-import { PropertyValueMap, css, html, unsafeCSS } from 'lit'
+import { PropertyValueMap, html } from 'lit'
 import { when } from 'lit/directives/when.js'
 import { map } from 'lit/directives/map.js'
 
-import styles from './select.css?inline'
+import styles from './select.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
@@ -26,7 +26,7 @@ declare global {
 
 @customElement('hwc-select')
 export class HWCSelect extends InputField {
-  static styles = css`${unsafeCSS(styles)}`
+  static styles = styles
 
   @query('button') protected $input!: HTMLButtonElement
 

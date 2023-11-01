@@ -1,7 +1,7 @@
-import { LitElement, PropertyValueMap, css, html, unsafeCSS } from 'lit'
+import { LitElement, PropertyValueMap, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 
-import styles from './ripple.css?inline'
+import styles from './ripple.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
@@ -14,7 +14,7 @@ declare global {
 
 @customElement('hwc-ripple')
 export class HWCRipple extends LitElement {
-  static styles = css`${unsafeCSS(styles)}`
+  static styles = styles
 
   @property({ type: String }) color!: string
 

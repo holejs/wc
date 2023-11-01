@@ -1,8 +1,8 @@
-import { PropertyValueMap, css, html, unsafeCSS } from 'lit'
+import { PropertyValueMap, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
 
-import styles from './checkbox.css?inline'
+import styles from './checkbox.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
@@ -18,7 +18,7 @@ declare global {
 
 @customElement('hwc-checkbox')
 export class HWCCheckbox extends InputField {
-  static styles = css`${unsafeCSS(styles)}`
+  static styles = styles
 
   @property({ type: String }) color!: string
 
