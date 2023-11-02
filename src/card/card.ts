@@ -44,11 +44,9 @@ export class HWCCard extends LitElement {
     }
 
     if (_changedProperties.has('elevation')) {
-      const elevation = Number(this.elevation)
-
       this.style.setProperty(
         '--hwc-card-box-shadow',
-        elevation ? `var(--hwc-box-shadow-${this.elevation})` : null
+        `var(--hwc-box-shadow-${this.elevation})`
       )
     }
   }
