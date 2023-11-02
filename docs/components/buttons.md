@@ -80,9 +80,9 @@ You can set gradient colors using a simple css class. Let's see the following ex
   /* Step 1: Define your class. */
   /* Gradient taken from https://uigradients.com/#ElectricViolet */
   .electric-violet__bg {
-    --hwc-button-bg: #4776E6;
-    --hwc-button-bg: -webkit-linear-gradient(to right, #8E54E9, #4776E6);
-    --hwc-button-bg: linear-gradient(to right, #8E54E9, #4776E6);
+    --hwc-button-background: #4776E6;
+    --hwc-button-background: -webkit-linear-gradient(to right, #8E54E9, #4776E6);
+    --hwc-button-background: linear-gradient(to right, #8E54E9, #4776E6);
   }
 </style>
 
@@ -160,23 +160,24 @@ The **ripple** effect simulates waves that propagate from the point where the in
 
 ## CSS Custom Properties
 
-| Name                          | Description                                                               |
-| ----------------------------- | ------------------------------------------------------------------------- |
-| `--hwc-button-font-family`    | Font family for the button text.                                          |
-| `--hwc-button-font-size`      | Font size for the button text.                                            |
-| `--hwc-button-font-weight`    | This property determines the font weight of the button text.              |
-| `--hwc-button-letter-spacing` | This property controls the spacing between characters in the button text. |
-| `--hwc-button-height`         | This property sets the height of the button.                              |
-| `--hwc-button-width`          | This property defines the width of the button.                            |
-| `--hwc-button-padding`        | Padding for the button content.                                           |
-| `--hwc-button-border-radius`  | Border radius for the button.                                             |
-| `--hwc-button-border-width`   | Border width for the button.                                              |
-| `--hwc-button-border-color`   | Border color for the button.                                              |
-| `--hwc-button-border-style`   | Border style for the button.                                              |
-| `--hwc-button-bg`             | Background color for the button.                                          |
-| `--hwc-button-color`          | Color for the button.                                                     |
-| `--hwc-button-text-color`     | Text color for the button.                                                |
-| `--hwc-button-cursor`         | Cursor style when hovering over the button.                               |
-| `--hwc-button-hover-bg`       | Background color when hovering over the button.                           |
-| `--hwc-button-box-shadow`     | Allow to set shadows to the component.                                    |
-| `--hwc-button-hover-opacity`  | Set opacity to the hover background component.                            |
+| Name                            | Description                                                                                 |
+| ------------------------------- | ------------------------------------------------------------------------------------------- |
+| `--hwc-button-font-family`      | Font family for the button text. **Default**: `Nunito Sans, sans-serif`.                    |
+| `--hwc-button-font-size`        | Font size for the button text. **Default**: `1rem`.                                         |
+| `--hwc-button-font-weight`      | This property determines the font weight of the button text. **Default**: `normal`.         |
+| `--hwc-button-letter-spacing`   | This property controls the spacing between characters in the button text. **Default**: `0`. |
+| `--hwc-button-height`           | This property sets the height of the button. **Default**: `43px`.                           |
+| `--hwc-button-width`            | This property defines the width of the button. **Default**: `auto`.                         |
+| `--hwc-button-padding`          | Padding for the button content. **Default**: `10px 20px`.                                   |
+| `--hwc-button-border-radius`    | Border radius for the button.                                                               |
+| `--hwc-button-border-width`     | Border width for the button. **Default**: `0`.                                              |
+| `--hwc-button-border-color`     | Border color for the button. **Default**: `transparent`.                                    |
+| `--hwc-button-border-style`     | Border style for the button. **Default**: `solid`.                                          |
+| `--hwc-button-background`       | Background color for the button. **Default**: `var(--hwc-button-color)`.                    |
+| `--hwc-button-color`            | Color for the button. **Default**: `var(--hwc-blue-darken-2)`.                              |
+| `--hwc-button-font-color`       | Text color for the button. **Default**: `white`.                                            |
+| `--hwc-button-cursor`           | Cursor style when hovering over the button. **Default**: `pointer`.                         |
+| `--hwc-button-hover-background` | Background color when hovering over the button.                                             |
+| `--hwc-button-box-shadow`       | Allow to set shadows to the component.                                                      |
+| `--hwc-button-hover-opacity`    | Set opacity to the hover background component.                                              |
+| `--hwc-button-z-index`          | Set z-index to the component. **Default**: `0`.                                             |

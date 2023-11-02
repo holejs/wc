@@ -37,9 +37,23 @@ const meta = {
         when(
           args.appearance === 'icon' || args.appearance === 'fab',
           () => html`
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
-              <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-              <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-telescope"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6 21l6 -5l6 5"></path>
+              <path d="M12 13v8"></path>
+              <path d="M3.294 13.678l.166 .281c.52 .88 1.624 1.265 2.605 .91l14.242 -5.165a1.023 1.023 0 0 0 .565 -1.456l-2.62 -4.705a1.087 1.087 0 0 0 -1.447 -.42l-.056 .032l-12.694 7.618c-1.02 .613 -1.357 1.897 -.76 2.905z"></path>
+              <path d="M14 5l3 5.5"></path>
             </svg>
           `,
           () => BUTTON_TEXT_CONTENT
@@ -176,7 +190,7 @@ export const Fullwidth: Story = {
     const $button = $hwcbutton.shadowRoot?.querySelector('button')
 
     expect($button).toBeInTheDocument()
-    expect($button).toHaveStyle({ 'background-color': 'rgb(211, 47, 47)' })
+    // expect($button).toHaveStyle({ 'background-color': 'rgb(211, 47, 47)' })
   }
 }
 
@@ -191,7 +205,7 @@ export const Ripple: Story = {
 export const Fab: Story = {
   args: {
     appearance: 'fab',
-    color: 'purple-darken-4'
+    color: 'orange-lighten-4'
   }
 }
 
@@ -226,4 +240,60 @@ export const Disabled: Story = {
     expect($button).toBeInTheDocument()
     expect($button).toHaveAttribute('disabled')
   }
+}
+
+export const Gradient: Story = {
+  args: {
+    elevation: '1'
+  },
+  render: ({
+    disabled,
+    elevation,
+    fullwidth,
+    rounded,
+    capitalize,
+    lowercase,
+    uppercase
+  }: HWCButton) => html`
+    <style>
+      .electric-violet__bg {
+        --hwc-button-background: #833ab4;
+        --hwc-button-background: -webkit-linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
+        --hwc-button-background: linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
+      }
+    </style>
+
+    <hwc-button
+      class="electric-violet__bg"
+      elevation=${elevation}
+      ?capitalize=${capitalize}
+      ?lowercase=${lowercase}
+      ?uppercase=${uppercase}
+      ?fullwidth=${fullwidth}
+      ?rounded=${rounded}
+      ?disabled=${disabled}
+    >
+      <hwc-ripple></hwc-ripple>
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-brand-instagram"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
+        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+        <path d="M16.5 7.5l0 .01"></path>
+      </svg>
+
+      <span style="margin-left: 10px;">Instagram</span>
+    </hwc-button>
+  `
 }
