@@ -8,7 +8,7 @@
   /* Colors */
   /* --hwc-card-color: unset; */
   /* --hwc-card-bg: white; */
-  --hwc-card-text-color: unset;
+  --hwc-card-font-color: unset;
 
   /* Padding */
   --hwc-card-header-padding: 15px 15px 5px 15px;
@@ -31,7 +31,7 @@
   box-shadow: var(--hwc-card-box-shadow);
   border-radius: var(--hwc-card-border-radius);
   background: var(--hwc-card-bg, white);
-  color: var(--hwc-card-text-color);
+  color: var(--hwc-card-font-color);
 }
 
 .body__wrapper {

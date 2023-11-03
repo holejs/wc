@@ -48,7 +48,7 @@ export const Gradient: Story = {
     <style>
       .card {
         --hwc-card-body-padding: 15px 15px 0px 15px;
-        --hwc-card-text-color: white;
+        --hwc-card-font-color: white;
         --hwc-card-bg: #000000;
         --hwc-card-bg: -webkit-linear-gradient(to right, #434343, #000000);
         --hwc-card-bg: linear-gradient(to right, #434343, #000000);
@@ -56,7 +56,7 @@ export const Gradient: Story = {
 
       .wrapper {
         width: 400px;
-        font-family: Poppins;
+        font-family: 'Nunito Sans', sans-serif;
       }
       .card__body {
         display: flex;

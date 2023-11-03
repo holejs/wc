@@ -137,7 +137,7 @@ This event is executed when the component's `close()` method is executed.
 | `--hwc-chip-font-family`            | Defines the font family used for the text inside the chip.       |
 | `--hwc-chip-color`                  | Defines the main color of the chip.                              |
 | `--hwc-chip-bg`                     | Defines the background color of the chip.                        |
-| `--hwc-chip-text-color`             | Defines the text color inside the chip.                          |
+| `--hwc-chip-font-color`             | Defines the text color inside the chip.                          |
 | `--hwc-chip-font-size`              | Defines the font size used for the text inside the chip.         |
 | `--hwc-chip-padding`                | Defines the padding of the content inside the chip.              |
 | `--hwc-chip-border-width`           | Defines the border width of the chip.                            |
