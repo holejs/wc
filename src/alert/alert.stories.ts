@@ -105,11 +105,3 @@ export const Dismissible: Story = {
     expect(document.querySelector('hwc-alert')).toBeNull()
   }
 }
-
-export const Colored: Story = {
-  args: {
-    appearance: 'text',
-    color: 'purple-darken-2',
-    dismissible: true
-  }
-}
