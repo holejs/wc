@@ -10,6 +10,8 @@
   z-index: var(--hwc-button-z-index, 0);
   width: auto;
   height: auto;
+
+  --hwc-button-color: var(--hwc-blue-darken-2);
 }
 
 /* Base styles */
@@ -21,7 +23,7 @@
   border-color: var(--hwc-button-border-color, transparent);
   border-radius: var(--hwc-button-border-radius, 0.65rem);
   
-  background: var(--hwc-button-background, var(--hwc-button-color, var(--hwc-blue-darken-2)));
+  background: var(--hwc-button-background, var(--hwc-button-color));
   color: var(--hwc-button-font-color, white);
 
   font-family: var(--hwc-button-font-family, 'Nunito Sans', sans-serif);
