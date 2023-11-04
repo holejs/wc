@@ -1,4 +1,4 @@
-import { PropertyValueMap, LitElement, unsafeCSS, html, css } from 'lit'
+import { PropertyValueMap, LitElement, unsafeCSS, html, css, nothing } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './button.css?inline'
@@ -22,6 +22,8 @@ export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 export class HWCButton extends LitElement {
   static styles = css`${unsafeCSS(styles)}`
 
+  @query('.button') $button!: HTMLButtonElement
+
   // eslint-disable-next-line no-undef
   private readonly internals = this.attachInternals()
 
@@ -30,13 +32,11 @@ export class HWCButton extends LitElement {
 
   @property({ type: String }) appearance: ButtonAppearance = 'raised'
 
-  @property({ type: String, reflect: true }) type: ButtonType = 'button'
+  @property({ type: String }) type: ButtonType = 'button'
 
   @property({ type: String }) color!: string
 
   @property({ type: String, reflect: true }) elevation!: ButtonElevation
-
-  @property({ type: String, reflect: true }) role = 'button'
 
   @property({ type: Boolean }) lowercase = false
 
@@ -50,7 +50,17 @@ export class HWCButton extends LitElement {
 
   @property({ type: Boolean }) disabled = false
 
-  @query('.button') $button!: HTMLButtonElement
+  @property({ type: String }) href!: string
+
+  @property({ type: String }) target: string = '_blank'
+
+  @property({ type: String }) rel!: string
+
+  connectedCallback (): void {
+    super.connectedCallback()
+
+    this.setAttribute('role', this.href ? 'link' : 'button')
+  }
 
   protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (_changedProperties.has('color')) {
@@ -111,7 +121,23 @@ export class HWCButton extends LitElement {
     if (isReset) return $form.reset()
   }
 
-  protected render (): unknown {
+  private _renderAnchor (): unknown {
+    return html`
+      <a
+        class="button"
+        href=${this.href}
+        target=${this.target}
+        rel=${this.rel || nothing}
+        ?disabled=${this.disabled}
+      >
+        <div class="button__wrapper">
+          <slot></slot>
+        </div>
+      </a>
+    `
+  }
+
+  private _renderButton (): unknown {
     return html`
       <button
         class="button"
@@ -124,5 +150,13 @@ export class HWCButton extends LitElement {
         </div>
       </button>
     `
+  }
+
+  protected render (): unknown {
+    const isLink = this.href
+
+    return isLink
+      ? this._renderAnchor()
+      : this._renderButton()
   }
 }

@@ -30,6 +30,7 @@
   font-size: var(--hwc-button-font-size, 1rem);
   font-weight: var(--hwc-button-font-weight, normal);
   letter-spacing: var(--hwc-button-letter-spacing, 0);
+  text-decoration: none;
   
   cursor: var(--hwc-button-cursor, pointer);
 

@@ -24,6 +24,9 @@ const meta = {
       .type=${args.type || 'button'}
       .color=${args.color}
       .elevation=${args.elevation}
+      href=${args.href}
+      target=${args.target}
+      rel=${args.rel}
       ?rounded=${args.rounded}
       ?fullwidth=${args.fullwidth}
       ?uppercase=${args.uppercase}
@@ -103,6 +106,18 @@ const meta = {
     capitalize: {
       control: 'boolean',
       description: 'Displays the first letter of each word in uppercase.'
+    },
+    href: {
+      control: 'text',
+      description: 'The URL that the hyperlink points to.'
+    },
+    target: {
+      control: 'text',
+      description: 'Specifies where to display the linked URL.'
+    },
+    rel: {
+      control: 'text',
+      description: 'Specifies the relationship between the current document and the linked URL.'
     }
   }
 }
@@ -118,7 +133,7 @@ export const Basic: Story = {
 
     expect($hwcbutton).toBeInTheDocument()
     expect($hwcbutton.appearance).toBe('raised')
-    expect($hwcbutton).toHaveAttribute('type', 'button')
+    // expect($hwcbutton).toHaveAttribute('type', 'button')
     expect($hwcbutton).toHaveAttribute('role', 'button')
     expect($hwcbutton).toBeVisible()
     expect($hwcbutton.uppercase).toBeFalsy()
@@ -141,7 +156,7 @@ export const Outlined: Story = {
 
     expect($hwcbutton).toBeInTheDocument()
     expect($hwcbutton).toHaveAttribute('appearance', 'outlined')
-    expect($hwcbutton).toHaveAttribute('type', 'button')
+    // expect($hwcbutton).toHaveAttribute('type', 'button')
     expect($hwcbutton).toHaveAttribute('role', 'button')
     expect($hwcbutton).toBeVisible()
 
@@ -244,7 +259,9 @@ export const Disabled: Story = {
 
 export const Gradient: Story = {
   args: {
-    elevation: '1'
+    elevation: '1',
+    href: 'https://www.instagram.com',
+    target: '_blank'
   },
   render: ({
     disabled,
@@ -253,7 +270,10 @@ export const Gradient: Story = {
     rounded,
     capitalize,
     lowercase,
-    uppercase
+    uppercase,
+    href,
+    target,
+    rel
   }: HWCButton) => html`
     <style>
       .electric-violet__bg {
@@ -266,6 +286,9 @@ export const Gradient: Story = {
     <hwc-button
       class="electric-violet__bg"
       elevation=${elevation}
+      href=${href}
+      target=${target}
+      rel=${rel}
       ?capitalize=${capitalize}
       ?lowercase=${lowercase}
       ?uppercase=${uppercase}

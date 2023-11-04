@@ -158,6 +158,18 @@ The **ripple** effect simulates waves that propagate from the point where the in
 </hwc-button>
 ```
 
+## Href, Target & Rel
+
+These properties allow you to turn the button into a link.
+
+```html
+<hwc-button
+  href="https://github.com/holejs/wc"
+  target="_blank"
+  rel="noopener noreferrer"
+>@holejs/wc</hwc-button>
+```
+
 ## CSS Custom Properties
 
 | Name                            | Description                                                                                 |
