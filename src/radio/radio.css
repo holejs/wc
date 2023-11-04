@@ -29,7 +29,7 @@
   margin-right: 10px;
   border-style: var(--hwc-radio-border-style, solid);
   border-width: var(--hwc-radio-border-width, 2px);
-  border-color: var(--hwc-radio-border-color, var(--hwc-grey-darken-1));
+  border-color: var(--hwc-radio-border-color, var(--hwc-grey-lighten-2));
   border-radius: 50%;
 }
 
