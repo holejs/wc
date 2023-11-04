@@ -203,4 +203,5 @@ The `hwc-select` component has the following error messages:
 | `--hwc-select-options-background` | Background of the options (default value: white)         |
 | `--hwc-select-transition`      | Transition of the select component (default value: 250ms ease all) |
 | `--hwc-select-font-size`        | Font size of the select component (default value: 1rem) |
+| `--hwc-select-font-color`       | Font color of the select component (default value: var(--hwc-grey-darken-3)) |
 | `--hwc-select-error-color`      | Error color of the select component (default value: var(--hwc-red-darken-2)) |
