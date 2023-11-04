@@ -1,3 +1,13 @@
+## [0.15.3](https://github.com/holejs/wc/compare/v0.15.2...v0.15.3) (2023-11-04)
+
+
+### Features
+
+* **button:** Add hyperlink functionality to HWCButton component ([96884eb](https://github.com/holejs/wc/commit/96884eb9884db5ca22b5423e2b27018947ecda4f))
+* **select:** Add font color to select element. ([3ffd897](https://github.com/holejs/wc/commit/3ffd897d8c7f129b3a4751aab9eeb22312694b83))
+
+
+
 ## [0.15.2](https://github.com/holejs/wc/compare/v0.15.1...v0.15.2) (2023-11-03)
 
 
