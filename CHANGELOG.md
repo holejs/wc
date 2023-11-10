@@ -1,3 +1,28 @@
+## [0.15.3](https://github.com/holejs/wc/compare/v0.15.2...v0.15.3) (2023-11-04)
+
+
+### Features
+
+* **button:** Add hyperlink functionality to HWCButton component ([96884eb](https://github.com/holejs/wc/commit/96884eb9884db5ca22b5423e2b27018947ecda4f))
+* **select:** Add font color to select element. ([3ffd897](https://github.com/holejs/wc/commit/3ffd897d8c7f129b3a4751aab9eeb22312694b83))
+
+
+
+## [0.15.2](https://github.com/holejs/wc/compare/v0.15.1...v0.15.2) (2023-11-03)
+
+
+### Bug Fixes
+
+* **button:** Default color was set ([f39dfee](https://github.com/holejs/wc/commit/f39dfee9fe629ea8b2330d14a1e5e15afd5ef879))
+* **card:** Prevents the inheritance of elevations ([25b20b0](https://github.com/holejs/wc/commit/25b20b006efa616c61bbe680c72ce8e2495a29c4))
+
+
+### Features
+
+* The font, CSS Custom Props are modified ([8b3cc98](https://github.com/holejs/wc/commit/8b3cc9832c8f32f90dda67ed343fb335ca95ee55))
+
+
+
 ## [0.15.1](https://github.com/holejs/wc/compare/v0.15.0...v0.15.1) (2023-10-29)
 
 

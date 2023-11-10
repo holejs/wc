@@ -15,11 +15,11 @@
   --hwc-checkbox-disabled-color: #F6F8FF;
   --hwc-checkbox-disabled-inner-color: #E1E6F9;
   --hwc-checkbox-label-margin: 0px 0px 0px 10px;
-  --hwc-checkbox-font-family: Poppins, sans-serif;
+  --hwc-checkbox-font-family: 'Nunito Sans', sans-serif;
   
   --hwc-checkbox-border-width: 2px;
   --hwc-checkbox-border-style: solid;
-  --hwc-checkbox-border-color: var(--hwc-grey-darken-1);
+  --hwc-checkbox-border-color: var(--hwc-grey-lighten-2);
 }
 
 :host([disabled]) {
@@ -132,15 +132,16 @@
   vertical-align: middle;
   cursor: pointer;
   margin: var(--hwc-checkbox-label-margin);
-  color: var(--hwc-checkbox-text-color, currentColor);
+  color: var(--hwc-checkbox-font-color, currentColor);
   font-family: var(--hwc-checkbox-font-family);
+  font-size: var(--hwc-checkbox-font-size, 1rem);
 }
 
 .checkbox__details {
   margin-top: 10px;
   font-family: var(--hwc-checkbox-font-family);
   color: var(--hwc-checkbox-error-color);
-  font-size: 12px;
+  font-size: var(--hwc-checkbox-details-font-size, 0.875rem);
 }
 
 /* Erros */

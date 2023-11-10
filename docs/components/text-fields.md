@@ -281,13 +281,13 @@ Ready, this way we can define our own validations with their feedback messages. 
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `--hwc-text-field-focused-color`      | Defines the color of the text field when it is in the focused state (focus). Default: **unset**                     |
 | `--hwc-text-field-bg`                 | Defines the background color of the text field. Default: **unset**                                                  |
-| `--hwc-text-field-font-family`        | Sets the font family for the text inside the text field. Default: **Poppins, sans-serif**                           |
-| `--hwc-text-field-input-text-color`   | Defines the text color of the entered text in the text field. Default: **unset**                                    |
+| `--hwc-text-field-font-family`        | Sets the font family for the text inside the text field. Default: **Nunito Sans, sans-serif**                           |
+| `--hwc-text-field-input-font-color`   | Defines the text color of the entered text in the text field. Default: **unset**                                    |
 | `--hwc-text-field-input-font-size`    | Sets the font size of the text inside the text field. Default: **16px**                                             |
 | `--hwc-text-field-label-font-size`    | Sets the font size for the label of the text field. Default: **14px**                                               |
-| `--hwc-text-field-label-text-color`   | Defines the text color of the label in the text field. Default: **unset**                                           |
+| `--hwc-text-field-label-font-color`   | Defines the text color of the label in the text field. Default: **unset**                                           |
 | `--hwc-text-field-details-font-size`  | Sets the font size for the details or help messages in the text field. Default: **12px**                            |
-| `--hwc-text-field-details-text-color` | Defines the text color of the details or help messages in the text field. Default: **unset**                        |
+| `--hwc-text-field-details-font-color` | Defines the text color of the details or help messages in the text field. Default: **unset**                        |
 | `--hwc-text-field-padding`            | Defines the internal padding of the text field. Default: **15px**                                                   |
 | `--hwc-text-field-border-color`       | Defines the border color of the text field. Default: **unset**                                                      |
 | `--hwc-text-field-border-width`       | Sets the border width of the text field. Default: **2px**                                                           |

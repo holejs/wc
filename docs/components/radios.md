@@ -98,7 +98,7 @@ Unlike the validations of the `<hwc-text-field>`, the radio button only presents
 | `--hwc-radio-checkmark-height`   | Height of the checkmark of the radio buttons.              |
 | `--hwc-radio-font-size`          | Font size of the radio buttons.                            |
 | `--hwc-radio-font-family`        | Font family of the radio buttons.                          |
-| `--hwc-radio-text-color`         | Text color of the radio buttons.                           |
+| `--hwc-radio-font-color`         | Text color of the radio buttons.                           |
 | `--hwc-radio-error-color`        | Color of the radio buttons when they are in error.         |
 | `--hwc-radio-focus-shadow`       | Shadow displayed when a radio button is focused.           |
 | `--hwc-radio-border-hover-color` | Border color of the radio buttons when hovering over them. |

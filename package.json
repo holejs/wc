@@ -1,6 +1,6 @@
 {
   "name": "@holejs/wc",
-  "version": "0.15.1",
+  "version": "0.15.3",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -100,15 +100,15 @@
     "lit": "2.7.5"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "7.5.1",
-    "@storybook/addon-interactions": "7.5.1",
-    "@storybook/addon-links": "7.5.1",
-    "@storybook/addon-mdx-gfm": "7.5.1",
-    "@storybook/blocks": "7.5.1",
+    "@storybook/addon-essentials": "7.5.2",
+    "@storybook/addon-interactions": "7.5.2",
+    "@storybook/addon-links": "7.5.2",
+    "@storybook/addon-mdx-gfm": "7.5.2",
+    "@storybook/blocks": "7.5.2",
     "@storybook/jest": "0.2.3",
     "@storybook/testing-library": "0.2.2",
-    "@storybook/web-components": "7.5.1",
-    "@storybook/web-components-vite": "7.5.1",
+    "@storybook/web-components": "7.5.2",
+    "@storybook/web-components-vite": "7.5.2",
     "@testing-library/dom": "9.3.1",
     "@typescript-eslint/eslint-plugin": "6.2.0",
     "@typescript-eslint/parser": "6.2.0",
@@ -121,7 +121,7 @@
     "eslint-plugin-storybook": "0.6.15",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "storybook": "7.5.1",
+    "storybook": "7.5.2",
     "typescript": "5.0.2",
     "vite": "4.4.0",
     "vite-plugin-dts": "3.3.1",

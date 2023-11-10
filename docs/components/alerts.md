@@ -1,6 +1,6 @@
 # Alerts
 
-The `hwc-alert` component is to provide a simple way to display warning messages, success messages, error messages, or relevant information to the user, without having to worry about the complexity of the underlying logic or visual customization. With hwc-alert, developers can create compelling visual notifications quickly and efficiently.
+The `hwc-alert` component is to provide a simple way to display **warning messages**, **success messages**, **error messages**, or **relevant information** to the user, without having to worry about the complexity of the underlying logic or visual customization. With `hwc-alert`, developers can create compelling visual notifications quickly and efficiently.
 
 ## Usage
 
@@ -20,7 +20,7 @@ import '@holejs/wc/alert/alert.js'
 
 ## Type
 
-Allows you to modify the intent of the component. Currently the available values are the following: `info`, `success`, `warning` y `error`.
+Allows you to modify the intent of the component. Currently the available values are the following: `info`, `success`, `warning` and `error`.
 
 ```html
 <!-- It is not necessary to specify. -->
@@ -35,7 +35,7 @@ Allows you to modify the intent of the component. Currently the available values
 
 ## Appearance
 
-Allows you to modify the appearance of the component. Currently the available values are the following: `filled`, `outlined` y `text`.
+Allows you to modify the appearance of the component. Currently the available values are the following: `filled`, `outlined` and `text`.
 
 ```html
 <!-- It is not necessary to specify. -->
@@ -83,7 +83,7 @@ None.
 **Example**
 
 ```html
-<hwc-alert closable>I'm Alert.</hwc-alert>
+<hwc-alert dismissible>I'm Alert.</hwc-alert>
 
 <script>
   // Capture element.
@@ -103,13 +103,18 @@ This event is fired when the `close()` method is executed.
 **Using Lit**
 
 ```html
-<hwc-alert @close=${() => console.log('Closed')} closable>Closable alert!</hwc-alert>
+<hwc-alert
+  dismissible
+  @close=${() => console.log('Closed')}
+>
+  Closable alert!
+</hwc-alert>
 ```
 
 **Using Vanilla**
 
 ```html
-<hwc-alert closable>Closable alert!</hwc-alert>
+<hwc-alert dismissible>Closable alert!</hwc-alert>
 
 <script>
   const $alert = document.querySelector('hwc-alert')
@@ -127,13 +132,13 @@ This event is fired when the `close()` method is executed.
 
 | Name                        | Description                              |
 | --------------------------- | ---------------------------------------- |
-| `--hwc-alert-color`         | Main color of the alert.                 |
-| `--hwc-alert-bg`            | Background color of the alert.           |
-| `--hwc-alert-text-color`    | Text color inside the alert.             |
-| `--hwc-alert-padding`       | Internal spacing of the alert's content. |
-| `--hwc-alert-font-family`   | Typography font used in the alert.       |
-| `--hwc-alert-font-size`     | Font size of the text inside the alert.  |
-| `--hwc-alert-border-radius` | Border radius of the alert's corners.    |
-| `--hwc-alert-border-style`  | Border style of the alert.               |
-| `--hwc-alert-border-color`  | Border color of the alert.               |
-| `--hwc-alert-border-width`  | Border width of the alert.               |
+| `--hwc-alert-color`         | Main color of the alert. **Default**: `var(--hwc-blue-darken-2)`.                 |
+| `--hwc-alert-bg`            | Background color of the alert. **Default**: `var(--hwc-alert-color)`.           |
+| `--hwc-alert-font-color`    | Text color inside the alert. **Default**: `white`.             |
+| `--hwc-alert-padding`       | Internal spacing of the alert's content. **Default**: `16px`. |
+| `--hwc-alert-font-family`   | Typography font used in the alert. **Default**: `Nunito Sans, sans-serif`.       |
+| `--hwc-alert-font-size`     | Font size of the text inside the alert. **Default**: `1rem`.  |
+| `--hwc-alert-border-radius` | Border radius of the alert's corners. **Default**: `0.65rem`.    |
+| `--hwc-alert-border-style`  | Border style of the alert. **Default**: `solid`.               |
+| `--hwc-alert-border-color`  | Border color of the alert. **Default**: `var(--hwc-alert-color)`.               |
+| `--hwc-alert-border-width`  | Border width of the alert. **Default**: `2px`.               |

@@ -4,12 +4,12 @@ body.dark {
   /* Buttons */
   --hwc-text-field-bg: #333;
   --hwc-text-field-color: #fff;
-  --hwc-text-field-input-text-color: #fff;
+  --hwc-text-field-input-font-color: #fff;
   
   /* Cards */
   --hwc-card-bg: #505050;
-  --hwc-card-text-color: white;
+  --hwc-card-font-color: white;
 
   /* Checkboxes */
-  --hwc-checkbox-text-color: white;
+  --hwc-checkbox-font-color: white;
 }

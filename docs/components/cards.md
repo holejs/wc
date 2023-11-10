@@ -75,7 +75,7 @@ Allows you to disable the interaction with the card and apply a style to indicat
 | --------------------------- | -------------------------------------------------------------------------------- |
 | `--hwc-card-color`          | Text color of the card element.                                                  |
 | `--hwc-card-bg`             | Background color of the card element (uses `--hwc-card-color` if not specified). |
-| `--hwc-card-text-color`     | Text color of the card element.                                                  |
+| `--hwc-card-font-color`     | Text color of the card element.                                                  |
 | `--hwc-card-header-padding` | Padding of the header of the card element.                                       |
 | `--hwc-card-body-padding`   | Padding of the body of the card element.                                         |
 | `--hwc-card-footer-padding` | Padding of the footer of the card element.                                       |

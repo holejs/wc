@@ -29,7 +29,7 @@
   margin-right: 10px;
   border-style: var(--hwc-radio-border-style, solid);
   border-width: var(--hwc-radio-border-width, 2px);
-  border-color: var(--hwc-radio-border-color, var(--hwc-grey-darken-1));
+  border-color: var(--hwc-radio-border-color, var(--hwc-grey-lighten-2));
   border-radius: 50%;
 }
 
@@ -55,14 +55,14 @@
 }
 
 .radio__label {
-  font-size: var(--hwc-radio-font-size, 16px);
-  color: var(--hwc-radio-text-color, currentColor);
-  font-family: var(--hwc-radio-font-family, "Poppins", sans-serif);
+  font-size: var(--hwc-radio-font-size, 1rem);
+  color: var(--hwc-radio-font-color, currentColor);
+  font-family: var(--hwc-radio-font-family, "Nunito Sans", sans-serif);
 }
 
 .radio__details {
   margin-top: 5px;
-  font-family: var(--hwc-radio-font-family, "Poppins", sans-serif);
+  font-family: var(--hwc-radio-font-family, "Nunito Sans", sans-serif);
   color: var(--hwc-radio-error-color);
   font-size: 12px;
 }

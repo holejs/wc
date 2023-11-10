@@ -14,16 +14,17 @@
   --hwc-text-field-color: unset;
 
   /* Fonts */
-  --hwc-text-field-font-family: Poppins, sans-serif;
+  --hwc-text-field-font-family: 'Nunito Sans', sans-serif;
 
-  --hwc-text-field-input-text-color: unset;
-  --hwc-text-field-input-font-size: .875rem;
+  --hwc-text-field-input-font-color: unset;
+  --hwc-text-field-input-font-size: 1rem;
 
-  --hwc-text-field-label-font-size: .875rem;
-  --hwc-text-field-label-text-color: unset;
+  --hwc-text-field-label-font-size: 1rem;
+  --hwc-text-field-label-font-color: unset;
+  --hwc-text-field-label-font-weight: 600;
 
   --hwc-text-field-details-font-size: .875rem;
-  --hwc-text-field-details-text-color: unset;
+  --hwc-text-field-details-font-color: unset;
 
   /* Paddings */
   --hwc-text-field-padding: 0px 16px;
@@ -36,7 +37,7 @@
   --hwc-text-field-border-color: unset;
   --hwc-text-field-border-width: 2px;
   --hwc-text-field-border-style: solid;
-  --hwc-text-field-border-radius: 10px;
+  --hwc-text-field-border-radius: 0.65rem;
 
   /* Animations */
   --hwc-text-field-transition: 200ms all ease;
@@ -45,9 +46,9 @@
 .text-field__label {
   font-family: var(--hwc-text-field-font-family);
   font-size: var(--hwc-text-field-label-font-size);
-  color: var(--hwc-text-field-label-text-color, var(--hwc-text-field-color, var(--hwc-grey-darken-3)));
+  color: var(--hwc-text-field-label-font-color, var(--hwc-text-field-color, var(--hwc-grey-darken-3)));
   transition: var(--hwc-text-field-transition);
-  font-weight: 600;
+  font-weight: var(--hwc-text-field-label-font-weight);
 }
 
 .text-field__control {
@@ -70,7 +71,7 @@
   border: none;
   outline: none;
   font-size: var(--hwc-text-field-input-font-size, .875rem);
-  color: var(--hwc-text-field-input-text-color);
+  color: var(--hwc-text-field-input-font-color);
   font-family: var(--hwc-text-field-font-family);
   caret-color: var(--hwc-text-field-caret-color);
   background: transparent;
@@ -85,7 +86,7 @@
   margin-top: 5px;
   font-size: var(--hwc-text-field-details-font-size);
   font-family: var(--hwc-text-field-font-family);
-  color: var(--hwc-text-field-details-text-color, var(--hwc-text-field-color, var(--hwc-grey-lighten-1)));
+  color: var(--hwc-text-field-details-font-color, var(--hwc-text-field-color, var(--hwc-grey-lighten-1)));
 }
 
 .prepend-inner__control,
@@ -111,7 +112,7 @@
 /* Focus */
 .text-field:focus-within {
   --hwc-text-field-border-color: var(--hwc-text-field-focused-color, var(--hwc-blue-darken-2));
-  --hwc-text-field-label-text-color: var(--hwc-text-field-focused-color, var(--hwc-blue-darken-2));
+  --hwc-text-field-label-font-color: var(--hwc-text-field-focused-color, var(--hwc-blue-darken-2));
   --hwc-text-field-caret-color: var(--hwc-text-field-focused-color, var(--hwc-blue-darken-2));
   --hwc-text-field-inner-color: var(--hwc-text-field-focused-color, var(--hwc-blue-darken-2));
 }
@@ -153,7 +154,7 @@
 
   --hwc-text-field-border-color: var(--hwc-text-field-error-color);
   --hwc-text-field-caret-color: var(--hwc-text-field-error-color);
-  --hwc-text-field-label-text-color: var(--hwc-text-field-error-color);
-  --hwc-text-field-details-text-color: var(--hwc-text-field-error-color);
+  --hwc-text-field-label-font-color: var(--hwc-text-field-error-color);
+  --hwc-text-field-details-font-color: var(--hwc-text-field-error-color);
   --hwc-text-field-inner-color: var(--hwc-text-field-error-color);
 }
