@@ -1,6 +1,7 @@
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import litCss from 'vite-plugin-lit-css'
 import path from 'path'
 
 export default defineConfig({
@@ -25,7 +26,7 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external: /lit/,
+      external: /^lit/,
       output: {
         globals: {
           lit: 'lit',
@@ -38,6 +39,11 @@ export default defineConfig({
     }
   },
   plugins: [
+    // transform styles
+    litCss({
+      exclude: [/assets\/.*/]
+    }),
+
     // Generate d.ts.
     dts({
       outDir: './dist/types',

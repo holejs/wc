@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-import { PropertyValueMap, unsafeCSS, css, html } from 'lit'
+import { PropertyValueMap, html } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
 
-import styles from './radio.css?inline'
+import styles from './radio.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
@@ -19,7 +19,7 @@ declare global {
 
 @customElement('hwc-radio')
 export class HWCRadio extends InputField {
-  static styles = css`${unsafeCSS(styles)}`
+  static styles = styles
 
   @property({ type: String }) value = 'on'
 

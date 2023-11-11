@@ -1,8 +1,8 @@
 import { customElement, property, query } from 'lit/decorators.js'
-import { PropertyValueMap, unsafeCSS, html, css } from 'lit'
+import { PropertyValueMap, html } from 'lit'
 import { when } from 'lit/directives/when.js'
 
-import styles from './text-field.css?inline'
+import styles from './text-field.css'
 
 import { TextFieldError } from '../error.js'
 
@@ -52,7 +52,7 @@ const _validateType = (value: string | null) => {
 
 @customElement('hwc-text-field')
 export class HWCTextField extends InputField {
-  static styles = css`${unsafeCSS(styles)}`
+  static styles = styles
 
   @query('.text-field__control') $control!: HTMLDivElement
 
