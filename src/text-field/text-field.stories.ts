@@ -21,27 +21,33 @@ const meta = {
   title: 'Example/TextFields',
   tags: ['autodocs'],
   render: (args: any) => html`
-    <hwc-text-field
-      appearance=${args.appearance || 'outlined'}
-      color=${args.color || 'blue-darken-2'}
-      label=${args.label || ''}
-      placeholder=${args.placeholder || ''}
-      type=${args.type || 'text'}
-      name=${args.name || ''}
-      ?autofocus=${args.autofocus || false}
-      ?clearable=${args.clearable || false}
-      ?disabled=${args.disabled || false}
-      ?readonly=${args.readonly || false}
-      .value=${args.value || ''}
-      hint=${args.hint || ''}
-      rules=${args.rules || ''}
-      data-error-message-required=${args['data-error-message-required'] || ''}
-      data-error-message-minlength=${args['data-error-message-minlength'] || ''}
-      data-error-message-maxlength=${args['data-error-message-maxlength'] || ''}
-      data-error-message-pattern=${args['data-error-message-pattern'] || ''}
-      data-error-message-email=${args['data-error-message-email'] || ''}
-      @change=${_onHandleChange}
-    ></hwc-text-field>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+          <hwc-text-field
+            appearance=${args.appearance || 'outlined'}
+            color=${args.color || 'blue-darken-2'}
+            label=${args.label || ''}
+            placeholder=${args.placeholder || ''}
+            type=${args.type || 'text'}
+            name=${args.name || ''}
+            ?autofocus=${args.autofocus || false}
+            ?clearable=${args.clearable || false}
+            ?disabled=${args.disabled || false}
+            ?readonly=${args.readonly || false}
+            .value=${args.value || ''}
+            hint=${args.hint || ''}
+            rules=${args.rules || ''}
+            data-error-message-required=${args['data-error-message-required'] || ''}
+            data-error-message-minlength=${args['data-error-message-minlength'] || ''}
+            data-error-message-maxlength=${args['data-error-message-maxlength'] || ''}
+            data-error-message-pattern=${args['data-error-message-pattern'] || ''}
+            data-error-message-email=${args['data-error-message-email'] || ''}
+            @change=${_onHandleChange}
+          ></hwc-text-field>
+        </div>
+      </div>
+    </div>
   `,
   argTypes: {
     value: {
@@ -190,14 +196,20 @@ export const Errors: Story = {
                 <span style="display: flex" slot="prepend-inner">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    class="bi bi-person-circle"
-                    viewBox="0 0 16 16"
+                    class="icon icon-tabler icon-tabler-user-circle"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   >
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                    <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"></path>
                   </svg>
                 </span>
               </hwc-text-field>
@@ -219,14 +231,20 @@ export const Errors: Story = {
                 <span style="display: flex" slot="prepend-inner">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    class="bi bi-person-circle"
-                    viewBox="0 0 16 16"
+                    class="icon icon-tabler icon-tabler-user-circle"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   >
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                    <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"></path>
                   </svg>
                 </span>
               </hwc-text-field>
@@ -249,13 +267,19 @@ export const Errors: Story = {
                 <span style="display: flex" slot="prepend-inner">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    class="bi bi-envelope-fill"
-                    viewBox="0 0 16 16"
+                    class="icon icon-tabler icon-tabler-mail"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   >
-                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
+                    <path d="M3 7l9 6l9 -6"></path>
                   </svg>
                 </span>
               </hwc-text-field>
@@ -277,13 +301,20 @@ export const Errors: Story = {
                 <span style="display: flex" slot="prepend-inner">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="currentColor"
-                    class="bi bi-lock-fill"
-                    viewBox="0 0 16 16"
+                    class="icon icon-tabler icon-tabler-lock"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   >
-                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z"></path>
+                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
+                    <path d="M8 11v-4a4 4 0 1 1 8 0v4"></path>
                   </svg>
                 </span>
               </hwc-text-field>
