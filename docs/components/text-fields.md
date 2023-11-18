@@ -342,22 +342,26 @@ See the following examples:
 
 ## CSS Custom Properties
 
-| Property Name                         | Description                                                                                                         |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `--hwc-text-field-primery-color`      | Defines the color of the text field when it is in the focused state (focus). Default: **unset**                     |
-| `--hwc-text-field-background`                 | Defines the background color of the text field. Default: **unset**                                                  |
-| `--hwc-text-field-font-family`        | Sets the font family for the text inside the text field. Default: **Nunito Sans, sans-serif**                           |
-| `--hwc-text-field-input-font-color`   | Defines the text color of the entered text in the text field. Default: **unset**                                    |
-| `--hwc-text-field-input-font-size`    | Sets the font size of the text inside the text field. Default: **16px**                                             |
-| `--hwc-text-field-label-font-size`    | Sets the font size for the label of the text field. Default: **14px**                                               |
-| `--hwc-text-field-label-font-color`   | Defines the text color of the label in the text field. Default: **unset**                                           |
-| `--hwc-text-field-details-font-size`  | Sets the font size for the details or help messages in the text field. Default: **12px**                            |
-| `--hwc-text-field-details-font-color` | Defines the text color of the details or help messages in the text field. Default: **unset**                        |
-| `--hwc-text-field-padding`            | Defines the internal padding of the text field. Default: **15px**                                                   |
-| `--hwc-text-field-border-color`       | Defines the border color of the text field. Default: **unset**                                                      |
-| `--hwc-text-field-border-width`       | Sets the border width of the text field. Default: **2px**                                                           |
-| `--hwc-text-field-border-style`       | Defines the border style of the text field. Default: **solid**                                                      |
-| `--hwc-text-field-border-radius`      | Sets the border radius of the text field, creating rounded borders. Default: **10px**                               |
-| `--hwc-text-field-transition`         | Sets the duration and transition function for the animations applied to the text field. Default: **200ms all ease** |
-| `--hwc-text-field-error-color`        | Defines the color used to highlight the error status in a text field. Default: **--hwc-red-darken-2**               |
-| `--hwc-text-field-inner-color`        | Defines the internal color (only applies to slots) of a text field.                                                 |
+| Property Name                         | Description                                       |
+| ------------------------------------- | ------------------------------------------------- |
+| `--hwc-text-field-font-family`        | Font family for the text field                    |
+| `--hwc-text-field-font-size`          | Font size for the text field                      |
+| `--hwc-text-field-details-font-size`  | Font size for text field details                  |
+| `--hwc-text-field-border-color`       | Border color for the text field                   |
+| `--hwc-text-field-border`             | Border style and color for the text field         |
+| `--hwc-text-field-border-radius`      | Border radius for the text field                  |
+| `--hwc-text-field-primary-color`      | Primary color for the text field                  |
+| `--hwc-text-field-background`         | Background color for the text field               |
+| `--hwc-text-field-font-color`         | Font color for the text field                     |
+| `--hwc-text-field-input-font-color`   | Font color for the text field input               |
+| `--hwc-text-field-inner-color`        | Inner color for the text field                    |
+| `--hwc-text-field-padding`            | Padding for the text field                        |
+| `--hwc-text-field-transition`         | Transition duration and easing for the text field |
+| `--hwc-text-field-font-weight`        | Font weight for the text field label              |
+| `--hwc-text-field-caret-color`        | Caret color for the text field input              |
+| `--hwc-text-field-details-font-color` | Font color for text field details                 |
+| `--hwc-button-color`                  | Color for the clearable button                    |
+| `--hwc-button-height`                 | Height of the clearable button                    |
+| `--hwc-button-width`                  | Width of the clearable button                     |
+| `--hwc-text-field-margin`             | Margin for the text field in underline appearance |
+| `--hwc-text-field-error-color`        | Color for text field in error state               |
