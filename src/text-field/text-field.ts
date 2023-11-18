@@ -1,6 +1,7 @@
 import { customElement, property, query } from 'lit/decorators.js'
-import { PropertyValueMap, html } from 'lit'
 import { when } from 'lit/directives/when.js'
+import { PropertyValueMap, html } from 'lit'
+import IMask, { InputMask } from 'imask'
 
 import styles from './text-field.css'
 
@@ -83,20 +84,36 @@ export class HWCTextField extends InputField {
 
   @property({ type: Boolean }) clearable = false
 
+  @property({ type: String }) mask!: string
+
   private readonly _uniqueId = `text-field-${generateHash()}`
+
+  private _imask: InputMask<any> | null = null
 
   protected firstUpdated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(changedProperties)
 
-    // Add event listeners.
+    if (this.$input && this.mask) {
+      this._configureMask()
+    }
+
     this.$control.addEventListener('click', this._onFocus.bind(this))
 
     this.form?.addEventListener('reset', this._onReset.bind(this))
 
-    // Remove inner slots if not used.
-    if (this._hasElementSlot('slot[name="prepend-inner"]')) this.$prependInner.remove()
+    // The reason for adding the event listener this way and not from the template of LIT (@input)
+    // is because whe configured the mask a desynchronization of the value occurs.
+    this.$input.addEventListener('input', this._onInput.bind(this))
 
-    if (this._hasElementSlot('slot[name="append-inner"]')) this.$appendInner.remove()
+    // The elements found in the slot are removed to avoid rendering unnecessary elements that
+    // affect the design of the element.
+    if (this._hasElementSlot('slot[name="prepend-inner"]')) {
+      this.$prependInner.remove()
+    }
+
+    if (this._hasElementSlot('slot[name="append-inner"]')) {
+      this.$appendInner.remove()
+    }
   }
 
   protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -105,7 +122,7 @@ export class HWCTextField extends InputField {
     if (changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
-      this.style.setProperty('--hwc-text-field-focused-color', color)
+      this.style.setProperty('--hwc-text-field-primary-color', color)
     }
 
     if (changedProperties.has('value')) {
@@ -126,6 +143,8 @@ export class HWCTextField extends InputField {
     this.$control.removeEventListener('click', this._onFocus.bind(this))
 
     this.form?.removeEventListener('reset', this._onReset.bind(this))
+
+    this.$input.removeEventListener('input', this._onInput.bind(this))
   }
 
   /**
@@ -138,9 +157,15 @@ export class HWCTextField extends InputField {
 
     this._setValue('')
 
+    this._imask?.updateValue()
+
     this.setValidity(null)
 
     this.triggerValidation()
+  }
+
+  private _configureMask (): void {
+    this._imask = IMask(this.$input, { mask: this.mask })
   }
 
   private _hasElementSlot (query: string): boolean {
@@ -175,7 +200,7 @@ export class HWCTextField extends InputField {
    * @private
    * @param {InputEvent} ev - The input event triggered.
    */
-  private async _onInput (ev: InputEvent): Promise<void> {
+  private async _onInput (ev: Event): Promise<void> {
     const $input = ev.target as HTMLInputElement
 
     this._setValue($input.value)
@@ -259,7 +284,6 @@ export class HWCTextField extends InputField {
                 .value=${this.value}
                 type=${this.type}
                 name=${this.name}
-                @input=${this._onInput}
                 @keydown=${this._onKeydown}
                 @blur=${this._onBlur}
               >

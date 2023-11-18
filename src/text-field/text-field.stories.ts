@@ -38,6 +38,7 @@ const meta = {
             .value=${args.value || ''}
             hint=${args.hint || ''}
             rules=${args.rules || ''}
+            mask=${args.mask || ''}
             data-error-message-required=${args['data-error-message-required'] || ''}
             data-error-message-minlength=${args['data-error-message-minlength'] || ''}
             data-error-message-maxlength=${args['data-error-message-maxlength'] || ''}
@@ -102,6 +103,10 @@ const meta = {
       control: 'text',
       description: 'Defines the name of the text field.'
     },
+    mask: {
+      control: 'text',
+      description: 'Defines the mask of the text field.'
+    },
     autofocus: {
       control: 'boolean',
       description: 'Defines if the text field is focused when the page loads.'
@@ -160,7 +165,7 @@ const _onHandleSubmit = (e: Event) => {
 
   const data = Object.fromEntries(formData.entries())
 
-  console.log(data)
+  console.log('data: ', data)
 }
 
 export const Basic: Story = {
@@ -538,6 +543,198 @@ export const DynamicErrors: Story = {
     await step('Validate the form is valid.', () => {
       expect($form.checkValidity()).toBeTruthy()
       expect(new FormData($form).get('email')).toBe('ivan.guevara@gmail.com')
+    })
+  }
+}
+
+export const Mask: Story = {
+  args: {},
+  render: ({
+    color = 'blue-darken-2',
+    appearance = 'outlined',
+    disabled = false
+  }: any) => html`
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+          <form @submit=${_onHandleSubmit}>
+            <div class="row">
+              <div class="col-12 py-3">
+                <hwc-text-field
+                  name="card_name"
+                  label="Card Name"
+                  placeholder="e.g. Ivan Guevara"
+                  hint="Enter your card name"
+                  appearance=${appearance}
+                  color=${color}
+                  ?disabled=${disabled}
+                  rules="required|minlength:3"
+                  data-error-message-required="This field is required."
+                  data-error-message-minlength="The field must have at least 3 characters."
+                ></hwc-text-field>
+              </div>
+
+              <div class="col-12 py-3">
+                <hwc-text-field
+                  name="card_number"
+                  label="Card Number"
+                  placeholder="e.g. 1234 1234 1234 1234"
+                  hint="Enter your card number"
+                  mask="0000 0000 0000 0000"
+                  appearance=${appearance}
+                  color=${color}
+                  ?disabled=${disabled}
+                  rules="required|pattern:^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$"
+                  data-error-message-required="This field is required."
+                  data-error-message-pattern="The card number is not valid."
+                ></hwc-text-field>
+              </div>
+
+              <div class="col-12 col-sm-6 py-3">
+                <hwc-text-field
+                  name="card_expiration_date"
+                  label="Expiration Date"
+                  placeholder="e.g. 01/23"
+                  hint="Enter your card expiration date"
+                  mask="00/00"
+                  appearance=${appearance}
+                  color=${color}
+                  ?disabled=${disabled}
+                  rules="required|pattern:^[0-9]{2}/[0-9]{2}$"
+                  data-error-message-required="This field is required."
+                  data-error-message-pattern="The expiration date is not valid."
+                ></hwc-text-field>
+              </div>
+
+              <div class="col-12 col-sm-6 py-3">
+                <hwc-text-field
+                  name="card_cvv"
+                  label="CVV"
+                  placeholder="e.g. 123"
+                  hint="Enter your card cvv"
+                  mask="000"
+                  appearance=${appearance}
+                  color=${color}
+                  ?disabled=${disabled}
+                  rules="required|pattern:^[0-9]{3}$"
+                  data-error-message-required="This field is required."
+                  data-error-message-pattern="The cvv is not valid."
+                ></hwc-text-field>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px">
+              <hwc-button type="submit" color=${color} fullwidth>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-shopping-cart-copy"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M11.5 17h-5.5v-14h-2" />
+                  <path d="M6 5l14 1l-1 7h-13" />
+                  <path d="M15 19l2 2l4 -4" />
+                </svg>
+
+                <span style="margin-left: 10px">Buy</span>
+              </hwc-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    const $form = document.querySelector('form') as HTMLFormElement
+
+    const $cardName = canvas.getByRole('textbox', { name: /card name/i })
+    const $cardNumber = canvas.getByRole('textbox', { name: /card number/i })
+    const $cardExpirationDate = canvas.getByRole('textbox', { name: /expiration date/i })
+    const $cardCVV = canvas.getByRole('textbox', { name: /cvv/i })
+
+    // Validate that the text fields are in the document.
+    await step('Validate that the text fields are in the document.', () => {
+      expect($cardName).toBeInTheDocument()
+      expect($cardName).toBeVisible()
+      expect($cardName).toHaveAttribute('type', 'text')
+
+      expect($cardNumber).toBeInTheDocument()
+      expect($cardNumber).toBeVisible()
+      expect($cardNumber).toHaveAttribute('type', 'text')
+
+      expect($cardExpirationDate).toBeInTheDocument()
+      expect($cardExpirationDate).toBeVisible()
+      expect($cardExpirationDate).toHaveAttribute('type', 'text')
+
+      expect($cardCVV).toBeInTheDocument()
+      expect($cardCVV).toBeVisible()
+      expect($cardCVV).toHaveAttribute('type', 'text')
+    })
+
+    // Extract input native input
+    const $cardNameInput = $cardName.shadowRoot?.querySelector('input') as HTMLInputElement
+    const $cardNumberInput = $cardNumber.shadowRoot?.querySelector('input') as HTMLInputElement
+    const $cardExpirationDateInput = $cardExpirationDate.shadowRoot?.querySelector('input') as HTMLInputElement
+    const $cardCVVInput = $cardCVV.shadowRoot?.querySelector('input') as HTMLInputElement
+
+    // Complete partial data.
+    await step('Complete partial data.', async () => {
+      await userEvent.type($cardNameInput, 'Iv')
+      await userEvent.type($cardNumberInput, '1234')
+      await userEvent.type($cardExpirationDateInput, '01')
+      await userEvent.type($cardCVVInput, '1')
+    })
+
+    // Check the error messages is visible.
+    await step('Check the error messages is visible.', () => {
+      expect($form.checkValidity()).toBeFalsy()
+
+      expect($cardName.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The field must have at least 3 characters.')
+      expect($cardNumber.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The card number is not valid.')
+      expect($cardExpirationDate.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The expiration date is not valid.')
+      expect($cardCVV.shadowRoot?.querySelector('.text-field__details span')).toHaveTextContent('The cvv is not valid.')
+    })
+
+    // Complete the text fields.
+    await step('Complete the text fields.', async () => {
+      await userEvent.type($cardNameInput, 'an')
+      await userEvent.type($cardNumberInput, '1234 1234 1234 1234')
+      await userEvent.type($cardExpirationDateInput, '01')
+      await userEvent.type($cardCVVInput, '11')
+    })
+
+    // Validate that the text fields are valid.
+    await step('Validate that the text fields are valid.', () => {
+      expect($form.checkValidity()).toBeTruthy()
+
+      expect($cardName.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The field must have at least 3 characters.')
+      expect($cardNumber.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The card number is not valid.')
+      expect($cardExpirationDate.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The expiration date is not valid.')
+      expect($cardCVV.shadowRoot?.querySelector('.text-field__details span')).not.toHaveTextContent('The cvv is not valid.')
+    })
+
+    // Get the form data.
+    await step('Get the form data.', () => {
+      const formData = new FormData($form)
+
+      const data = Object.fromEntries(formData.entries())
+
+      expect(data).toEqual({
+        card_name: 'Ivan',
+        card_number: '1234 1234 1234 1234',
+        card_expiration_date: '01/01',
+        card_cvv: '111'
+      })
     })
   }
 }

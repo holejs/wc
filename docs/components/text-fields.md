@@ -4,6 +4,29 @@ The `<hwc-text-field>` component is a highly customizable and reactive text inpu
 
 This component is useful in any web application that requires the collection of user information through forms and seeks to simplify the validation process and error handling.
 
+## Table of contents
+
+- [Text Fields](#text-fields)
+  - [Table of contents](#table-of-contents)
+  - [Basic usage](#basic-usage)
+  - [Appearance](#appearance)
+  - [Colors](#colors)
+  - [Label](#label)
+  - [Placeholder](#placeholder)
+  - [Type](#type)
+  - [Name](#name)
+  - [Autofocus](#autofocus)
+  - [Disabled](#disabled)
+  - [Readonly](#readonly)
+  - [Hint](#hint)
+  - [Clearable](#clearable)
+  - [Slots: prepend-inner \& append-inner](#slots-prepend-inner--append-inner)
+  - [Validations](#validations)
+  - [Error messages](#error-messages)
+  - [Custom validations](#custom-validations)
+  - [Mask](#mask)
+  - [CSS Custom Properties](#css-custom-properties)
+
 ## Basic usage
 
 **Typescript/Javascript**
@@ -275,12 +298,54 @@ $firstName.addRule({
 
 Ready, this way we can define our own validations with their feedback messages. 💪
 
+## Mask
+
+The `mask` property allows you to define a mask for the text field. This mask will be applied to the value entered by the user, allowing you to format the value in a certain way. For example, you can use a mask to format a **phone number** or a **credit card number**.
+
+> [!NOTE]
+> To add masks to text fields, [Imask](https://imask.js.org/guide.html) is being used. Read their documentation for more details.
+
+> [!TIP]
+> Accompany your mask with the pattern property to validate the value entered by the user.
+
+See the following examples:
+
+**1. Card number**
+
+```html
+<hwc-text-field
+  name="card_number"
+  mask="0000 0000 0000 0000"
+  rules="required|pattern:^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$"
+></hwc-text-field>
+```
+
+**2. Phone number**
+
+```html
+<hwc-text-field
+  name="phone_number"
+  mask="(000) 0000-0000"
+  rules="required|pattern:^\([0-9]{3}\) [0-9]{4}-[0-9]{4}$"
+></hwc-text-field>
+```
+
+**3. Date**
+
+```html
+<hwc-text-field
+  name="date"
+  mask="00/00/0000"
+  rules="required|pattern:^[0-9]{2}/[0-9]{2}/[0-9]{4}$"
+></hwc-text-field>
+```
+
 ## CSS Custom Properties
 
 | Property Name                         | Description                                                                                                         |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `--hwc-text-field-focused-color`      | Defines the color of the text field when it is in the focused state (focus). Default: **unset**                     |
-| `--hwc-text-field-bg`                 | Defines the background color of the text field. Default: **unset**                                                  |
+| `--hwc-text-field-primery-color`      | Defines the color of the text field when it is in the focused state (focus). Default: **unset**                     |
+| `--hwc-text-field-background`                 | Defines the background color of the text field. Default: **unset**                                                  |
 | `--hwc-text-field-font-family`        | Sets the font family for the text inside the text field. Default: **Nunito Sans, sans-serif**                           |
 | `--hwc-text-field-input-font-color`   | Defines the text color of the entered text in the text field. Default: **unset**                                    |
 | `--hwc-text-field-input-font-size`    | Sets the font size of the text inside the text field. Default: **16px**                                             |
