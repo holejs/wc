@@ -1,3 +1,17 @@
+# [0.16.0](https://github.com/holejs/wc/compare/v0.15.3...v0.16.0) (2023-11-18)
+
+
+### Bug Fixes
+
+* **build:** update external lit package regex for correct bundle exclusion ([a7ca149](https://github.com/holejs/wc/commit/a7ca1492b19d57ae84c7a82b64057c821aba955c))
+
+
+### Features
+
+* **text-field:** Masks functionality integrated ([dbc7e0b](https://github.com/holejs/wc/commit/dbc7e0b06f2624b2b61209840c9924a13e4e2075))
+
+
+
 ## [0.15.3](https://github.com/holejs/wc/compare/v0.15.2...v0.15.3) (2023-11-04)
 
 
