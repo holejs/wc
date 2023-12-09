@@ -20,6 +20,8 @@ const RULES_FUNCTIONS = [
  * and an optional 'value' property representing the rule value if provided.
  */
 export const parseRules = (rules: string): { key: string; value: string }[] => {
+  if (!rules) return []
+
   return RULES_FUNCTIONS
     .map(([regex, key]) => {
       const match = rules.match(regex)
