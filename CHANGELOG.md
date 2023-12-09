@@ -1,3 +1,12 @@
+## [0.17.1](https://github.com/holejs/wc/compare/v0.17.0...v0.17.1) (2023-12-09)
+
+
+### Bug Fixes
+
+* Fix issue with parseRules function ([670be50](https://github.com/holejs/wc/commit/670be508e0ce01e39013e2bb366b33bfe421964e))
+
+
+
 # [0.17.0](https://github.com/holejs/wc/compare/v0.16.0...v0.17.0) (2023-12-09)
 
 
