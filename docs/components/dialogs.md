@@ -36,6 +36,16 @@ By default, the dialog will close when the user clicks outside the dialog. To pr
 </hwc-dialog>
 ```
 
+## Fullscreen.
+
+By default, the dialog will be displayed in the center of the screen. To display the dialog in full screen, add the `fullscreen` attribute.
+
+```html
+<hwc-dialog fullscreen>
+  <!-- Add your content here. -->
+</hwc-dialog>
+```
+
 ## Events.
 
 The `hwc-dialog` component emits the following events:

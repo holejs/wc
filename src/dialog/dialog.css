@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+:host([fullscreen]) .dialog {
+  width: 100vw;
+  height: 100vw;
+}
+
 .dialog {
   border: none;
   border-radius: calc(5px * 3.74);

@@ -22,6 +22,10 @@ const meta = {
     persistent: {
       control: 'boolean',
       description: 'If true, the dialog will not close when clicking outside it.'
+    },
+    fullscreen: {
+      control: 'boolean',
+      description: 'If true, the dialog will be fullscreen.'
     }
   }
 }
@@ -52,7 +56,7 @@ const _onHandleSubmit = (ev: Event) => {
 
 export const Basic: Story = {
   args: {},
-  render: ({ persistent }) => html`
+  render: ({ persistent, fullscreen }) => html`
     <style>
       h1, p {
         margin: 0;
@@ -74,7 +78,7 @@ export const Basic: Story = {
       </hwc-button>
     </div>
 
-    <hwc-dialog ?persistent=${persistent}>
+    <hwc-dialog ?persistent=${persistent} ?fullscreen=${fullscreen}>
       <h1>Dialog title</h1>
 
       <p>
@@ -123,7 +127,7 @@ export const Basic: Story = {
 }
 
 export const Forms: Story = {
-  render: ({ persistent }) => html`
+  render: ({ persistent, fullscreen }) => html`
     <style>
       h1, p {
         margin: 0;
@@ -145,7 +149,7 @@ export const Forms: Story = {
       </hwc-button>
     </div>
 
-    <hwc-dialog ?persistent=${persistent}>
+    <hwc-dialog ?persistent=${persistent} ?fullscreen=${fullscreen}>
       <form @submit=${_onHandleSubmit}>
         <div class="row">
           <div class="col-12 col-md-6 py-2">
@@ -193,6 +197,46 @@ export const Forms: Story = {
           </div>
         </div>
       </form>
+    </hwc-dialog>
+  `
+}
+
+export const Fullscreen: Story = {
+  render: ({ persistent }) => html`
+    <style>
+      h1, p {
+        margin: 0;
+        font-family: 'Nunito Sans', sans-serif;
+      }
+
+      h1 {
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: var(--hwc-grey-darken-1);
+      }
+    </style>
+
+    <div style="display: flex; justify-content: center;">
+      <hwc-button @click=${_onOpenModal}>
+        Open dialog
+      </hwc-button>
+    </div>
+
+    <hwc-dialog ?persistent=${persistent} fullscreen>
+      <h1>Dialog title</h1>
+
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Nullam ultricies, urna id aliquet tincidunt, nisl justo
+        lacinia massa, eu lacinia nunc nisi sed ex.
+      </p>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+        <hwc-button appearance="text" @click=${_onCloseModal}>Close</hwc-button>
+        <hwc-button @click=${_onCloseModal}>Confirm</hwc-button>
+      </div>
     </hwc-dialog>
   `
 }

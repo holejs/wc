@@ -18,6 +18,8 @@ export class HWCDialog extends LitElement {
 
   @property({ type: Boolean }) persistent = false
 
+  @property({ type: Boolean }) fullscreen = false
+
   @property({ type: String, reflect: true }) role = 'dialog'
 
   /**
