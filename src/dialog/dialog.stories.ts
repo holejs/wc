@@ -1,4 +1,6 @@
 import type { StoryObj } from '@storybook/web-components'
+import { userEvent, within } from '@storybook/testing-library'
+import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import '../text-field/text-field.js'
@@ -86,7 +88,38 @@ export const Basic: Story = {
         <hwc-button @click=${_onCloseModal}>Confirm</hwc-button>
       </div>
     </hwc-dialog>
-  `
+  `,
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    const $hwcbutton = canvas.getByRole('button', { name: 'Open dialog' })
+
+    const $button = $hwcbutton.shadowRoot!.querySelector('button')!
+
+    await step('Open dialog', async () => {
+      await userEvent.click($button)
+    })
+
+    const $hwcDialog = canvas.getByRole<HWCDialog>('dialog')
+
+    const $dialog = $hwcDialog.shadowRoot!.querySelector('dialog')!
+
+    // Check if dialog is open
+    await step('Check if dialog is open', async () => {
+      expect($dialog.open).toBeTruthy()
+    })
+
+    // Close dialog
+    await step('Close dialog', async () => {
+      const $closeButton = canvas.getByRole('button', { name: 'Close' })
+
+      const $button = $closeButton.shadowRoot!.querySelector('button')!
+
+      await userEvent.click($button)
+
+      expect($dialog.open).toBeFalsy()
+    })
+  }
 }
 
 export const Forms: Story = {
