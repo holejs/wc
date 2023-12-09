@@ -62,6 +62,10 @@
       "types": "./dist/types/chip/chip.d.ts",
       "default": "./dist/chip.js"
     },
+    "./dialog/dialog.js": {
+      "types": "./dist/types/dialog/dialog.d.ts",
+      "default": "./dist/dialog.js"
+    },
     "./radio/radio.js": {
       "types": "./dist/types/radio/radio.d.ts",
       "default": "./dist/radio.js"

@@ -1,8 +1,9 @@
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 import { defineConfig } from 'vite'
-import dts from 'vite-plugin-dts'
-import litCss from 'vite-plugin-lit-css'
 import path from 'path'
+
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+import litCss from 'vite-plugin-lit-css'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   build: {
@@ -14,6 +15,7 @@ export default defineConfig({
         path.resolve(__dirname, './src/card/card.ts'),
         path.resolve(__dirname, './src/checkbox/checkbox.ts'),
         path.resolve(__dirname, './src/chip/chip.ts'),
+        path.resolve(__dirname, './src/dialog/dialog.ts'),
         path.resolve(__dirname, './src/radio/radio.ts'),
         path.resolve(__dirname, './src/ripple/ripple.ts'),
 
