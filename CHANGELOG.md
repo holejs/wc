@@ -1,3 +1,13 @@
+# [0.17.0](https://github.com/holejs/wc/compare/v0.16.0...v0.17.0) (2023-12-09)
+
+
+### Features
+
+* Add fullscreen attribute to hwc-dialog component ([955fd24](https://github.com/holejs/wc/commit/955fd24fac28b573ecb166c3600aa49ce5ab0e33))
+* The base functionality of HWCDialog has been implemented ([0c1d09a](https://github.com/holejs/wc/commit/0c1d09ab19800ea102a95b2cba155c7a987025c3))
+
+
+
 # [0.16.0](https://github.com/holejs/wc/compare/v0.15.3...v0.16.0) (2023-11-18)
 
 
