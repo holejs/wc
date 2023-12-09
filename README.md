@@ -56,6 +56,7 @@ Bellow you can see the list of components that are currently available.
 - [Cards](/docs/components/cards.md)
 - [Checkboxes](/docs/components/checkboxes.md)
 - [Chips](/docs/components/chips.md)
+- [Dialogs](/docs/components/dialogs.md)
 - [Radios](/docs/components/radios.md)
 - [Ripples](/docs/components/ripples.md)
 - [Selects](/docs/components/selects.md)
