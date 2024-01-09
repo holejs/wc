@@ -47,6 +47,7 @@ export class HWCChip extends LitElement {
   close (): void {
     const event = new CustomEvent('close', {
       bubbles: true,
+      composed: true,
       cancelable: true
     })
 
@@ -59,7 +60,7 @@ export class HWCChip extends LitElement {
 
   protected render (): unknown {
     return html`
-      <div class="chip">
+      <button class="chip">
         <div class="chip__wrapper">
           <span class="chip__content">
             <slot></slot>
@@ -95,7 +96,7 @@ export class HWCChip extends LitElement {
             `
           )}
         </div>
-      </div>
+      </button>
     `
   }
 }

@@ -8,6 +8,8 @@
 /* Host styles for the component */
 :host {
   display: inline-block;
+  position: relative;
+  z-index: 0;
 
   /* Fonts */
   --hwc-chip-font-family: 'Nunito Sans', sans-serif;
@@ -47,11 +49,18 @@
   font-family: var(--hwc-chip-font-family);
   font-size: var(--hwc-chip-font-size);
   overflow: hidden;
+  appearance: none;
+  background: none;
+  outline: none;
+  border: none;
+}
+
+:host([appearance="filled"]) .chip {
+  background: var(--hwc-chip-background);
 }
 
 /* Styles for filled and text appearance */
-:host([appearance="filled"]) .chip::after,
-:host([appearance="text"]) .chip::after {
+.chip__wrapper::before {
   position: absolute;
   content: "";
   top: 0;
@@ -60,8 +69,10 @@
   right: 0;
   width: 100%;
   height: 100%;
+}
+
+:host([appearance="text"]) .chip__wrapper::before {
   background: var(--hwc-chip-background);
-  z-index: -1;
 }
 
 /* Wrapper styles for chip content */
@@ -98,7 +109,7 @@
   color: var(--hwc-chip-font-color);
 }
 
-:host([appearance="text"]) .chip::after {
+:host([appearance="text"]) .chip__wrapper::before {
   opacity: var(--hwc-chip-opacity);
 }
 
