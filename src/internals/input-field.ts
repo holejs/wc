@@ -25,10 +25,7 @@ import {
  *
  * ```ts
  * class MyInput extends InputField {
- *  protected firstUpdated (changedProperties: Map<PropertyKey, unknown>): void {
- *   super.firstUpdated(changedProperties)
- *
- *   // Your code here...
+ *   // Your code here.
  * }
  * ```
  */
