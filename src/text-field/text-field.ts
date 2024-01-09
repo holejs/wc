@@ -14,10 +14,12 @@ import { InputField } from '../internals/input-field.js'
 
 import '../button/button.js'
 
+const COMPONENT_NAME = 'hwc-text-field'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-text-field': HWCTextField;
+    [COMPONENT_NAME]: HWCTextField
   }
 }
 
@@ -51,7 +53,7 @@ const _validateType = (value: string | null) => {
   return value
 }
 
-@customElement('hwc-text-field')
+@customElement(COMPONENT_NAME)
 export class HWCTextField extends InputField {
   static styles = styles
 

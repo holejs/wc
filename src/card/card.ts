@@ -5,16 +5,18 @@ import styles from './card.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
+const COMPONENT_NAME = 'hwc-card'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-card': HWCCard;
+    [COMPONENT_NAME]: HWCCard
   }
 }
 
 export type CardElevation = '0' | '1' | '2' | '3' | '4' | '5'
 
-@customElement('hwc-card')
+@customElement(COMPONENT_NAME)
 export class HWCCard extends LitElement {
   static styles?: CSSResultGroup | undefined = styles
 

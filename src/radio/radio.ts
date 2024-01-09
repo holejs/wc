@@ -10,14 +10,16 @@ import { generateHash } from '../utils/generateHash.js'
 
 import { InputField } from '../internals/input-field.js'
 
+const COMPONENT_NAME = 'hwc-radio'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-radio': HWCRadio;
+    [COMPONENT_NAME]: HWCRadio
   }
 }
 
-@customElement('hwc-radio')
+@customElement(COMPONENT_NAME)
 export class HWCRadio extends InputField {
   static styles = styles
 

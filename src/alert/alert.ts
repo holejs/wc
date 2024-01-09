@@ -8,10 +8,12 @@ import '../button/button.js'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
+const COMPONENT_NAME = 'hwc-alert'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-alert': HWCAlert;
+    [COMPONENT_NAME]: HWCAlert
   }
 }
 
@@ -19,7 +21,7 @@ export type AlertAppearance = 'filled' | 'text' | 'outlined'
 
 export type AlertType = 'info' | 'success' | 'warning' | 'error'
 
-@customElement('hwc-alert')
+@customElement(COMPONENT_NAME)
 export class HWCAlert extends LitElement {
   static styles = styles
 

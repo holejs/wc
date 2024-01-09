@@ -9,14 +9,16 @@ import { generateHash } from '../utils/generateHash.js'
 
 import { InputField } from '../internals/input-field.js'
 
+const COMPONENT_NAME = 'hwc-checkbox'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-checkbox': HWCCheckbox;
+    [COMPONENT_NAME]: HWCCheckbox
   }
 }
 
-@customElement('hwc-checkbox')
+@customElement(COMPONENT_NAME)
 export class HWCCheckbox extends InputField {
   static styles = styles
 

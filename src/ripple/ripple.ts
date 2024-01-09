@@ -5,14 +5,16 @@ import styles from './ripple.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
+const COMPONENT_NAME = 'hwc-ripple'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-ripple': HWCRipple;
+    [COMPONENT_NAME]: HWCRipple
   }
 }
 
-@customElement('hwc-ripple')
+@customElement(COMPONENT_NAME)
 export class HWCRipple extends LitElement {
   static styles = styles
 

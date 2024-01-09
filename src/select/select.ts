@@ -17,14 +17,16 @@ import { Validations } from './constants.js'
 
 import { HWCSelectOption } from './select-option.js'
 
+const COMPONENT_NAME = 'hwc-select'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-select': HWCSelect;
+    [COMPONENT_NAME]: HWCSelect
   }
 }
 
-@customElement('hwc-select')
+@customElement(COMPONENT_NAME)
 export class HWCSelect extends InputField {
   static styles = styles
 

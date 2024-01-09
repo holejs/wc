@@ -5,10 +5,12 @@ import styles from './button.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
+const COMPONENT_NAME = 'hwc-button'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-button': HWCButton;
+    [COMPONENT_NAME]: HWCButton
   }
 }
 
@@ -18,7 +20,7 @@ export type ButtonAppearance = 'raised' | 'outlined' | 'text' | 'fab' | 'icon'
 
 export type ButtonElevation = '1' | '2' | '3' | '4' | '5';
 
-@customElement('hwc-button')
+@customElement(COMPONENT_NAME)
 export class HWCButton extends LitElement {
   static styles = styles
 

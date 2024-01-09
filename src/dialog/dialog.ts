@@ -3,14 +3,16 @@ import { LitElement, html } from 'lit'
 
 import styles from './dialog.css'
 
+const COMPONENT_NAME = 'hwc-dialog'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-dialog': HWCDialog
+    [COMPONENT_NAME]: HWCDialog
   }
 }
 
-@customElement('hwc-dialog')
+@customElement(COMPONENT_NAME)
 export class HWCDialog extends LitElement {
   static styles = styles
 

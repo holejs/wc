@@ -8,10 +8,12 @@ import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 
 import '../button/button.js'
 
+const COMPONENT_NAME = 'hwc-chip'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-chip': HWCChip;
+    [COMPONENT_NAME]: HWCChip
   }
 }
 
@@ -19,7 +21,7 @@ export type ChipAppearence = 'filled' | 'outlined' | 'text'
 
 export type ChipSize = 'x-small' | 'small' | 'regular' | 'large' | 'x-large'
 
-@customElement('hwc-chip')
+@customElement(COMPONENT_NAME)
 export class HWCChip extends LitElement {
   static styles?: CSSResultGroup | undefined = styles
 

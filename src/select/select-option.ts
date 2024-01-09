@@ -7,14 +7,16 @@ import styles from './select.css?inline'
 
 import { HWCSelect } from './select.js'
 
+const COMPONENT_NAME = 'hwc-select-option'
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
-    'hwc-select-option': HWCSelectOption;
+    [COMPONENT_NAME]: HWCSelectOption
   }
 }
 
-@customElement('hwc-select-option')
+@customElement(COMPONENT_NAME)
 export class HWCSelectOption extends LitElement {
   static styles = css`${unsafeCSS(styles)}`
 
