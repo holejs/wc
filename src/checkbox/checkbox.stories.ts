@@ -1,4 +1,4 @@
-import { within, fireEvent } from '@storybook/testing-library'
+import { within, fireEvent, userEvent } from '@storybook/testing-library'
 import type { StoryObj } from '@storybook/web-components'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
@@ -120,14 +120,16 @@ export const Basic: Story = {
 
     // Reset the form.
     await step('Reset the form', async () => {
-      fireEvent.reset($form)
-    })
+      const $resetBtn = $form.querySelector('hwc-button[type="reset"]') as HTMLButtonElement
 
-    // Validate the checkbox is not displaying an error message.
-    await step('Checkbox is not displaying an error message', () => {
+      await userEvent.click($resetBtn.shadowRoot?.querySelector('button') as HTMLButtonElement)
+
+      expect($checkbox).not.toBeChecked()
       expect($checkbox).toHaveAttribute('aria-invalid', 'false')
       expect($checkbox).toHaveAttribute('aria-checked', 'false')
       expect($checkbox.shadowRoot?.querySelector('.checkbox__details span')).not.toBeInTheDocument()
+
+      expect($form).toBeInvalid()
     })
 
     // Check the checkbox.

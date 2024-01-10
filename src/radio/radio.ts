@@ -40,7 +40,7 @@ export class HWCRadio extends InputField {
 
     this.addEventListener('focusout', this._handleFocusout)
 
-    this.form?.addEventListener('reset', this._onHandleReset.bind(this))
+    this.form?.addEventListener('reset', this.reset.bind(this))
 
     this._root = this.getRootNode() as ParentNode
   }
@@ -50,7 +50,7 @@ export class HWCRadio extends InputField {
 
     this.removeEventListener('focusout', this._handleFocusout)
 
-    this.form?.removeEventListener('reset', this._onHandleReset)
+    this.form?.removeEventListener('reset', this.reset.bind(this))
   }
 
   protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -73,13 +73,17 @@ export class HWCRadio extends InputField {
     }
   }
 
+  /**
+   * Reset the radio.
+   */
   reset (): void {
     this.checked = false
     this.dirty = false
     this.touched = false
 
     this.setValidity(null)
-    this.triggerValidation()
+
+    setTimeout(() => this.triggerValidation(), 0)
   }
 
   private _setValue (value: string | null): void {
@@ -117,10 +121,6 @@ export class HWCRadio extends InputField {
         $radio.checked = false
         $radio.setValidity(null)
       })
-  }
-
-  private _onHandleReset (): void {
-    this.reset()
   }
 
   // This method has been overridden to prevent the validation from being triggered.

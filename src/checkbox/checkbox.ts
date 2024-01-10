@@ -37,7 +37,7 @@ export class HWCCheckbox extends InputField {
   connectedCallback (): void {
     super.connectedCallback()
 
-    this.form?.addEventListener('reset', this._onHandleReset.bind(this))
+    this.form?.addEventListener('reset', this.reset.bind(this))
   }
 
   protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -65,22 +65,23 @@ export class HWCCheckbox extends InputField {
   disconnectedCallback (): void {
     super.disconnectedCallback()
 
-    this.form?.removeEventListener('reset', this._onHandleReset.bind(this))
+    this.form?.removeEventListener('reset', this.reset.bind(this))
   }
 
   /**
    * Resets the state of the component.
    */
   reset (): void {
+    if (this.disabled) return
+
     this.checked = false;
 
     (this.$input as HTMLInputElement).checked = false
 
     this.touched = false
-
     this.dirty = false
 
-    this.triggerValidation()
+    setTimeout(() => this.triggerValidation(), 0)
   }
 
   private _setValue (value: string | null): void {
@@ -102,10 +103,6 @@ export class HWCCheckbox extends InputField {
     this.touched = true
 
     this.triggerValidation()
-  }
-
-  private _onHandleReset (): void {
-    this.reset()
   }
 
   protected render (): unknown {
