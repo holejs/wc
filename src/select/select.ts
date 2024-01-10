@@ -55,7 +55,7 @@ export class HWCSelect extends InputField {
     super.connectedCallback()
 
     // Initialize the event listeners.
-    this.form?.addEventListener('reset', this._onHandleReset.bind(this))
+    this.form?.addEventListener('reset', this.reset.bind(this))
 
     document.addEventListener('click', this._handleDocumentClick.bind(this))
 
@@ -103,7 +103,7 @@ export class HWCSelect extends InputField {
     super.disconnectedCallback()
 
     // Remove the event listeners.
-    this.form?.removeEventListener('reset', this._onHandleReset.bind(this))
+    this.form?.removeEventListener('reset', this.reset.bind(this))
 
     document.removeEventListener('click', this._handleDocumentClick.bind(this))
   }
@@ -171,13 +171,12 @@ export class HWCSelect extends InputField {
   reset (): void {
     this.dirty = false
     this.touched = false
+    this.options = []
 
     // Reset the options.
     this._getOptionsNode().forEach(($option) => {
       $option.selected = false
     })
-
-    this.options = []
   }
 
   private _getOptionsNode (): NodeListOf<HWCSelectOption> {
@@ -188,10 +187,6 @@ export class HWCSelect extends InputField {
     const isClickInside = this.contains(ev.target as Node)
 
     if (!isClickInside) this.close()
-  }
-
-  private _onHandleReset (): void {
-    this.reset()
   }
 
   private _onHandleClick (): void {

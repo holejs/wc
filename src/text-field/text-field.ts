@@ -101,7 +101,7 @@ export class HWCTextField extends InputField {
 
     this.$control.addEventListener('click', this._onFocus.bind(this))
 
-    this.form?.addEventListener('reset', this._onReset.bind(this))
+    this.form?.addEventListener('reset', this.reset.bind(this))
 
     // The reason for adding the event listener this way and not from the template of LIT (@input)
     // is because whe configured the mask a desynchronization of the value occurs.
@@ -144,7 +144,7 @@ export class HWCTextField extends InputField {
     // Remove event listeners
     this.$control.removeEventListener('click', this._onFocus.bind(this))
 
-    this.form?.removeEventListener('reset', this._onReset.bind(this))
+    this.form?.removeEventListener('reset', this.reset.bind(this))
 
     this.$input.removeEventListener('input', this._onInput.bind(this))
   }
@@ -235,10 +235,6 @@ export class HWCTextField extends InputField {
     this._setValue('')
 
     this.dispatchEvent(new CustomEvent('change'))
-  }
-
-  private _onReset (): void {
-    this.reset()
   }
 
   private _onFocus (): void {
