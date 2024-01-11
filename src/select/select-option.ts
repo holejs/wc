@@ -28,7 +28,10 @@ export class HWCSelectOption extends LitElement {
 
   protected firstUpdated (): void {
     if (this.selected) {
-      this._getSelectNode().appendOption(this.value)
+      this._getSelectNode().appendOption({
+        value: this.value,
+        text: this.textContent || ''
+      })
     }
   }
 
@@ -78,7 +81,10 @@ export class HWCSelectOption extends LitElement {
       $select?.removeOption(this.value)
     } else {
       this.selected = true
-      $select?.appendOption(this.value)
+      $select?.appendOption({
+        value: this.value,
+        text: this.textContent || ''
+      })
     }
 
     if (isSingleSelect) {

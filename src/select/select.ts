@@ -26,6 +26,11 @@ declare global {
   }
 }
 
+interface Option {
+  value: string;
+  text: string;
+}
+
 @customElement(COMPONENT_NAME)
 export class HWCSelect extends InputField {
   static styles = styles
@@ -45,7 +50,7 @@ export class HWCSelect extends InputField {
   @property({ type: String, reflect: true, attribute: 'aria-haspopup' })
     ariaHasPopup = 'listbox'
 
-  @property({ attribute: false }) options: string[] = []
+  @property({ attribute: false }) options: Option[] = []
 
   @property({ type: Boolean, attribute: false }) expanded = false
 
@@ -75,7 +80,7 @@ export class HWCSelect extends InputField {
     if (changedProperties.has('options')) {
       const formData = new FormData()
 
-      this.options.forEach((_option) => formData.append(this.name, _option))
+      this.options.forEach(({ value }) => formData.append(this.name, value))
 
       this.internals.setFormValue(formData)
 
@@ -109,7 +114,9 @@ export class HWCSelect extends InputField {
   }
 
   get value (): string | string[] | null {
-    const value = this.multiple ? this.options : this.options[0]
+    const value = this.multiple
+      ? this.options.map(({ value }) => value)
+      : this.options[0]?.value
 
     return value ?? null
   }
@@ -117,10 +124,10 @@ export class HWCSelect extends InputField {
   /**
    * Add an option.
    *
-   * @param {string} value - The value of the option to add.
+   * @param {Option} value - The value of the option to add.
    * @returns {void}
    */
-  appendOption (value: string): void {
+  appendOption (value: Option): void {
     if (this.dirty || Boolean(value)) this.dirty = true
 
     this.multiple ? this.options.push(value) : this.options = [value]
@@ -134,8 +141,13 @@ export class HWCSelect extends InputField {
    * @param {string} value - The value of the option to remove.
    * @returns {void}
    */
-  removeOption (value: string): void {
-    this.options.splice(this.options.indexOf(value), 1)
+  removeOption (key: string): void {
+    const index = this.options.findIndex(({ value }) => value === key)
+
+    if (index < 0) return
+
+    this.options.splice(index, 1)
+
     this.requestUpdate('options')
   }
 
@@ -229,10 +241,10 @@ export class HWCSelect extends InputField {
               @click=${this._onHandleClick}
               @blur=${this._onHandleBlur}
             >
-              ${map(this.options, (option, index) => {
+              ${map(this.options, ({ text }, index) => {
                 return index === 0
-                  ? html`<span class="select__control__label">${option}</span>`
-                  : html`<span class="select__control__label">, ${option}</span>`
+                  ? html`<span class="select__control__label">${text}</span>`
+                  : html`<span class="select__control__label">, ${text}</span>`
               })}
             </button>
           </div>
