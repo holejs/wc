@@ -11,8 +11,9 @@
   border-radius: var(--hwc-select-border-radius, 0.65rem);
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  padding: 0 16px;
+  padding: 10px 16px;
   cursor: pointer;
   margin-bottom: var(--hwc-select-margin-bottom, 0.625rem);
   margin-top: var(--hwc-select-margin-top, .5rem);
