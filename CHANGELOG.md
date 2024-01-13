@@ -1,3 +1,18 @@
+## [0.17.2](https://github.com/holejs/wc/compare/v0.17.1...v0.17.2) (2024-01-13)
+
+
+### Bug Fixes
+
+* **chip:** Fixed element position ([c89fc27](https://github.com/holejs/wc/commit/c89fc278a16412d0e85252d3e256df7471660df2))
+* Update checkbox and radio reset functionality ([e86a0e4](https://github.com/holejs/wc/commit/e86a0e475a9b3188ab6564a934b99843cfe30349))
+
+
+### Features
+
+* **select:** The text displayed in the selected options was modified ([d99147e](https://github.com/holejs/wc/commit/d99147e98b2163612a758ea29e9f49e2dcc61de8))
+
+
+
 ## [0.17.1](https://github.com/holejs/wc/compare/v0.17.0...v0.17.1) (2023-12-09)
 
 
