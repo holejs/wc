@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:host([appearance='circle']) .avatar {
+  border-radius: 50%;
+}
+
+:host([appearance='square']) .avatar {
+  border-radius: 5px;
+}
+
+:host([size="small"]) .avatar {
+  height: 32px;
+  width: 32px;
+}
+
+:host([size="small"]) .avatar__text {
+  font-size: 1rem;
+}
+
+:host([size="large"]) .avatar {
+  height: 64px;
+  width: 64px;
+}
+
+:host([size="large"]) .avatar__text {
+  font-size: 1.8rem;
+}
+
+.avatar {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hwc-blue-darken-2);
+}
+
+.avatar__text {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Nunito Sans', sans-serif;
+}
