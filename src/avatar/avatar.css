@@ -36,21 +36,21 @@
 }
 
 .avatar {
-  height: 50px;
-  width: 50px;
+  height: var(--hwc-avatar-size, 50px);
+  width: var(--hwc-avatar-size, 50px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--hwc-blue-darken-2);
+  background: var(--hwc-avatar-color, var(--hwc-blue-darken-2));
 }
 
 .avatar__text {
-  color: #fff;
-  font-size: 1.3rem;
-  font-weight: bold;
-  text-transform: uppercase;
+  color: var(--hwc-avatar-text-color, #fff);
+  font-size: var(--hwc-avatar-font-size, 1.4rem);
+  font-weight: var(--hwc-avatar-font-weight, 700);
+  text-transform: var(--hwc-avatar-text-transform, uppercase);
   letter-spacing: 1px;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: var(--hwc-avatar-font-family, 'Nunito Sans', sans-serif);
 }
 
 .avatar__image {

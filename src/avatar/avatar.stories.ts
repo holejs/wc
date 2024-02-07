@@ -8,8 +8,6 @@ import './avatar.js'
 
 type Story = StoryObj<HWCAvatar>;
 
-const _removeWhitespace = (text: string | undefined | null) => (text || '').replace(/\s/g, '')
-
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 const meta = {
   title: 'Example/Avatar',
@@ -32,6 +30,10 @@ const meta = {
       options: ['circle', 'square'],
       description: 'The appearance of the avatar. The default value is `circle`.'
     },
+    color: {
+      control: 'color',
+      description: 'The color of the avatar. The default value is a random color.'
+    },
     size: {
       control: 'inline-radio',
       options: ['small', 'medium', 'large'],
@@ -49,6 +51,8 @@ const meta = {
 }
 
 export default meta
+
+const _removeWhitespace = (text: string | undefined | null) => (text || '').replace(/\s/g, '')
 
 export const Basic: Story = {
   args: {
