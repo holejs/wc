@@ -1,3 +1,14 @@
+# [0.18.0](https://github.com/holejs/wc/compare/v0.17.2...v0.18.0) (2024-02-07)
+
+
+### Features
+
+* Add avatar component and its styles ([36ed0a6](https://github.com/holejs/wc/commit/36ed0a65adef656104ebc51bf7c488975359f8b2))
+* **avatar:** Add color property, update color styling & define CSS Custom Props in HWCAvatar ([437376e](https://github.com/holejs/wc/commit/437376eeae47a11a503506ac7fc60121624f71b3))
+* **avatar:** Add image support to HWCAvatar component ([618d5e3](https://github.com/holejs/wc/commit/618d5e3ae6423c1ef6a0f8423f7055c647d21c3b))
+
+
+
 ## [0.17.2](https://github.com/holejs/wc/compare/v0.17.1...v0.17.2) (2024-01-13)
 
 
