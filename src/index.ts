@@ -1,4 +1,5 @@
 import './alert/alert.js'
+import './avatar/avatar.js'
 import './button/button.js'
 import './card/card.js'
 import './checkbox/checkbox.js'
@@ -13,6 +14,7 @@ import './select/select.js'
 import './text-field/text-field.js'
 
 export * from './alert/alert.js'
+export * from './avatar/avatar.js'
 export * from './button/button.js'
 export * from './card/card.js'
 export * from './checkbox/checkbox.js'

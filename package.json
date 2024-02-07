@@ -46,6 +46,10 @@
       "types": "./dist/types/alert/alert.d.ts",
       "default": "./dist/alert.js"
     },
+    "./avatar/avatar.js": {
+      "types": "./dist/types/avatar/avatar.d.ts",
+      "default": "./dist/avatar.js"
+    },
     "./button/button.js": {
       "types": "./dist/types/button/button.d.ts",
       "default": "./dist/button.js"
