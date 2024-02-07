@@ -1,4 +1,6 @@
 import type { StoryObj } from '@storybook/web-components'
+import { within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import { HWCAvatar } from './avatar.js'
@@ -6,14 +8,17 @@ import './avatar.js'
 
 type Story = StoryObj<HWCAvatar>;
 
+const _removeWhitespace = (text: string | undefined | null) => (text || '').replace(/\s/g, '')
+
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 const meta = {
   title: 'Example/Avatar',
   tags: ['autodocs'],
-  render: ({ appearance, name, size }: any) => html`
+  render: ({ appearance, name, src, size }: any) => html`
     <hwc-avatar
       appearance=${appearance}
       name=${name}
+      src=${src}
       size=${size}
     ></hwc-avatar>
   `,
@@ -31,6 +36,14 @@ const meta = {
       control: 'inline-radio',
       options: ['small', 'medium', 'large'],
       description: 'The size of the avatar. The default value is `medium`.'
+    },
+    src: {
+      control: 'text',
+      description: 'The URL of the image to be displayed in the avatar. If this property is set, the `name` property will be ignored.'
+    },
+    alt: {
+      control: 'text',
+      description: 'The alt text for the image. When you not provide a `alt` attribute, the `name` property will be used.'
     }
   }
 }
@@ -41,5 +54,15 @@ export const Basic: Story = {
   args: {
     name: 'Ivan Guevara',
     appearance: 'circle'
+  },
+  play: ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    const $avatar = canvas.getByRole('img')
+
+    step('The avatar should have the initials IG', () => {
+      expect($avatar).toBeInTheDocument()
+      expect(_removeWhitespace($avatar.shadowRoot?.textContent)).toBe('IG')
+    })
   }
 }

@@ -4,6 +4,11 @@
   padding: 0;
 }
 
+:host {
+  display: inline-block;
+  position: relative;
+}
+
 :host([appearance='circle']) .avatar {
   border-radius: 50%;
 }
@@ -46,4 +51,11 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   font-family: 'Nunito Sans', sans-serif;
+}
+
+.avatar__image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 }
