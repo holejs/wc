@@ -52,6 +52,7 @@ Once the components are imported, they can be used in the HTML file.
 Bellow you can see the list of components that are currently available.
 
 - [Alerts](/docs/components/alerts.md)
+- [Avatars](/docs/components/avatars.md)
 - [Buttons](/docs/components/buttons.md)
 - [Cards](/docs/components/cards.md)
 - [Checkboxes](/docs/components/checkboxes.md)
