@@ -1,3 +1,6 @@
+import './assets/colors.css'
+import './assets/elevations.css'
+
 /** @type { import('@storybook/web-components').Preview } */
 const preview = {
   parameters: {
