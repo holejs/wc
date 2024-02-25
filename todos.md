@@ -4,3 +4,4 @@
 - [ ] Migrate all components to the new structure
 - [ ] Remove all interactions in the storybook and moved to tha __tests__ folder
 - [ ] Create a new package that manages the theme
+- [ ] Add `build` command for all packages

@@ -1,10 +1,11 @@
 {
-  "name": "@holjes/wc-ripple",
+  "name": "@holejs/wc-ripple",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Ivan Guevara <ivanzaldivar16@gmail.com>",
   "homepage": "https://github.com/holejs/wc/tree/main/packages/components/ripple#readme",
   "license": "MIT",
+  "type": "module",
   "main": "dist/index.js",
   "directories": {
     "lib": "dist",
@@ -18,7 +19,8 @@
     "url": "git+https://github.com/holejs/wc.git"
   },
   "scripts": {
-    "test": "node ./__tests__/ripple.test.js"
+    "test": "node ./__tests__/ripple.test.js",
+    "build": "vite build"
   },
   "bugs": {
     "url": "https://github.com/holejs/wc/issues"

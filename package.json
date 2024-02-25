@@ -103,7 +103,8 @@
     "preview": "vite preview",
     "dev:sb": "storybook dev -p 6006",
     "build:sb": "storybook build",
-    "update-dependencies": "ncu -u"
+    "update-dependencies": "ncu -u",
+    "build:pkg": "lerna run build"
   },
   "dependencies": {
     "imask": "7.1.3",

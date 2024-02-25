@@ -1,10 +1,9 @@
 import { PropertyValueMap, LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
+import '@holejs/wc-button'
 
 import styles from './alert.css'
-
-// import '../button/button.js'
 
 import { isValidColorFormat } from './utils.js'
 

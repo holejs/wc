@@ -4,7 +4,7 @@ import { expect } from '@storybook/jest'
 import { when } from 'lit/directives/when.js'
 import { html } from 'lit'
 
-// import '../ripple/ripple.js'
+import '@holejs/wc-ripple'
 import './button.js'
 
 // eslint-disable-next-line no-undef
