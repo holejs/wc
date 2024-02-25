@@ -1,0 +1,187 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: content-box;
+}
+
+:host {
+  display: inline-block;
+  position: relative;
+  z-index: var(--hwc-button-z-index, 0);
+  width: auto;
+  height: auto;
+
+  --hwc-button-color: var(--hwc-blue-darken-2);
+}
+
+/* Base styles */
+.button {
+  display: inline-block;
+  position: relative;
+  
+  border-width: var(--hwc-button-border-width, 0);
+  border-color: var(--hwc-button-border-color, transparent);
+  border-radius: var(--hwc-button-border-radius, 0.65rem);
+  
+  background: var(--hwc-button-background, var(--hwc-button-color));
+  color: var(--hwc-button-font-color, white);
+
+  font-family: var(--hwc-button-font-family, 'Nunito Sans', sans-serif);
+  font-size: var(--hwc-button-font-size, 1rem);
+  font-weight: var(--hwc-button-font-weight, normal);
+  letter-spacing: var(--hwc-button-letter-spacing, 0);
+  text-decoration: none;
+  
+  cursor: var(--hwc-button-cursor, pointer);
+
+  height: var(--hwc-button-height, 43px);
+  width: var(--hwc-button-width, auto);
+
+  box-shadow: var(--hwc-button-box-shadow);
+  transition: 250ms all ease;
+  overflow: hidden;
+}
+
+.button__wrapper {
+  display: flex;
+  align-items: center;
+  padding: var(--hwc-button-padding, 10px 20px);
+}
+
+/* Uppercase, Lowercase & Capitalize */
+:host([uppercase]) .button {
+  text-transform: uppercase;
+}
+
+:host([lowercase]) .button {
+  text-transform: lowercase;
+}
+
+:host([capitalize]) .button {
+  text-transform: capitalize;
+}
+
+/* Rounded */
+:host([rounded]) .button {
+  border-radius: 50rem;
+}
+
+/* Fullwidth */
+:host([fullwidth]) {
+  display: block;
+}
+
+:host([fullwidth]) .button {
+  width: 100%;
+}
+
+:host([fullwidth]) .button__wrapper {
+  justify-content: center;
+}
+
+/* Disabled */
+:host([disabled]) {
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.5;
+}
+
+/* Appearance: Outlined */
+:host([appearance="outlined"]) {
+  --hwc-button-border-width: 2px;
+  --hwc-button-border-style: solid;
+
+  --hwc-button-border-color: var(--hwc-button-color);
+  --hwc-button-font-color: var(--hwc-button-color);
+
+  --hwc-button-hover-background: var(--hwc-button-color);
+
+  --hwc-button-padding: 8px 18px;
+}
+
+:host([appearance="outlined"]) .button {
+  background: transparent;
+  border-width: var(--hwc-button-border-width);
+  border-color: var(--hwc-button-border-color);
+  border-style: var(--hwc-button-border-style);
+  color: var(--hwc-button-font-color);
+}
+
+/* Appearance: Text */
+:host([appearance="text"]) {
+  --hwc-button-font-color: var(--hwc-button-color);
+}
+
+:host([appearance="text"]) .button {
+  background: transparent;
+  color: var(--hwc-button-font-color);
+}
+
+:host([appearance="text"]) .button:hover {
+  color: var(--hwc-button-font-color);
+}
+
+/* Appearance: Fab & Icon */
+:host([appearance="icon"]) .button,
+:host([appearance="fab"]) .button {
+  border-radius: 50%;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--hwc-button-height, 35px);
+  width: var(--hwc-button-width, 35px);
+  color: var(--hwc-button-font-color);
+}
+
+:host([appearance="fab"]) .button__wrapper,
+:host([appearance="icon"]) .button__wrapper {
+  padding: 0;
+}
+
+/* Icon */
+:host([appearance="icon"]) {
+  --hwc-button-font-color: var(--hwc-button-color);
+}
+
+:host([appearance="icon"]) .button {
+  background: transparent;
+}
+
+/* Hover */
+:host([appearance="outlined"]),
+:host([appearance="text"]),
+:host([appearance="icon"]) {
+  --hwc-button-hover-opacity: 0.1;
+  --hwc-button-hover-background: var(--hwc-button-color);
+}
+
+.button__wrapper::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.2);
+  transition: opacity 250ms ease;
+}
+
+.button:hover .button__wrapper::before {
+  opacity: var(--hwc-button-hover-opacity);
+}
+
+:host([appearance="outlined"]) .button__wrapper::before,
+:host([appearance="text"]) .button__wrapper::before,
+:host([appearance="icon"]) .button__wrapper::before {
+  background: var(--hwc-button-hover-background);
+}
+
+:host([appearance="outlined"]) .button:hover .button__wrapper::before,
+:host([appearance="text"]) .button:hover .button__wrapper::before,
+:host([appearance="icon"]) .button:hover .button__wrapper::before {
+  opacity: var(--hwc-button-hover-opacity);
+}
