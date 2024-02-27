@@ -19,8 +19,8 @@
     "url": "git+https://github.com/holejs/wc.git"
   },
   "scripts": {
-    "test": "node ./__tests__/alert.test.js",
-    "build": "vite build"
+    "build": "vite build",
+    "test": "vitest"
   },
   "bugs": {
     "url": "https://github.com/holejs/wc/issues"

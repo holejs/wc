@@ -32,5 +32,8 @@ export default defineConfig({
 
     // Generate .d.ts files
     dts(),
-  ]
-})
+  ],
+  test: {
+    environment: 'jsdom'
+  }
+} as any)
