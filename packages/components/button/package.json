@@ -19,7 +19,6 @@
     "url": "git+https://github.com/holejs/wc.git"
   },
   "scripts": {
-    "test": "node ./__tests__/button.test.js",
     "build": "vite build"
   },
   "bugs": {
