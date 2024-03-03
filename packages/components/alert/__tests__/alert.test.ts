@@ -1,50 +1,65 @@
-import { describe, test, expect } from 'vitest'
-import { html, render } from 'lit'
+import { fixture, html } from '@open-wc/testing'
+import { expect } from '@esm-bundle/chai'
+import sinon from 'sinon'
 
-import '../src/alert.js'
+import '../dist/index.js'
 
-export const _delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+type HWCAlert = HTMLElementTagNameMap['hwc-alert']
+
+const _delay = (ms: number = 100) => new Promise(resolve => setTimeout(resolve, ms))
 
 describe('<hwc-alert>', () => {
-  test('should render alert', async () => {
-    const $el = html`<hwc-alert>I'm Alert Component!</hwc-alert>`
-    render($el, document.body)
-  
-    const $hwcalert = document.querySelector('hwc-alert')
-  
-    expect($hwcalert).not.toBeNull()
-    expect($hwcalert?.appearance).toBe('filled')
-    expect($hwcalert?.textContent).toBe("I'm Alert Component!")
+  describe('when contain values for default attributes', () => {
+    it('should render alert', async () => {
+      const $alert = await fixture<HWCAlert>(html`<hwc-alert>Alert</hwc-alert>`)
+
+      expect($alert.shadowRoot!.querySelector('.alert')).to.exist
+      expect($alert.querySelector('.alert__icon')).not.to.exist
+      expect($alert.type).to.equal(undefined)
+      expect($alert.appearance).to.equal('filled')
+      expect($alert.dismissible).to.equal(false)
+      expect($alert.color).to.equal(undefined)
+      expect($alert).to.be.accessible()
+    })
+
+    it('should render alert with type', async () => {
+      const $alert = await fixture<HWCAlert>(html`<hwc-alert type="info">Alert</hwc-alert>`)
+
+      expect($alert.shadowRoot!.querySelector('.alert')).to.exist
+      expect($alert.shadowRoot!.querySelector('.alert__icon')).to.exist
+    })
   })
-  
-  test('should render alert with type', async () => {
-    const $el = html`<hwc-alert type="success">I'm Alert Component!</hwc-alert>`
-    render($el, document.body)
-  
-    await _delay(150)
-  
-    const $hwcalert = document.querySelector('hwc-alert')
-  
-    expect($hwcalert).not.toBeNull()
-    expect($hwcalert?.type).toBe('success')
-    expect($hwcalert?.shadowRoot?.querySelector('.alert__icon')).not.toBeNull()
-  })
-  
-  test('should dismissible alert', async () => {
-    const $el = html`<hwc-alert dismissible>I'm Alert Component!</hwc-alert>`
-    render($el, document.body)
-  
-    await _delay(150)
-  
-    const $hwcalert = document.querySelector('hwc-alert')
-  
-    expect($hwcalert).not.toBeNull()
-    expect($hwcalert?.hasAttribute('dismissible')).toBe(true)
-    expect($hwcalert?.shadowRoot?.querySelector('.alert-button__close')).not.toBeNull()
-  
-    // Close alert
-    $hwcalert?.close()
-  
-    expect(document.querySelector('hwc-alert')).toBeNull()
+
+  describe('when contain dismissible attribute', () => {
+    it('should render alert with dismissible', async () => {
+      const $alert = await fixture<HWCAlert>(html`<hwc-alert dismissible>Alert</hwc-alert>`)
+
+      expect($alert.shadowRoot!.querySelector('.alert__actions')).to.exist
+    })
+
+    it('should close alert', async () => {
+      const onclose = sinon.spy()
+
+      const $alert = await fixture<HWCAlert>(html`<hwc-alert dismissible>Alert</hwc-alert>`)
+
+      $alert.addEventListener('close', onclose)
+      $alert.close()
+
+      await _delay()
+
+      expect(document.querySelector('hwc-alert')).to.be.null
+      expect(onclose).to.have.been.calledOnce
+    })
+
+    it('should not close alert when event is cancelled', async () => {
+      const $alert = await fixture<HWCAlert>(html`<hwc-alert dismissible>Alert</hwc-alert>`)
+
+      $alert.addEventListener('close', e => e.preventDefault())
+      $alert.close()
+
+      await _delay()
+
+      expect(document.querySelector('hwc-alert')).to.exist
+    })
   })
 })
