@@ -1,55 +1,65 @@
-# @holejs/wc-alert
+# @holejs/wc-button
 
-The `hwc-alert` component is to provide a simple way to display **warning messages**, **success messages**, **error messages**, or **relevant information** to the user, without having to worry about the complexity of the underlying logic or visual customization. With `hwc-alert`, developers can create compelling visual notifications quickly and efficiently.
+The `hwc-button` component provides a simple and flexible way to create interactive buttons in your web application. Buttons are essential elements that allow users to perform actions and interact with your website or web application.
 
 ## Installation
 
 ```bash
-npm i @holejs/wc-alert
+npm install @holejs/wc-button
 ```
 
 ## Usage
 
-To use the `hwc-alert` component, you can include it in your HTML code using the following syntax:
+To use the `hwc-button` component, you can include it in your HTML code using the following syntax:
 
 **Typescript/Javascript**
 
 ```ts
-import '@holejs/wc-alert'
+import '@holejs/wc-button';
 ```
 
 **HTML**
 
 ```html
-<hwc-alert>Basic alert!</hwc-alert>
-```
-
-## Type
-
-Allows you to modify the intent of the component. Currently the available values are the following: `info`, `success`, `warning` and `error`.
-
-```html
-<!-- It is not necessary to specify. -->
-<hwc-alert type="info">Info alert!</hwc-alert>
-
-<hwc-alert type="success">Success alert!</hwc-alert>
-
-<hwc-alert type="warning">Warning alert!</hwc-alert>
-
-<hwc-alert type="error">Error alert!</hwc-alert>
+<hwc-button>Click me!</hwc-button>
 ```
 
 ## Appearance
 
-Allows you to modify the appearance of the component. Currently the available values are the following: `filled`, `outlined` and `text`.
+This property allows you to modify the layout of the component. The possible values are: `outlined`, `text`, `fab` & `icon`
 
 ```html
-<!-- It is not necessary to specify. -->
-<hwc-alert appearance="filled">Filled alert!</hwc-alert>
+<!-- Regular -->
+<hwc-button>Click me!</hwc-button>
 
-<hwc-alert appearance="outlined">Outlined alert!</hwc-alert>
+<!-- Outlined -->
+<hwc-button appearance="outlined">Click me!</hwc-button>
 
-<hwc-alert appearance="text">Text alert!</hwc-alert>
+<!-- Text -->
+<hwc-button appearance="text">Click me!</hwc-button>
+
+<!-- Fab -->
+<!-- Icon taken from https://icons.getbootstrap.com/icons/star-fill/ -->
+<hwc-button appearance="fab" color="orange-darken-2">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>
+</hwc-button>
+
+<!-- Icon -->
+<hwc-button appearance="icon" color="orange-darken-2">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>
+</hwc-button>
+```
+
+## Disabled
+
+This property allows you to disable the component.
+
+```html
+<hwc-button disabled>Click me!</hwc-button>
 ```
 
 ## Colors
@@ -57,94 +67,134 @@ Allows you to modify the appearance of the component. Currently the available va
 The color property allows you to modify the color of the component.
 
 ```html
-<hwc-alert color="green-darken-2">Color palette alert!</hwc-alert>
+<hwc-button color="green-darken-2">Click me!</hwc-button>
 
-<hwc-alert color="#5963C3">Hexadecimal alert!</hwc-alert>
+<hwc-button color="purple-darken-2" appearance="outlined">Click me!</hwc-button>
 
-<hwc-alert appearance="rgb(187, 89, 195)">RGB alert!</hwc-alert>
+<hwc-button color="#674A9C" appearance="text">Click me!</hwc-button>
 ```
 
 > **NOTE**: You can see the color palette in the following link [Color palette](#color-palette)
 
-## Dismissible
+## Color gradient
 
-Add a button that allows you to interactively close the component by clicking it.
+You can set gradient colors using a simple css class. Let's see the following example:
 
 ```html
-<hwc-alert dismissible>Dismissible alert!</hwc-alert>
+<style>
+  /* Step 1: Define your class. */
+  /* Gradient taken from https://uigradients.com/#ElectricViolet */
+  .electric-violet__bg {
+    --hwc-button-background: #4776E6;
+    --hwc-button-background: -webkit-linear-gradient(to right, #8E54E9, #4776E6);
+    --hwc-button-background: linear-gradient(to right, #8E54E9, #4776E6);
+  }
+</style>
+
+<!-- Step 2: Adding class. -->
+<hwc-button class="electric-violet__bg">Gradient button!</hwc-button>
 ```
 
-## Methods
+## Uppercase, Lowercase & Capitalize
 
-### close
-
-> $el.close(): void
-
-Method in charge of removing the component.
-
-**Parameters**
-
-None.
-
-**Example**
+These options allow you to make simple transformations to the button text.
 
 ```html
-<hwc-alert dismissible>I'm Alert.</hwc-alert>
+<hwc-button uppercase color="red-darken-2">Click me!</hwc-button>
 
-<script>
-  // Capture element.
-  const $alert = document.querySelector('hwc-alert')
+<hwc-button lowercase appearance="outlined">CLICK ME!</hwc-button>
 
-  // Close element after 3 seconds.
-  setTimeout(() => $alert.close(), 3000)
-</script>
+<hwc-button capitalize appearance="text" color="pink-darken-2">click me!</hwc-button>
 ```
 
-## Events
+## Rounded
 
-### close
-
-This event is fired when the `close()` method is executed.
-
-**Using Lit**
+This property adds pronounced borders to the side of the component.
 
 ```html
-<hwc-alert
-  dismissible
-  @close=${() => console.log('Closed')}
->
-  Closable alert!
-</hwc-alert>
+<hwc-button rounded uppercase color="red-darken-2">Click me!</hwc-button>
 ```
 
-**Using Vanilla**
+## Fullwidth
+
+Is an attribute that makes the button stretch to the full width of its parent container.
 
 ```html
-<hwc-alert dismissible>Closable alert!</hwc-alert>
+<hwc-button fullwidth rounded color="orange-darken-2">Click me!</hwc-button>
+```
 
-<script>
-  const $alert = document.querySelector('hwc-alert')
+## Elevations
 
-  $alert.addEventListener('close', (ev) => {
-    // You can prevent removal.
-    // ev.preventDefault()
+This property allows you to apply a visual lift effect to the component, creating a sense of depth and making the button appear to be raised or floating above the surface.
 
-    console.log('Closed')
-  })
-</script>
+```html
+<hwc-button elevation="1" color="teal-darken-2">Click me!</hwc-button>
+
+<hwc-button elevation="2" appearance="text" color="green-darken-2">Click me!</hwc-button>
+
+<hwc-button elevation="3" color="yellow-darken-2">Click me!</hwc-button>
+
+<hwc-button elevation="4" appearance="outlined" color="blue-darken-2">Click me!</hwc-button>
+
+<hwc-button elevation="5" color="teal-darken-2">Click me!</hwc-button>
+```
+
+**Create your custom elevations**
+
+```html
+<style>
+  .custom__elevation {
+    --hwc-button-box-shadow: 3px 7px 15px rgba(103, 74, 156 , 0.65);
+  }
+</style>
+
+<hwc-button class="custom__elevation" color="purple-darken-2">Custom elevation button!</hwc-button>
+```
+
+## Ripple
+
+The **ripple** effect simulates waves that propagate from the point where the interaction was made, spreading across the button area, and then gradually fading out.
+
+```html
+<hwc-button elevation="1">
+  <!-- Adding ripple effect -->
+  <hwc-ripple></hwc-ripple>
+  Button + Ripple!
+</hwc-button>
+```
+
+## Href, Target & Rel
+
+These properties allow you to turn the button into a link.
+
+```html
+<hwc-button
+  href="https://github.com/holejs/wc"
+  target="_blank"
+  rel="noopener noreferrer"
+>@holejs/wc</hwc-button>
 ```
 
 ## CSS Custom Properties
 
-| Name                        | Description                              |
-| --------------------------- | ---------------------------------------- |
-| `--hwc-alert-color`         | Main color of the alert. **Default**: `var(--hwc-blue-darken-2)`.                 |
-| `--hwc-alert-bg`            | Background color of the alert. **Default**: `var(--hwc-alert-color)`.           |
-| `--hwc-alert-font-color`    | Text color inside the alert. **Default**: `white`.             |
-| `--hwc-alert-padding`       | Internal spacing of the alert's content. **Default**: `16px`. |
-| `--hwc-alert-font-family`   | Typography font used in the alert. **Default**: `Nunito Sans, sans-serif`.       |
-| `--hwc-alert-font-size`     | Font size of the text inside the alert. **Default**: `1rem`.  |
-| `--hwc-alert-border-radius` | Border radius of the alert's corners. **Default**: `0.65rem`.    |
-| `--hwc-alert-border-style`  | Border style of the alert. **Default**: `solid`.               |
-| `--hwc-alert-border-color`  | Border color of the alert. **Default**: `var(--hwc-alert-color)`.               |
-| `--hwc-alert-border-width`  | Border width of the alert. **Default**: `2px`.               |
+| Name                            | Description                                                                                 |
+| ------------------------------- | ------------------------------------------------------------------------------------------- |
+| `--hwc-button-font-family`      | Font family for the button text. **Default**: `Nunito Sans, sans-serif`.                    |
+| `--hwc-button-font-size`        | Font size for the button text. **Default**: `1rem`.                                         |
+| `--hwc-button-font-weight`      | This property determines the font weight of the button text. **Default**: `normal`.         |
+| `--hwc-button-letter-spacing`   | This property controls the spacing between characters in the button text. **Default**: `0`. |
+| `--hwc-button-height`           | This property sets the height of the button. **Default**: `43px`.                           |
+| `--hwc-button-width`            | This property defines the width of the button. **Default**: `auto`.                         |
+| `--hwc-button-padding`          | Padding for the button content. **Default**: `10px 20px`.                                   |
+| `--hwc-button-border-radius`    | Border radius for the button.                                                               |
+| `--hwc-button-border-width`     | Border width for the button. **Default**: `0`.                                              |
+| `--hwc-button-border-color`     | Border color for the button. **Default**: `transparent`.                                    |
+| `--hwc-button-border-style`     | Border style for the button. **Default**: `solid`.                                          |
+| `--hwc-button-background`       | Background color for the button. **Default**: `var(--hwc-button-color)`.                    |
+| `--hwc-button-color`            | Color for the button. **Default**: `var(--hwc-blue-darken-2)`.                              |
+| `--hwc-button-font-color`       | Text color for the button. **Default**: `white`.                                            |
+| `--hwc-button-cursor`           | Cursor style when hovering over the button. **Default**: `pointer`.                         |
+| `--hwc-button-hover-background` | Background color when hovering over the button.                                             |
+| `--hwc-button-box-shadow`       | Allow to set shadows to the component.                                                      |
+| `--hwc-button-hover-opacity`    | Set opacity to the hover background component.                                              |
+| `--hwc-button-z-index`          | Set z-index to the component. **Default**: `0`.                                             |
