@@ -1,18 +1,23 @@
 {
   "name": "@holejs/wc-button",
   "version": "0.0.0",
-  "description": "> TODO: description",
-  "author": "Ivan Guevara <ivanzaldivar16@gmail.com>",
+  "description": "Beautiful universal components made with Lit.",
+  "author": {
+    "name": "Ivan Guevara",
+    "email": "ivanzaldivar16@gmail.com"
+  },
   "homepage": "https://github.com/holejs/wc/tree/main/packages/components/button#readme",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "directories": {
-    "lib": "dist",
-    "test": "__tests__"
+    "lib": "dist"
   },
   "files": [
-    "dist"
+    "dist/**",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "repository": {
     "type": "git",
