@@ -1,7 +1,5 @@
-'use strict';
+import { expect } from '@esm-bundle/chai'
 
-const ripple = require('..');
-const assert = require('assert').strict;
-
-assert.strictEqual(ripple(), 'Hello from ripple');
-console.info('ripple tests passed');
+it('sums up 2 numbers', () => {
+  expect(1 + 1).to.equal(2);
+})
