@@ -1,0 +1,37 @@
+{
+  "name": "@holejs/wc-text-field",
+  "version": "0.0.0",
+  "description": "Beautiful universal components made with Lit.",
+  "author": {
+    "name": "Ivan Guevara",
+    "email": "ivanzaldivar16@gmail.com"
+  },
+  "homepage": "https://github.com/holejs/wc/tree/main/packages/components/text-field#readme",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "dist"
+  },
+  "files": [
+    "dist/**",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holejs/wc.git"
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "bugs": {
+    "url": "https://github.com/holejs/wc/issues"
+  },
+  "dependencies": {
+    "@holejs/utils": "file:../../utils",
+    "@holejs/wc-button": "file:../button",
+    "imask": "7.5.0"
+  }
+}
