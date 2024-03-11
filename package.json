@@ -105,7 +105,8 @@
     "build:sb": "storybook build",
     "update-dependencies": "ncu -u",
     "build:pkg": "lerna run build",
-    "test": "wtr"
+    "test": "wtr",
+    "test:watch": "wtr --watch"
   },
   "dependencies": {
     "imask": "7.1.3",
