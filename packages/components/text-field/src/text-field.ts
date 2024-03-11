@@ -70,7 +70,7 @@ export class HWCTextField extends InputField {
 
   @property({ type: String }) label!: string
 
-  @property({ type: Boolean }) autofocus!: boolean
+  @property({ type: Boolean }) autofocus: boolean = false
 
   @property({ type: String }) placeholder!: string
 
