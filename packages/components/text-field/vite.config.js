@@ -20,7 +20,6 @@ export default defineConfig({
           lit: 'lit',
           'lit/decorators.js': 'lit/decorators',
           'lit/directives/when.js': 'lit/directives/when'
-          // '@holejs/wc-button': '@holejs/wc-button'
         }
       }
     }

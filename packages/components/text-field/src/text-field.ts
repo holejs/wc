@@ -4,11 +4,11 @@ import { PropertyValueMap, html } from 'lit'
 import IMask, { InputMask } from 'imask'
 
 import { isValidColorFormat, generateHash } from '@holejs/utils'
+import { InputField } from '@holejs/theme'
+
 import '@holejs/wc-button'
 
 import styles from './text-field.css'
-
-import { InputField } from './input-field.js'
 
 const COMPONENT_NAME = 'hwc-text-field'
 
