@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/wc-avatar",
+  "name": "@holejs/radio",
   "version": "0.0.0",
   "description": "Beautiful universal components made with Lit.",
   "keywords": [],
@@ -7,8 +7,8 @@
     "name": "Ivan Guevara",
     "email": "ivanzaldivar16@gmail.com"
   },
-  "homepage": "https://github.com/holejs/wc/tree/main/packages/components/avatar#readme",
-  "license": "ISC",
+  "homepage": "https://github.com/holejs/wc/tree/main/packages/components/radio#readme",
+  "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "directories": {
@@ -31,6 +31,10 @@
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
-    "@holejs/utils": "file:../../utils"
+    "@holejs/utils": "file:../../utils",
+    "@holejs/theme": "file:../../theme"
+  },
+  "devDependencies": {
+    "@holejs/wc-button": "file:../button"
   }
 }
