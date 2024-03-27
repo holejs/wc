@@ -49,6 +49,8 @@ export class HWCCheckbox extends InputField {
 
     if (changedProperties.has('value') || changedProperties.has('checked')) {
       this._setValue(this.checked ? this.value : null)
+
+      this.triggerValidation()
     }
 
     if (changedProperties.has('checked')) {
