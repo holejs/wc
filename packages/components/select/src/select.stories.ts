@@ -3,7 +3,7 @@ import type { StoryObj } from '@storybook/web-components'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
-import '../button/button.js'
+import '@holejs/wc-button'
 
 import './select-option.js'
 import './select.js'
