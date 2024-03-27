@@ -10,15 +10,17 @@ npm install @holejs/wc-avatar
 
 ## Basic usage
 
-**Displaying Name Initials**
+**Javascript/Typescript**
+
+```ts
+import '@holejs/wc-avatar';
+```
+
+**HTML**
 
 ```html
 <hwc-avatar name="Ivan Guevara"></hwc-avatar>
-```
 
-**Avatar with Image**
-
-```html
 <hwc-avatar src="avatar.jpg" alt="Profile Picture"></hwc-avatar>
 ```
 
