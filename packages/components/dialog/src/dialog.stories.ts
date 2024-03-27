@@ -4,11 +4,7 @@ import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import '@holejs/wc-text-field'
-// import '../text-field/text-field.js'
-// import '../select/select-option.js'
-// import '../select/select.js'
-import '@holejs/wc-button'
-// import '../button/button.js'
+import '@holejs/wc-select'
 import './dialog.js'
 
 // eslint-disable-next-line no-undef
