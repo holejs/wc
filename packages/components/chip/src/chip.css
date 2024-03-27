@@ -1,0 +1,181 @@
+/* Reset all padding and margin for all elements */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: content-box;
+}
+
+/* Host styles for the component */
+:host {
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+
+  /* Fonts */
+  --hwc-chip-font-family: 'Nunito Sans', sans-serif;
+
+  /* Colors */
+  --hwc-chip-font-color: var(--hwc-chip-color);
+  --hwc-chip-color: var(--hwc-grey-lighten-1);
+  --hwc-chip-background: var(--hwc-chip-color);
+
+  /* Fonts */
+  --hwc-chip-font-size: 0.875rem;
+
+  /* Padding */
+  --hwc-chip-padding: 5px 10px;
+
+  /* Borders */
+  --hwc-chip-border-width: 2px;
+  --hwc-chip-border-style: solid;
+  --hwc-chip-border-radius: 5px;
+  --hwc-chip-border-color: var(--hwc-chip-color);
+
+  /* Opacity */
+  --hwc-chip-opacity: 0.15;
+
+  /* Closable */
+  --hwc-chip-closable-button-height: 21px;
+  --hwc-chip-closable-button-width: 21px;
+  --hwc-chip-closable-icon-height: 16px;
+  --hwc-chip-closable-icon-width: 16px;
+}
+
+/* Base styles for the chip element */
+.chip {
+  position: relative;
+  display: inline-flex;
+  border-radius: var(--hwc-chip-border-radius);
+  font-family: var(--hwc-chip-font-family);
+  font-size: var(--hwc-chip-font-size);
+  overflow: hidden;
+  appearance: none;
+  background: none;
+  outline: none;
+  border: none;
+}
+
+:host([appearance="filled"]) .chip {
+  background: var(--hwc-chip-background);
+}
+
+/* Styles for filled and text appearance */
+.chip__wrapper::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+:host([appearance="text"]) .chip__wrapper::before {
+  background: var(--hwc-chip-background);
+}
+
+/* Wrapper styles for chip content */
+.chip__wrapper {
+  width: auto;
+  display: flex;
+  align-items: center;
+  padding: var(--hwc-chip-padding);
+}
+
+/* Styles for chip actions */
+.chip__actions {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  margin-left: 5px;
+}
+
+/* Styles for filled appearance */
+:host([appearance="filled"]) {
+  --hwc-chip-font-color: white;
+}
+
+:host([appearance="filled"]) .chip-button__closable {
+  --hwc-button-color: white;
+}
+
+:host([appearance="filled"]) .chip {
+  color: var(--hwc-chip-font-color);
+}
+
+/* Styles for text appearance */
+:host([appearance="text"]) .chip {
+  color: var(--hwc-chip-font-color);
+}
+
+:host([appearance="text"]) .chip__wrapper::before {
+  opacity: var(--hwc-chip-opacity);
+}
+
+:host([appearance="text"]) .chip-button__closable {
+  --hwc-button-color: var(--hwc-chip-font-color);
+}
+
+/* Styles for outlined appearance */
+:host([appearance="outlined"]) .chip {
+  --hwc-chip-padding: 3px 8px;
+  color: var(--hwc-chip-font-color);
+  border-width: var(--hwc-chip-border-width);
+  border-style: var(--hwc-chip-border-style);
+  border-color: var(--hwc-chip-border-color);
+}
+
+:host([appearance="outlined"]) .chip-button__closable {
+  --hwc-button-color: var(--hwc-chip-font-color);
+}
+
+/* Rounded styles */
+:host([rounded]) .chip {
+  border-radius: 50rem;
+}
+
+/* Closable styles */
+.chip-button__closable {
+  --hwc-button-height: var(--hwc-chip-closable-button-height);
+  --hwc-button-width: var(--hwc-chip-closable-button-width);
+}
+
+.closable__icon {
+  height: var(--hwc-chip-closable-icon-height);
+  width: var(--hwc-chip-closable-icon-width);
+}
+
+/* Size styles */
+:host([size="x-small"]) {
+  --hwc-chip-font-size: 10px;
+  --hwc-chip-padding: 2px 5px;
+  --hwc-chip-closable-button-height: 15px;
+  --hwc-chip-closable-button-width: 15px;
+  --hwc-chip-closable-icon-height: 10px;
+  --hwc-chip-closable-icon-width: 10px;
+}
+
+:host([size="small"]) {
+  --hwc-chip-font-size: 12px;
+  --hwc-chip-padding: 4px 8px;
+  --hwc-chip-closable-button-height: 18px;
+  --hwc-chip-closable-button-width: 18px;
+  --hwc-chip-closable-icon-height: 12px;
+  --hwc-chip-closable-icon-width: 12px;
+}
+
+:host([size="large"]) {
+  --hwc-chip-font-size: 16px;
+  --hwc-chip-closable-icon-height: 16px;
+  --hwc-chip-closable-icon-width: 16px;
+}
+
+:host([size="x-large"]) {
+  --hwc-chip-font-size: 17px;
+  --hwc-chip-padding: 7px 17px;
+  --hwc-chip-closable-button-height: 25px;
+  --hwc-chip-closable-button-width: 25px;
+  --hwc-chip-closable-icon-height: 18px;
+  --hwc-chip-closable-icon-width: 18px;
+}
