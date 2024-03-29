@@ -65,8 +65,11 @@ export class HWCRadio extends InputField {
     }
 
     if (changedProperties.has('checked')) {
-      if (this.checked) this._uncheckRadios()
-
+      if (this.checked) {
+        this._uncheckRadios()
+        this.triggerValidation()
+      }
+      
       this.ariaChecked = String(this.checked)
     }
   }
