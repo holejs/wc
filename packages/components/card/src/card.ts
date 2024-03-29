@@ -28,9 +28,9 @@ export class HWCCard extends LitElement {
 
   @property({ type: String }) color!: string
 
-  @property({ type: Boolean }) outlined!: boolean
+  @property({ type: Boolean, reflect: true }) outlined = false
 
-  @property({ type: Boolean }) disabled!: boolean
+  @property({ type: Boolean, reflect: true }) disabled = false
 
   protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (this.hasElementSlot('slot[name="header"]')) this.$cardHeader.remove()
@@ -38,18 +38,22 @@ export class HWCCard extends LitElement {
     if (this.hasElementSlot('slot[name="footer"]')) this.$cardFooter.remove()
   }
 
-  protected updated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (_changedProperties.has('color')) {
+  protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('color')) {
       const color = isValidColorFormat(this.color) ? `var(--hwc-${this.color})` : this.color
 
       this.style.setProperty('--hwc-card-bg', color)
     }
 
-    if (_changedProperties.has('elevation')) {
+    if (changedProperties.has('elevation')) {
       this.style.setProperty(
         '--hwc-card-box-shadow',
         `var(--hwc-box-shadow-${this.elevation})`
       )
+    }
+
+    if (changedProperties.has('disabled')) {
+      this.setAttribute('aria-disabled', String(this.disabled))
     }
   }
 
