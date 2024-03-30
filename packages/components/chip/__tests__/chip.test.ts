@@ -19,23 +19,23 @@ describe('<hwc-chip>', () => {
   describe('when chip is closable', () => {
     it('should render a chip when is closable', async () => {
       const $chip = await fixture<HWCChip>(html`<hwc-chip closable>Guns N' Roses</hwc-chip>`)
-  
+
       const $button = $chip.shadowRoot?.querySelector<HWCButton>('.chip-button__closable')
-  
+
       expect($chip.closable).to.be.true
       expect($button).to.exist
-  
+
       $button?.click()
-  
+
       expect(document.body.contains($chip)).to.be.false
     })
 
     it('should not close chip when event is cancelled', async () => {
       const $chip = await fixture<HWCChip>(html`<hwc-chip closable>Guns N' Roses</hwc-chip>`)
-  
+
       $chip.addEventListener('close', e => e.preventDefault())
       $chip.close()
-  
+
       expect(document.body.contains($chip)).to.be.true
     })
   })

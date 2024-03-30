@@ -4,11 +4,12 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './avatar.css'
 
-import { isValidColorFormat, randomHexColor } from '@holejs/utils';
+import { isValidColorFormat, randomHexColor } from '@holejs/utils'
 
 const COMPONENT_NAME = 'hwc-avatar'
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: HWCAvatar
   }
@@ -36,7 +37,7 @@ export class HWCAvatar extends LitElement {
 
   @property({ type: String }) src!: string
 
-  protected updated(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+  protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     if (changedProperties.has('color')) {
       const color = isValidColorFormat(this.color)
         ? `var(--hwc-${this.color})`

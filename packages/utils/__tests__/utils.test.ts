@@ -90,7 +90,7 @@ describe('utils', () => {
     it('should return true if the value is required', () => {
       const rules = 'required'
       const parsedRules = parseRules(rules)
-      
+
       expect(parsedRules).to.be.a('array')
       expect(parsedRules).to.have.length(1)
 
@@ -102,7 +102,7 @@ describe('utils', () => {
     it('should return true if the value contains multiple rules', () => {
       const rules = 'required|email|min:5|max:10'
       const parsedRules = parseRules(rules)
-      
+
       expect(parsedRules).to.be.a('array')
       expect(parsedRules).to.have.length(4)
 

@@ -15,6 +15,6 @@ export default defineConfig({
   },
   plugins: [
     // Generate .d.ts files
-    dts(),
+    dts()
   ]
 })

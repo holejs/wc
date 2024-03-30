@@ -127,7 +127,11 @@ export class HWCSelect extends InputField {
   appendOption (value: Option): void {
     if (this.dirty || Boolean(value)) this.dirty = true
 
-    this.multiple ? this.options.push(value) : this.options = [value]
+    if (this.multiple) {
+      this.options.push(value)
+    } else {
+      this.options = [value]
+    }
 
     this.requestUpdate('options')
   }
@@ -195,11 +199,17 @@ export class HWCSelect extends InputField {
   private _handleDocumentClick (ev: Event): void {
     const isClickInside = this.contains(ev.target as Node)
 
-    if (!isClickInside) this.close()
+    if (isClickInside) return
+
+    this.close()
   }
 
   private _onHandleClick (): void {
-    !this.expanded ? this.open() : this.close()
+    if (!this.expanded) {
+      this.open()
+    } else {
+      this.close()
+    }
 
     this.triggerValidation()
   }

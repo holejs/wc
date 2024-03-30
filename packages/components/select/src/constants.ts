@@ -31,7 +31,7 @@ const _maxHandler: RuleHandler = async ({ el, input }: any) => {
 }
 
 export const Validations: Partial<Record<RuleMethods, RuleHandler>> = {
-  'required': _requiredHandler,
-  'min': _minHandler,
-  'max': _maxHandler
+  required: _requiredHandler,
+  min: _minHandler,
+  max: _maxHandler
 }

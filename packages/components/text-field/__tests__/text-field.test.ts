@@ -2,7 +2,6 @@ import { expect, html, fixture, elementUpdated } from '@open-wc/testing'
 
 import type { HWCButton } from '@holejs/wc-button'
 import { HWCTextField } from '../dist/index.js'
-import '../dist/index.js'
 
 const _delay = (ms: number = 100) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -150,7 +149,7 @@ describe('<hwc-text-field>', () => {
       $textfield.value = 'ivan'
 
       await _delay()
-      
+
       expect($textfield.validationMessage).to.equal('Please include an \'@\' in the email address. \'ivan\' is missing an \'@\'.')
       expect($form.checkValidity()).to.be.false
 
@@ -185,7 +184,7 @@ describe('<hwc-text-field>', () => {
       $textfield.value = 'ivan'
 
       await _delay()
-      
+
       expect($textfield.validationMessage).to.equal('This is not a valid email.')
       expect($form.checkValidity()).to.be.false
 

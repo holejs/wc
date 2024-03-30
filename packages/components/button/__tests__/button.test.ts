@@ -1,9 +1,8 @@
 import { fixture, html, expect } from '@open-wc/testing'
 import sinon from 'sinon'
 
+import type { HWCButton } from '../dist/index.js'
 import '../dist/index.js'
-
-type HWCButton = HTMLElementTagNameMap['hwc-button']
 
 describe('<hwc-button>', () => {
   describe('when contain values for default attributes', () => {

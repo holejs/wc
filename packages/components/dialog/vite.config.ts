@@ -30,6 +30,6 @@ export default defineConfig({
     }),
 
     // Generate .d.ts files
-    dts(),
+    dts()
   ]
 })

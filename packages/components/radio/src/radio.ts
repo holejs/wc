@@ -69,7 +69,7 @@ export class HWCRadio extends InputField {
         this._uncheckRadios()
         this.triggerValidation()
       }
-      
+
       this.ariaChecked = String(this.checked)
     }
   }

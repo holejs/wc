@@ -1,9 +1,9 @@
-import { fixture, html, expect } from "@open-wc/testing"
+import { fixture, html, expect } from '@open-wc/testing'
 
-import "../dist/index.js"
+import '../dist/index.js'
 
 const _stripExpressionComments = (html: string) =>
-  html.replace(/<!--\?lit\$[0-9]+\$-->|<!--\??-->/g, '');
+  html.replace(/<!--\?lit\$[0-9]+\$-->|<!--\??-->/g, '')
 
 const _removeWhitespace = (text: string | undefined | null) => (text || '').replace(/\s/g, '')
 

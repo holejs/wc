@@ -2,9 +2,8 @@ import { fixture, html } from '@open-wc/testing'
 import { expect } from '@esm-bundle/chai'
 import sinon from 'sinon'
 
+import type { HWCAlert } from '../dist/index.js'
 import '../dist/index.js'
-
-type HWCAlert = HTMLElementTagNameMap['hwc-alert']
 
 const _delay = (ms: number = 100) => new Promise(resolve => setTimeout(resolve, ms))
 
