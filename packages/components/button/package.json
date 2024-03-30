@@ -29,6 +29,9 @@
   "bugs": {
     "url": "https://github.com/holejs/wc/issues"
   },
+  "dependencies": {
+    "lit": "3.1.0"
+  },
   "devDependencies": {
     "@holejs/wc-ripple": "file:../ripple"
   }

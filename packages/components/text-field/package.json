@@ -33,6 +33,7 @@
     "@holejs/utils": "file:../../utils",
     "@holejs/wc-button": "file:../button",
     "@holejs/theme": "file:../../theme",
-    "imask": "7.5.0"
+    "imask": "7.5.0",
+    "lit": "3.1.0"
   }
 }

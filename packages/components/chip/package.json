@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@holejs/utils": "file:../../utils",
-    "@holejs/wc-button": "file:../button"
+    "@holejs/wc-button": "file:../button",
+    "lit": "3.1.0"
   }
 }
