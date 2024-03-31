@@ -21,14 +21,7 @@
     "packages/components/*"
   ],
   "scripts": {
-    "lint:fix": "eslint --fix src/**/*.ts",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "publish:feat": "npm run build && npm version minor -m \"chore: publish %s\" && npm publish && git push origin",
-    "publish:patch": "npm run build && npm version patch -m \"chore: publish %s\" && npm publish && git push origin",
-    "dev": "vite serve demo/",
-    "preview": "vite preview",
-    "dev:sb": "storybook dev -p 6006",
-    "build:sb": "storybook build",
+    "lint": "eslint --fix packages/**/*.ts",
     "update-dependencies": "ncu -u",
     "build": "lerna run build",
     "test": "wtr",
