@@ -25,7 +25,8 @@
     "update-dependencies": "ncu -u",
     "build": "lerna run build",
     "test": "wtr",
-    "test:watch": "wtr --watch"
+    "test:watch": "wtr --watch",
+    "prepublish": "npm run build && npm run test"
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
