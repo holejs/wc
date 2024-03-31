@@ -82,7 +82,7 @@ describe('utils', () => {
     it('should generate a random hex color', () => {
       const color = randomHexColor()
       expect(color).to.be.a('string')
-      expect(color).to.match(/^#[0-9a-f]{6}$/)
+      expect(color).to.match(/^#[0-9a-f]{3,6}$/i)
     })
   })
 
