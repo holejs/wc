@@ -1,9 +1,9 @@
-import { PropertyValueMap, LitElement, html, nothing } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
+import { PropertyValueMap, LitElement, html, nothing } from 'lit'
 
 import styles from './button.css'
 
-import { isValidColorFormat } from './utils.js'
+import { isValidColorFormat } from '@holejs/utils'
 
 const COMPONENT_NAME = 'hwc-button'
 

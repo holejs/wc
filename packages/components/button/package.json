@@ -30,6 +30,7 @@
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
+    "@holejs/utils": "file:../../utils",
     "lit": "3.1.0"
   },
   "devDependencies": {
