@@ -1,7 +1,8 @@
 import { expect, html, fixture, elementUpdated } from '@open-wc/testing'
 
 import type { HWCButton } from '@holejs/wc-button'
-import { HWCTextField } from '../dist/index.js'
+import type { HWCTextField } from '../dist/index.js'
+import '../dist/index.js'
 
 const _delay = (ms: number = 100) => new Promise(resolve => setTimeout(resolve, ms))
 
