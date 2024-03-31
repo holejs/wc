@@ -8,7 +8,7 @@
     "email": "ivanzaldivar16@gmail.com"
   },
   "homepage": "https://github.com/holejs/wc/tree/main/packages/components/avatar#readme",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "directories": {
