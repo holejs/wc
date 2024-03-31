@@ -5,7 +5,7 @@ import '@holejs/wc-button'
 
 import styles from './alert.css'
 
-import { isValidColorFormat } from './utils.js'
+import { isValidColorFormat } from '@holejs/utils'
 
 const COMPONENT_NAME = 'hwc-alert'
 
