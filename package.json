@@ -1,19 +1,8 @@
 {
   "name": "@holejs/wc",
   "version": "0.18.0",
+  "private": true,
   "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
-  "directories": {
-    "lib": "dist"
-  },
-  "files": [
-    "CHANGELOG.md",
-    "README.md",
-    "LICENSE",
-    "dist/**"
-  ],
   "bugs": {
     "url": "https://github.com/holejs/wc/issues"
   },
@@ -21,100 +10,29 @@
     "url": "https://github.com/holejs/wc"
   },
   "homepage": "https://github.com/holejs/wc",
-  "keywords": [
-    "components",
-    "web-components",
-    "component-library",
-    "lit-html",
-    "lit-element"
-  ],
+  "keywords": [],
   "author": {
     "name": "Ivan Guevara",
-    "email": "ivanzaldivar16@gmail.com",
-    "url": "https://github.com/thebug404"
+    "email": "ivanzaldivar16@gmail.com"
   },
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/types/index.d.ts",
   "workspaces": [
     "packages/*",
     "packages/components/*"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/types/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./alert/alert.js": {
-      "types": "./dist/types/alert/alert.d.ts",
-      "default": "./dist/alert.js"
-    },
-    "./avatar/avatar.js": {
-      "types": "./dist/types/avatar/avatar.d.ts",
-      "default": "./dist/avatar.js"
-    },
-    "./button/button.js": {
-      "types": "./dist/types/button/button.d.ts",
-      "default": "./dist/button.js"
-    },
-    "./card/card.js": {
-      "types": "./dist/types/card/card.d.ts",
-      "default": "./dist/card.js"
-    },
-    "./checkbox/checkbox.js": {
-      "types": "./dist/types/checkbox/checkbox.d.ts",
-      "default": "./dist/checkbox.js"
-    },
-    "./chip/chip.js": {
-      "types": "./dist/types/chip/chip.d.ts",
-      "default": "./dist/chip.js"
-    },
-    "./dialog/dialog.js": {
-      "types": "./dist/types/dialog/dialog.d.ts",
-      "default": "./dist/dialog.js"
-    },
-    "./radio/radio.js": {
-      "types": "./dist/types/radio/radio.d.ts",
-      "default": "./dist/radio.js"
-    },
-    "./ripple/ripple.js": {
-      "types": "./dist/types/ripple/ripple.d.ts",
-      "default": "./dist/ripple.js"
-    },
-    "./select/select-option.js": {
-      "types": "./dist/types/select/select-option.d.ts",
-      "default": "./dist/select-option.js"
-    },
-    "./select/select.js": {
-      "types": "./dist/types/select/select.d.ts",
-      "default": "./dist/select.js"
-    },
-    "./text-field/text-field.js": {
-      "types": "./dist/types/text-field/text-field.d.ts",
-      "default": "./dist/text-field.js"
-    },
-    "./styles/colors.css": "./dist/assets/colors.css",
-    "./styles/elevations.css": "./dist/assets/elevations.css"
-  },
   "scripts": {
     "lint:fix": "eslint --fix src/**/*.ts",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "publish:feat": "npm run build && npm version minor -m \"chore: publish %s\" && npm publish && git push origin",
     "publish:patch": "npm run build && npm version patch -m \"chore: publish %s\" && npm publish && git push origin",
     "dev": "vite serve demo/",
-    "build": "tsc && vite build",
     "preview": "vite preview",
     "dev:sb": "storybook dev -p 6006",
     "build:sb": "storybook build",
     "update-dependencies": "ncu -u",
-    "build:pkg": "lerna run build",
+    "build": "lerna run build",
     "test": "wtr",
     "test:watch": "wtr --watch"
-  },
-  "dependencies": {
-    "imask": "7.1.3",
-    "lit": "3.1.0"
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
