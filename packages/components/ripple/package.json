@@ -1,31 +1,33 @@
 {
   "name": "@holejs/wc-ripple",
   "version": "0.0.0",
-  "description": "> TODO: description",
+  "description": "Beautiful universal components made with Lit.",
   "author": "Ivan Guevara <ivanzaldivar16@gmail.com>",
   "homepage": "https://github.com/holejs/wc/tree/main/packages/components/ripple#readme",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "directories": {
-    "lib": "dist",
-    "test": "__tests__"
+    "lib": "dist"
   },
   "files": [
-    "dist"
+    "dist/**",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/holejs/wc.git"
   },
   "scripts": {
-    "test": "node ./__tests__/ripple.test.js",
     "build": "vite build"
   },
   "bugs": {
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
+    "@holejs/utils": "file:../../utils",
     "lit": "3.1.0"
   }
 }

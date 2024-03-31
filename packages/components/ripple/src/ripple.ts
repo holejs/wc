@@ -1,9 +1,9 @@
-import { LitElement, PropertyValueMap, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
+import { LitElement, PropertyValueMap, html } from 'lit'
 
 import styles from './ripple.css'
 
-import { isValidColorFormat } from './utils.js'
+import { isValidColorFormat } from '@holejs/utils'
 
 const COMPONENT_NAME = 'hwc-ripple'
 
