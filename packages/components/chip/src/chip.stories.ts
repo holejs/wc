@@ -3,10 +3,8 @@ import type { StoryObj } from '@storybook/web-components'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
+import type { HWCChip } from './chip.js'
 import './chip.js'
-
-// eslint-disable-next-line no-undef
-type HWCChip = HTMLElementTagNameMap['hwc-chip']
 
 type Story = StoryObj<HWCChip>;
 

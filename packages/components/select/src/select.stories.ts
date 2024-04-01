@@ -5,11 +5,9 @@ import { html } from 'lit'
 
 import '@holejs/wc-button'
 
+import type { HWCSelect } from './select.js'
 import './select-option.js'
 import './select.js'
-
-// eslint-disable-next-line no-undef
-type HWCSelect = HTMLElementTagNameMap['hwc-select']
 
 type Story = StoryObj<HWCSelect>;
 

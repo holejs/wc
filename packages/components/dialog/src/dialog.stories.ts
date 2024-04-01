@@ -5,10 +5,9 @@ import { html } from 'lit'
 
 import '@holejs/wc-text-field'
 import '@holejs/wc-select'
-import './dialog.js'
 
-// eslint-disable-next-line no-undef
-type HWCDialog = HTMLElementTagNameMap['hwc-dialog']
+import type { HWCDialog } from './dialog.js'
+import './dialog.js'
 
 type Story = StoryObj<HWCDialog>;
 

@@ -5,10 +5,9 @@ import { when } from 'lit/directives/when.js'
 import { html } from 'lit'
 
 import '@holejs/wc-ripple'
-import './button.js'
 
-// eslint-disable-next-line no-undef
-type HWCButton = HTMLElementTagNameMap['hwc-button']
+import type { HWCButton } from './button.js'
+import './button.js'
 
 type Story = StoryObj<HWCButton>;
 

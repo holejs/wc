@@ -4,10 +4,9 @@ import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import '@holejs/wc-button'
-import './checkbox.js'
 
-// eslint-disable-next-line no-undef
-type HWCCheckbox = HTMLElementTagNameMap['hwc-checkbox']
+import type { HWCCheckbox } from './checkbox.js'
+import './checkbox.js'
 
 type Story = StoryObj<HWCCheckbox>;
 

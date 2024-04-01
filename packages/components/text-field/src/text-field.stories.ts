@@ -3,10 +3,8 @@ import type { StoryObj } from '@storybook/web-components'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
+import type { HWCTextField } from './text-field.js'
 import './text-field.js'
-
-// eslint-disable-next-line no-undef
-type HWCTextField = HTMLElementTagNameMap['hwc-text-field']
 
 type Story = StoryObj<HWCTextField>;
 

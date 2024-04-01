@@ -5,10 +5,9 @@ import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import '@holejs/wc-button'
-import './radio.js'
 
-// eslint-disable-next-line no-undef
-type HWCRadio = HTMLElementTagNameMap['hwc-radio']
+import type { HWCRadio } from './radio.js'
+import './radio.js'
 
 type Story = StoryObj<HWCRadio>;
 
