@@ -5,7 +5,7 @@ import { html } from 'lit'
 
 import U2Image from './fixtures/u2.png'
 
-import '@holejs/wc-button'
+import '@holejs-ui/button'
 import './card.js'
 
 // eslint-disable-next-line no-undef

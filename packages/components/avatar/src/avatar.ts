@@ -4,7 +4,7 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './avatar.css'
 
-import { isValidColorFormat, randomHexColor } from '@holejs/utils'
+import { isValidColorFormat, randomHexColor } from '@holejs-ui/utils'
 
 const COMPONENT_NAME = 'hwc-avatar'
 

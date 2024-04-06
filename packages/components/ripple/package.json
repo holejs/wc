@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/wc-ripple",
+  "name": "@holejs-ui/ripple",
   "version": "0.0.0",
   "description": "Beautiful universal components made with Lit.",
   "author": "Ivan Guevara <ivanzaldivar16@gmail.com>",
@@ -27,7 +27,7 @@
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
-    "@holejs/utils": "file:../../utils",
+    "@holejs-ui/utils": "file:../../utils",
     "lit": "3.1.0"
   }
 }

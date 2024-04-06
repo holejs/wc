@@ -1,11 +1,11 @@
-# @holejs/wc-dialog
+# @holejs-ui/dialog
 
 The `HWCDialog` component is used to display a modal dialog box. It is used to show a message or get confirmation from the user.
 
 ## Installation
 
 ```bash
-npm install @holejs/wc-dialog
+npm install @holejs-ui/dialog
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ npm install @holejs/wc-dialog
 **Javascript/Typescript**
 
 ```ts
-import '@holejs/wc-dialog'
+import '@holejs-ui/dialog'
 
 // Get elements.
 const $dialog = document.querySelector('hwc-dialog')

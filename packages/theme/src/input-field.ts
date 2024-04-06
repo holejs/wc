@@ -1,7 +1,7 @@
 import { property, query, state } from 'lit/decorators.js'
 import { LitElement, PropertyValueMap } from 'lit'
 
-import { parseRules } from '@holejs/utils'
+import { parseRules } from '@holejs-ui/utils'
 
 import {
   ValidationContext,

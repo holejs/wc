@@ -3,7 +3,7 @@ import { PropertyValueMap, LitElement, html, nothing } from 'lit'
 
 import styles from './button.css'
 
-import { isValidColorFormat } from '@holejs/utils'
+import { isValidColorFormat } from '@holejs-ui/utils'
 
 const COMPONENT_NAME = 'hwc-button'
 

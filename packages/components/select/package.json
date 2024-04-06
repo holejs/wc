@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/wc-select",
+  "name": "@holejs-ui/select",
   "version": "0.0.0",
   "description": "Beautiful universal components made with Lit.",
   "keywords": [],
@@ -31,11 +31,11 @@
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
-    "@holejs/theme": "file:../../theme",
-    "@holejs/utils": "file:../../utils",
+    "@holejs-ui/theme": "file:../../theme",
+    "@holejs-ui/utils": "file:../../utils",
     "lit": "3.1.0"
   },
   "devDependencies": {
-    "@holejs/wc-button": "file:../button"
+    "@holejs-ui/button": "file:../button"
   }
 }

@@ -3,8 +3,8 @@ import { userEvent, within } from '@storybook/testing-library'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
-import '@holejs/wc-text-field'
-import '@holejs/wc-select'
+import '@holejs-ui/text-field'
+import '@holejs-ui/select'
 
 import type { HWCDialog } from './dialog.js'
 import './dialog.js'

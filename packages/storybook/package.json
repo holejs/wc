@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/storybook",
+  "name": "@holejs-ui/storybook",
   "version": "0.0.0",
   "private": true,
   "description": "Storybook for Web Components with Vite and Lit",

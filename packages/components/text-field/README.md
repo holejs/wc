@@ -1,12 +1,12 @@
-# @holejs/wc-text-field
+# @holejs-ui/text-field
 
-The `<hwc-text-field>` component is a highly customizable and reactive text input field, designed to make it easy to create interactive forms. It allows developers to create text fields to capture data such as **names**, **emails** and **passwords**, applying validation rules to ensure that the data entered is valid and secure.
+The `HWCTextField` component is a highly customizable and reactive text input field, designed to make it easy to create interactive forms. It allows developers to create text fields to capture data such as **names**, **emails** and **passwords**, applying validation rules to ensure that the data entered is valid and secure.
 
 This component is useful in any web application that requires the collection of user information through forms and seeks to simplify the validation process and error handling.
 
 ## Table of contents
 
-- [@holejs/wc-text-field](#holejswc-text-field)
+- [@holejs-ui/text-field](#holejs-uitext-field)
   - [Table of contents](#table-of-contents)
   - [Installation](#installation)
   - [Basic usage](#basic-usage)
@@ -31,7 +31,7 @@ This component is useful in any web application that requires the collection of 
 ## Installation
 
 ```bash
-npm install @holejs/wc-text-field
+npm install @holejs-ui/text-field
 ```
 
 ## Basic usage
@@ -39,7 +39,7 @@ npm install @holejs/wc-text-field
 **Typescript/Javascript**
 
 ```ts
-import '@holejs/wc-text-field'
+import '@holejs-ui/text-field'
 ```
 
 **HTML**

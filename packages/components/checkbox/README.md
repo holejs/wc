@@ -1,11 +1,11 @@
-# @holejs/wc-checkbox
+# @holejs-ui/checkbox
 
 `HWCCheckbox` component is a custom component for creating stylized checkboxes. This component offers a series of properties that allow you to customize its appearance and behavior to suit different use cases.
 
 ## Installation
 
 ```bash
-npm install @holejs/wc-checkbox
+npm install @holejs-ui/checkbox
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ To use the `HWCCheckbox` component, simply include tag in your HTML. You can adj
 **Javacript/Typescript**
 
 ```ts
-import '@holejs/wc-checkbox'
+import '@holejs-ui/checkbox'
 ```
 
 **HTML**

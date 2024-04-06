@@ -3,7 +3,7 @@ import { LitElement, PropertyValueMap, html } from 'lit'
 
 import styles from './ripple.css'
 
-import { isValidColorFormat } from '@holejs/utils'
+import { isValidColorFormat } from '@holejs-ui/utils'
 
 const COMPONENT_NAME = 'hwc-ripple'
 

@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/wc-button",
+  "name": "@holejs-ui/button",
   "version": "0.0.0",
   "description": "Beautiful universal components made with Lit.",
   "author": {
@@ -30,10 +30,10 @@
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
-    "@holejs/utils": "file:../../utils",
+    "@holejs-ui/utils": "file:../../utils",
     "lit": "3.1.0"
   },
   "devDependencies": {
-    "@holejs/wc-ripple": "file:../ripple"
+    "@holejs-ui/ripple": "file:../ripple"
   }
 }

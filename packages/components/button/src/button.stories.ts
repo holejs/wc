@@ -4,7 +4,7 @@ import { expect } from '@storybook/jest'
 import { when } from 'lit/directives/when.js'
 import { html } from 'lit'
 
-import '@holejs/wc-ripple'
+import '@holejs-ui/ripple'
 
 import type { HWCButton } from './button.js'
 import './button.js'

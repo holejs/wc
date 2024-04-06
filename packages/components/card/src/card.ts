@@ -3,7 +3,7 @@ import { customElement, property, query } from 'lit/decorators.js'
 
 import styles from './card.css'
 
-import { isValidColorFormat } from '@holejs/utils'
+import { isValidColorFormat } from '@holejs-ui/utils'
 
 const COMPONENT_NAME = 'hwc-card'
 

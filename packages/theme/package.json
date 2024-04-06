@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/theme",
+  "name": "@holejs-ui/theme",
   "version": "0.0.0",
   "description": "Beautiful universal components made with Lit.",
   "author": {
@@ -30,7 +30,7 @@
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
-    "@holejs/utils": "file:../utils",
+    "@holejs-ui/utils": "file:../utils",
     "lit": "3.1.0"
   }
 }

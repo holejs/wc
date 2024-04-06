@@ -1,21 +1,21 @@
-# @holejs/wc-button
+# @holejs-ui/button
 
-The `hwc-button` component provides a simple and flexible way to create interactive buttons in your web application. Buttons are essential elements that allow users to perform actions and interact with your website or web application.
+The `HWCButton` component provides a simple and flexible way to create interactive buttons in your web application. Buttons are essential elements that allow users to perform actions and interact with your website or web application.
 
 ## Installation
 
 ```bash
-npm install @holejs/wc-button
+npm install @holejs-ui/button
 ```
 
 ## Usage
 
-To use the `hwc-button` component, you can include it in your HTML code using the following syntax:
+To use the `HWCButton` component, you can include it in your HTML code using the following syntax:
 
 **Typescript/Javascript**
 
 ```ts
-import '@holejs/wc-button';
+import '@holejs-ui/button';
 ```
 
 **HTML**

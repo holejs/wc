@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/wc-dialog",
+  "name": "@holejs-ui/dialog",
   "version": "0.0.0",
   "description": "Beautiful universal components made with Lit.",
   "keywords": [],
@@ -34,7 +34,7 @@
     "lit": "3.1.0"
   },
   "devDependencies": {
-    "@holejs/wc-text-field": "file:../text-field",
-    "@holejs/wc-select": "file:../select"
+    "@holejs-ui/text-field": "file:../text-field",
+    "@holejs-ui/select": "file:../select"
   }
 }

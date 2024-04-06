@@ -1,11 +1,11 @@
-# @holejs/wc-avatar
+# @holejs-ui/avatar
 
 `HWCAvatar` is a customizable avatar component that can be used to display user profile pictures or name initials in a web interface.
 
 ## Installation
 
 ```bash
-npm install @holejs/wc-avatar
+npm install @holejs-ui/avatar
 ```
 
 ## Basic usage
@@ -13,7 +13,7 @@ npm install @holejs/wc-avatar
 **Javascript/Typescript**
 
 ```ts
-import '@holejs/wc-avatar';
+import '@holejs-ui/avatar'
 ```
 
 **HTML**

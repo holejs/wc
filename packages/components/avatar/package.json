@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/wc-avatar",
+  "name": "@holejs-ui/avatar",
   "version": "0.0.0",
   "description": "Beautiful universal components made with Lit.",
   "keywords": [],
@@ -31,7 +31,7 @@
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
-    "@holejs/utils": "file:../../utils",
+    "@holejs-ui/utils": "file:../../utils",
     "lit": "3.1.0"
   }
 }

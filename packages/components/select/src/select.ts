@@ -7,8 +7,8 @@ import { map } from 'lit/directives/map.js'
 
 import styles from './select.css'
 
-import { isValidColorFormat, generateHash, parseRules } from '@holejs/utils'
-import { InputField, RuleHandler, RuleMethods } from '@holejs/theme'
+import { isValidColorFormat, generateHash, parseRules } from '@holejs-ui/utils'
+import { InputField, RuleHandler, RuleMethods } from '@holejs-ui/theme'
 
 import { Validations } from './constants.js'
 

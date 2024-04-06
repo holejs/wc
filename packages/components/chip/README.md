@@ -1,21 +1,21 @@
-# @holejs/wc-chip
+# @holejs-ui/chip
 
 `HWCChip` are elements known as tags or input labels, the chips are small visual representations of information or selections that allow efficient and friendly interaction with the user.
 
 ## Installation
 
 ```bash
-npm install @holejs/wc-chip
+npm install @holejs-ui/chip
 ```
 
 ## Usage
 
-To use the `HWCChip>` component, you can include it in your HTML code using the following syntax:
+To use the `HWCChip` component, you can include it in your HTML code using the following syntax:
 
 **Javascript/Typescript**
 
 ```ts
-import '@holejs/wc-chip'
+import '@holejs-ui/chip'
 ```
 
 **HTML**

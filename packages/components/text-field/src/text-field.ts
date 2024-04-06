@@ -3,10 +3,10 @@ import { when } from 'lit/directives/when.js'
 import { PropertyValueMap, html } from 'lit'
 import IMask, { InputMask } from 'imask'
 
-import { isValidColorFormat, generateHash } from '@holejs/utils'
-import { InputField } from '@holejs/theme'
+import { isValidColorFormat, generateHash } from '@holejs-ui/utils'
+import { InputField } from '@holejs-ui/theme'
 
-import '@holejs/wc-button'
+import '@holejs-ui/button'
 
 import styles from './text-field.css'
 

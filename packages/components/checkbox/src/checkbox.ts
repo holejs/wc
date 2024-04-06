@@ -4,8 +4,8 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './checkbox.css'
 
-import { isValidColorFormat, generateHash } from '@holejs/utils'
-import { InputField } from '@holejs/theme'
+import { isValidColorFormat, generateHash } from '@holejs-ui/utils'
+import { InputField } from '@holejs-ui/theme'
 
 const COMPONENT_NAME = 'hwc-checkbox'
 

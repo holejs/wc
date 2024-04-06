@@ -1,4 +1,4 @@
-# @holejs/utils
+# @holejs-ui/utils
 
 This package contains a set of utility functions that are used across the project.
 
@@ -8,7 +8,7 @@ This package contains a set of utility functions that are used across the projec
 ## Installation
 
 ```bash
-npm install @holejs/utils
+npm install @holejs-ui/utils
 ```
 
 ## License

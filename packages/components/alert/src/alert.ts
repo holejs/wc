@@ -1,11 +1,11 @@
 import { PropertyValueMap, LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
-import '@holejs/wc-button'
+import '@holejs-ui/button'
 
 import styles from './alert.css'
 
-import { isValidColorFormat } from '@holejs/utils'
+import { isValidColorFormat } from '@holejs-ui/utils'
 
 const COMPONENT_NAME = 'hwc-alert'
 

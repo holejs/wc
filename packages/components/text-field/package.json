@@ -1,5 +1,5 @@
 {
-  "name": "@holejs/wc-text-field",
+  "name": "@holejs-ui/text-field",
   "version": "0.0.0",
   "description": "Beautiful universal components made with Lit.",
   "author": {
@@ -30,9 +30,9 @@
     "url": "https://github.com/holejs/wc/issues"
   },
   "dependencies": {
-    "@holejs/utils": "file:../../utils",
-    "@holejs/wc-button": "file:../button",
-    "@holejs/theme": "file:../../theme",
+    "@holejs-ui/utils": "file:../../utils",
+    "@holejs-ui/button": "file:../button",
+    "@holejs-ui/theme": "file:../../theme",
     "imask": "7.5.0",
     "lit": "3.1.0"
   }

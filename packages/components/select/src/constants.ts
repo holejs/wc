@@ -1,4 +1,4 @@
-import { RuleMethods, RuleHandler } from '@holejs/theme'
+import { RuleMethods, RuleHandler } from '@holejs-ui/theme'
 
 const _requiredHandler: RuleHandler = async ({ el }: any) => {
   const value = el.value

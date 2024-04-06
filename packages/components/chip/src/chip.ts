@@ -4,8 +4,8 @@ import { when } from 'lit/directives/when.js'
 
 import styles from './chip.css'
 
-import { isValidColorFormat } from '@holejs/utils'
-import '@holejs/wc-button'
+import { isValidColorFormat } from '@holejs-ui/utils'
+import '@holejs-ui/button'
 
 const COMPONENT_NAME = 'hwc-chip'
 

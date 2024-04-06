@@ -1,11 +1,11 @@
-# @holejs/wc-select
+# @holejs-ui/select
 
 `HWCSelect` component is a provide a way to select an option from a list of options. Similar to the native `<select>` element. Obviously, the `HWCSelect` component incorporates more advanced options, such as validations, error messages, multiple selection, among others.
 
 ## Installation
 
 ```bash
-npm install @holejs/wc-select
+npm install @holejs-ui/select
 ```
 
 ## Basic Usage
@@ -13,18 +13,18 @@ npm install @holejs/wc-select
 **Typescript/Javascript**
 
 ```ts
-import '@holejs/wc-select';
+import '@holejs-ui/select'
 
-const $form = document.querySelector('form');
+const $form = document.querySelector('form')
 
 $form.addEventListener('submit', (event) => {
-  event.preventDefault();
+  event.preventDefault()
 
-  const formData = new FormData($form);
+  const formData = new FormData($form)
 
   // Get the value of the select.
-  console.log(formData.get('colors'));
-});
+  console.log(formData.get('colors'))
+})
 ```
 
 ```html

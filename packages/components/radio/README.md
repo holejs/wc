@@ -1,11 +1,11 @@
-# @holejs/wc-radio
+# @holejs-ui/radio
 
 `HWCRadio` component is a custom component for creating stylized radio buttons. This component offers a series of properties that allow you to customize its appearance and behavior to suit different use cases.
 
 ## Installation
 
 ```bash
-npm install @holejs/wc-radio
+npm install @holejs-ui/radio
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ To use the `HWCRadio`, simply include tag in your HTML. You can adjust the prope
 **Javacript/Typescript**
 
 ```ts
-import '@holejs/wc-radio';
+import '@holejs-ui/radio'
 ```
 
 **HTML**

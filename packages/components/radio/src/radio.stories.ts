@@ -4,7 +4,7 @@ import type { StoryObj } from '@storybook/web-components'
 import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
-import '@holejs/wc-button'
+import '@holejs-ui/button'
 
 import type { HWCRadio } from './radio.js'
 import './radio.js'

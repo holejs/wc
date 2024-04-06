@@ -1,21 +1,21 @@
-# @holejs/wc-alert
+# @holejs-ui/alert
 
-The `hwc-alert` component is to provide a simple way to display **warning messages**, **success messages**, **error messages**, or **relevant information** to the user, without having to worry about the complexity of the underlying logic or visual customization. With `hwc-alert`, developers can create compelling visual notifications quickly and efficiently.
+The `HWCAlert` component is to provide a simple way to display **warning messages**, **success messages**, **error messages**, or **relevant information** to the user, without having to worry about the complexity of the underlying logic or visual customization. With `HWCAlert`, developers can create compelling visual notifications quickly and efficiently.
 
 ## Installation
 
 ```bash
-npm i @holejs/wc-alert
+npm i @holejs-ui/alert
 ```
 
 ## Usage
 
-To use the `hwc-alert` component, you can include it in your HTML code using the following syntax:
+To use the `HWCAlert` component, you can include it in your HTML code using the following syntax:
 
 **Typescript/Javascript**
 
 ```ts
-import '@holejs/wc-alert'
+import '@holejs-ui/alert'
 ```
 
 **HTML**
