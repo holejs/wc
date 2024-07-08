@@ -1,9 +1,8 @@
 import type { StoryObj } from '@storybook/web-components'
-import { within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest'
+import { expect, within } from '@storybook/test'
 import { html } from 'lit'
 
-import { HWCAvatar } from './avatar.js'
+import type { HWCAvatar } from './avatar.js'
 import './avatar.js'
 
 type Story = StoryObj<HWCAvatar>;

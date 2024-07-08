@@ -1,6 +1,5 @@
-import { userEvent, within } from '@storybook/testing-library'
+import { userEvent, within, expect } from '@storybook/test'
 import type { StoryObj } from '@storybook/web-components'
-import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import './alert.js'

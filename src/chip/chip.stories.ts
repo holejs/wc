@@ -1,6 +1,5 @@
-import { userEvent, within } from '@storybook/testing-library'
+import { expect, userEvent, within } from '@storybook/test'
 import type { StoryObj } from '@storybook/web-components'
-import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import './chip.js'

@@ -1,7 +1,6 @@
 import type { StoryObj } from '@storybook/web-components'
-import { within } from '@storybook/testing-library'
+import { expect, within } from '@storybook/test'
 import { when } from 'lit/directives/when.js'
-import { expect } from '@storybook/jest'
 import { html } from 'lit'
 
 import '../ripple/ripple.js'
