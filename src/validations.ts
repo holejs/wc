@@ -105,7 +105,9 @@ export const pattern: RuleHandler = async ({ input, el }: ValidationContext) => 
   input.validationMessage ||
   'The value does not comply with the valid format.'
 
-  const { patternMismatch } = input.validity || {}
+  // const { patternMismatch } = input.validity || {}
+  const regex = new RegExp((input as HTMLInputElement).pattern)
+  const patternMismatch = !regex.test((el as any).value)
 
   if (patternMismatch) return { status: 'invalid', message }
 

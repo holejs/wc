@@ -1,7 +1,7 @@
 import { customElement, property, query } from 'lit/decorators.js'
+import IMask, { FactoryArg, InputMask } from 'imask'
 import { when } from 'lit/directives/when.js'
 import { PropertyValueMap, html } from 'lit'
-import IMask, { InputMask } from 'imask'
 
 import styles from './text-field.css'
 
@@ -9,6 +9,7 @@ import { TextFieldError } from '../error.js'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
+import { delayFn } from '../utils/delay.js'
 
 import { InputField } from '../internals/input-field.js'
 
@@ -86,7 +87,7 @@ export class HWCTextField extends InputField {
 
   @property({ type: Boolean }) clearable = false
 
-  @property({ type: String }) mask!: string
+  @property({ type: String }) mask!: string | FactoryArg
 
   private readonly _uniqueId = `text-field-${generateHash()}`
 
@@ -95,17 +96,8 @@ export class HWCTextField extends InputField {
   protected firstUpdated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(changedProperties)
 
-    if (this.$input && this.mask) {
-      this._configureMask()
-    }
-
     this.$control.addEventListener('click', this._onFocus.bind(this))
-
     this.form?.addEventListener('reset', this.reset.bind(this))
-
-    // The reason for adding the event listener this way and not from the template of LIT (@input)
-    // is because whe configured the mask a desynchronization of the value occurs.
-    this.$input.addEventListener('input', this._onInput.bind(this))
 
     // The elements found in the slot are removed to avoid rendering unnecessary elements that
     // affect the design of the element.
@@ -128,13 +120,16 @@ export class HWCTextField extends InputField {
     }
 
     if (changedProperties.has('value')) {
-      this._setValue(this.value)
-
+      this.internals.setFormValue(this.value ?? null)
       this.triggerValidation()
     }
 
     if (changedProperties.has('label')) {
       this.setAttribute('aria-label', this.label || '')
+    }
+
+    if (changedProperties.has('mask')) {
+      this._configureMask()
     }
   }
 
@@ -143,10 +138,8 @@ export class HWCTextField extends InputField {
 
     // Remove event listeners
     this.$control.removeEventListener('click', this._onFocus.bind(this))
-
     this.form?.removeEventListener('reset', this.reset.bind(this))
-
-    this.$input.removeEventListener('input', this._onInput.bind(this))
+    this._imask?.off('accept', this._onInput)
   }
 
   /**
@@ -154,34 +147,38 @@ export class HWCTextField extends InputField {
    */
   reset (): void {
     this.touched = false
-
     this.dirty = false
 
-    this._setValue('')
+    this.value = ''
+    ;(this.$input as HTMLInputElement).value = ''
 
     this._imask?.updateValue()
-
     this.setValidity(null)
-
     this.triggerValidation()
   }
 
   private _configureMask (): void {
-    this._imask = IMask(this.$input, { mask: this.mask })
+    if (!this.$input && !this._imask) {
+      return
+    }
+
+    const options = typeof this.mask === 'string'
+      ? { mask: this.mask }
+      : this.mask
+
+    this._imask = IMask(this.$input, options)
+
+    this._imask.on('accept', this._onInput)
+
+    delayFn().then(() => {
+      this.value = this._imask?.value || ''
+    })
   }
 
   private _hasElementSlot (query: string): boolean {
     const $slot = this.shadowRoot?.querySelector(query) as HTMLSlotElement | null
 
     return !($slot && $slot.assignedNodes().length > 0)
-  }
-
-  private _setValue (value: string): void {
-    this.value = value;
-
-    (this.$input as HTMLInputElement).value = value
-
-    this.internals.setFormValue(value)
   }
 
   /**
@@ -202,15 +199,14 @@ export class HWCTextField extends InputField {
    * @private
    * @param {InputEvent} ev - The input event triggered.
    */
-  private async _onInput (ev: Event): Promise<void> {
-    const $input = ev.target as HTMLInputElement
-
-    this._setValue($input.value)
-
+  private _onInput = (ev?: Event): void => {
     this.dirty = true
 
-    this.triggerValidation()
+    this._imask
+      ? this.value = this._imask.value
+      : this.value = (ev?.target as HTMLInputElement).value
 
+    this.requestUpdate('value')
     this.dispatchEvent(new CustomEvent('change'))
   }
 
@@ -232,7 +228,7 @@ export class HWCTextField extends InputField {
   }
 
   private _onHandleClearable (): void {
-    this._setValue('')
+    this.value = ''
 
     this.dispatchEvent(new CustomEvent('change'))
   }
@@ -284,6 +280,7 @@ export class HWCTextField extends InputField {
                 name=${this.name}
                 @keydown=${this._onKeydown}
                 @blur=${this._onBlur}
+                @input=${this._onInput}
               >
 
               <!-- Append inner -->
