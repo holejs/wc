@@ -20,11 +20,14 @@ declare global {
 export class HWCSelectOption extends LitElement {
   static styles = css`${unsafeCSS(styles)}`
 
-  @property({ type: String }) value!: string
+  @property()
+    value = ''
 
-  @property({ type: Boolean, reflect: true }) selected = false
+  @property({ type: Boolean, reflect: true })
+    selected = false
 
-  @property({ type: String, reflect: true }) role = 'option'
+  @property({ reflect: true })
+    role = 'option'
 
   protected firstUpdated (): void {
     if (this.selected) {
