@@ -55,39 +55,132 @@ const _validateType = (value: string | null) => {
 }
 
 @customElement(COMPONENT_NAME)
-export class HWCTextField extends InputField {
+export class HWCTextField extends InputField<string> {
   static styles = styles
 
-  @query('.text-field__control') $control!: HTMLDivElement
+  @query('.text-field__control')
+  private $control!: HTMLDivElement
 
-  @query('.prepend-inner__control') $prependInner!: HTMLDivElement
+  @query('.prepend-inner__control')
+  private $prependInner!: HTMLDivElement
 
-  @query('.append-inner__control') $appendInner!: HTMLDivElement
+  @query('.append-inner__control')
+  private $appendInner!: HTMLDivElement
 
-  @property({ type: String, reflect: true }) appearance: TextFieldAppearance = 'outlined'
+  /**
+   * The appearance of the text field.
+   * The values available are `underline` and `outlined`.
+   *
+   * @default 'outlined'
+   */
+  @property({ reflect: true })
+    appearance: TextFieldAppearance = 'outlined'
 
-  @property({ type: String, converter: _validateType, reflect: true })
+  /**
+   * The type of the text field.
+   * The values available are `text`, `email`, `password`, `number`, `search`, `tel`, `url`, `date`, `time`, `datetime-local`, `month`, `hidden`, `datetime`.
+   *
+   * @default 'text'
+   */
+  @property({ converter: _validateType, reflect: true })
     type: TextFieldType = 'text'
 
-  @property({ type: String }) value = ''
+  @property()
+    value = ''
 
-  @property({ type: String }) autocomplete: 'on' | 'off' = 'on'
+  /**
+   * The autocomplete attribute of the text field, indicating whether
+   * the input can be automatically completed by the browser.
+   * The values available are `on` and `off`.
+   *
+   * @default 'on'
+   */
+  @property()
+    autocomplete: 'on' | 'off' = 'on'
 
-  @property({ type: String }) label!: string
+  /**
+   * The label of the text field.
+   */
+  @property()
+    label = ''
 
-  @property({ type: Boolean }) autofocus!: boolean
+  /**
+   * Indicates whether the text field is focused when the page is loaded.
+   *
+   * @default false
+   */
+  @property({ type: Boolean })
+    autofocus = false
 
-  @property({ type: String }) placeholder!: string
+  /**
+   * The placeholder text displayed when the text field is empty.
+   */
+  @property()
+    placeholder = ''
 
-  @property({ type: String, reflect: true }) role = 'textbox'
+  @property({ reflect: true })
+    role = 'textbox'
 
-  @property({ type: String }) color!: string
+  /**
+   * The color of the text field. You can set the color using different formats:
+   *
+   * - HEX: `#ff0000`
+   * - RGB: `rgb(255, 0, 0)`
+   * - RGBA: `rgba(255, 0, 0, 0.5)`
+   * - HSL: `hsl(0, 100%, 50%)`
+   * - Palette: For more information, see the [Color Palette](https://github.com/holejs/wc/blob/main/src/assets/colors.css)
+   *
+   * @example
+   * ```html
+   * <hwc-text-field color="#ff0000"></hwc-text-field>
+   *
+   * <hwc-text-field color="rgb(255, 0, 0)"></hwc-text-field>
+   *
+   * <hwc-text-field color="rgba(255, 0, 0, 0.5)"></hwc-text-field>
+   *
+   * <hwc-text-field color="hsl(0, 100%, 50%)"></hwc-text-field>
+   *
+   * <hwc-text-field color="blue-darken-2"></hwc-text-field>
+   * ```
+   */
+  @property()
+    color = ''
 
-  @property({ type: String }) hint!: string
+  /**
+   * The hint text displayed below the text field to provide additional information.
+   */
+  @property()
+    hint = ''
 
-  @property({ type: Boolean }) clearable = false
+  /**
+   * Indicates whether the text field is clearable.
+   * When the text field is clearable, a button is displayed to clear the text field.
+   *
+   * @default false
+   */
+  @property({ type: Boolean })
+    clearable = false
 
-  @property({ type: String }) mask!: string | FactoryArg
+  /**
+   * The mask of the text field. The mask are supported by the [IMask](https://imask.js.org/) library.
+   *
+   * @example
+   * ```html
+   * <hwc-text-field mask="00/00/0000"></hwc-text-field>
+   * ```
+   *
+   * Or you can use the object format:
+   *
+   * ```js
+   * const $textField = document.querySelector('hwc-text-field')
+   *
+   * $textField.mask = {
+   *   mask: '00/00/0000'
+   * }
+   * ```
+   */
+  @property()
+    mask!: string | FactoryArg
 
   private readonly _uniqueId = `text-field-${generateHash()}`
 
@@ -158,7 +251,7 @@ export class HWCTextField extends InputField {
   }
 
   private _configureMask (): void {
-    if (!this.$input && !this._imask) {
+    if (!this.$input || !this.mask) {
       return
     }
 

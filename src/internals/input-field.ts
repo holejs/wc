@@ -29,25 +29,75 @@ import {
  * }
  * ```
  */
-export class InputField extends LitElement {
+export abstract class InputField<T> extends LitElement {
   @query('input') protected $input!: HTMLElement
 
+  /**
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals
+   */
   protected readonly internals = this.attachInternals()
 
-  // More information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals#examples
+  /**
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals
+   */
   static formAssociated = true
 
-  @property({ type: String }) name!: string
+  /**
+   * The name of the input field.
+   */
+  @property()
+    name = ''
 
-  @property({ type: Boolean }) readonly = false
+  /**
+   * Indicates whether the input field is read-only.
+   */
+  @property({ type: Boolean })
+    readonly = false
 
-  @property({ type: Boolean }) disabled = false
+  /**
+   * Indicates whether the input field is disabled.
+   */
+  @property({ type: Boolean })
+    disabled = false
 
-  @property({ type: String }) rules!: string
+  /**
+   * The rules or validations applied to the input field.
+   * The values available are:
+   *
+   * - `required`: The input field is required.
+   * - `minlength`: The minimum length of the input field.
+   * - `maxlength`: The maximum length of the input field.
+   * - `min`: The minimum value of the input field.
+   * - `max`: The maximum value of the input field.
+   * - `email`: The input field must be an email. When using this rule, the `type` attribute must be set to `email`.
+   * - `pattern`: The pattern of the input field.
+   *
+   * **NOTE**: The rules are separated by a pipe character `|`. It's important
+   * the `pattern` must be defined last, otherwise it will not work correctly.
+   *
+   * @example
+   * ```html
+   * <hwc-text-field rules="required|minlength:3|maxlength:15"></hwc-text-field>
+   *
+   * <hwc-text-field type="email" rules="required|email"></hwc-text-field>
+   *
+   * <hwc-text-field rules="required|pattern:^[a-zA-Z0-9]{3,15}$"></hwc-text-field>
+   * ```
+   */
+  @property()
+    rules = ''
 
-  @state() dirty = false
+  /**
+   * Indicates whether the input field has been modified.
+   */
+  @property({ attribute: false })
+    dirty = false
 
-  @state() touched = false
+  /**
+   * Indicates whether the input field has been touched.
+   */
+  @property({ attribute: false })
+    touched = false
 
   @state()
   private _validationMessage: string | null = null
@@ -238,4 +288,15 @@ export class InputField extends LitElement {
 
     this.setValidity(feedback?.message || null)
   }
+
+  /**
+   * Value of the input field.
+   */
+  abstract value: T
+
+  /**
+   * The ARIA role of the input field.
+   * For more information: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles
+   */
+  abstract role: string
 }

@@ -32,27 +32,68 @@ interface Option {
 }
 
 @customElement(COMPONENT_NAME)
-export class HWCSelect extends InputField {
+export class HWCSelect extends InputField<string | string[] | null> {
   static styles = styles
 
-  @query('button') protected $input!: HTMLButtonElement
+  @query('button')
+  protected $input!: HTMLButtonElement
 
-  @property({ type: String }) label!: string
+  /**
+   * The label of the select.
+   */
+  @property()
+    label = ''
 
-  @property({ type: String }) hint!: string
+  /**
+   * The hint text displayed below the select to provide additional information.
+   */
+  @property()
+    hint = ''
 
-  @property({ type: String }) color!: string
+  /**
+   * The color of the select. You can set the color using different formats:
+   *
+   * - HEX: `#ff0000`
+   * - RGB: `rgb(255, 0, 0)`
+   * - RGBA: `rgba(255, 0, 0, 0.5)`
+   * - HSL: `hsl(0, 100%, 50%)`
+   * - Palette: For more information, see the [Color Palette](https://github.com/holejs/wc/blob/main/src/assets/colors.css)
+   *
+   * @example
+   * ```html
+   * <hwc-select color="#ff0000"></hwc-select>
+   *
+   * <hwc-select color="rgb(255, 0, 0)"></hwc-select>
+   *
+   * <hwc-select color="rgba(255, 0, 0, 0.5)"></hwc-select>
+   *
+   * <hwc-select color="hsl(0, 100%, 50%)"></hwc-select>
+   *
+   * <hwc-select color="blue-darken-2"></hwc-select>
+   * ```
+   */
+  @property()
+    color = ''
 
-  @property({ type: Boolean }) multiple = false
+  /**
+   * Indicates whether the select is disabled or not.
+   *
+   * @default false
+   */
+  @property({ type: Boolean })
+    multiple = false
 
-  @property({ type: String, reflect: true }) role = 'combobox'
+  @property({ reflect: true })
+    role = 'combobox'
 
-  @property({ type: String, reflect: true, attribute: 'aria-haspopup' })
+  @property({ reflect: true, attribute: 'aria-haspopup' })
     ariaHasPopup = 'listbox'
 
-  @property({ attribute: false }) options: Option[] = []
+  @property({ attribute: false })
+  private options: Option[] = []
 
-  @property({ type: Boolean, attribute: false }) expanded = false
+  @property({ type: Boolean, attribute: false })
+  private expanded = false
 
   private _uniqueId = `select-${generateHash()}`
 

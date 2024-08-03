@@ -20,16 +20,47 @@ declare global {
 }
 
 @customElement(COMPONENT_NAME)
-export class HWCRadio extends InputField {
+export class HWCRadio extends InputField<string> {
   static styles = styles
 
-  @property({ type: String }) value = 'on'
+  @property()
+    value = 'on'
 
-  @property({ type: String }) color!: string
+  /**
+   * The color of the radio. You can set the color using different formats:
+   *
+   * - HEX: `#ff0000`
+   * - RGB: `rgb(255, 0, 0)`
+   * - RGBA: `rgba(255, 0, 0, 0.5)`
+   * - HSL: `hsl(0, 100%, 50%)`
+   * - Palette: For more information, see the [Color Palette](https://github.com/holejs/wc/blob/main/src/assets/colors.css)
+   *
+   * @example
+   * ```html
+   * <hwc-radio color="#ff0000"></hwc-radio>
+   *
+   * <hwc-radio color="rgb(255, 0, 0)"></hwc-radio>
+   *
+   * <hwc-radio color="rgba(255, 0, 0, 0.5)"></hwc-radio>
+   *
+   * <hwc-radio color="hsl(0, 100%, 50%)"></hwc-radio>
+   *
+   * <hwc-radio color="blue-darken-2"></hwc-radio>
+   * ```
+   */
+  @property()
+    color = ''
 
-  @property({ type: String, reflect: true }) role = 'radio'
+  @property({ reflect: true })
+    role = 'radio'
 
-  @property({ type: Boolean, reflect: true }) checked = false
+  /**
+   * Indicates whether the radio is checked or not.
+   *
+   * @default false
+   */
+  @property({ type: Boolean, reflect: true })
+    checked = false
 
   @state() private _uniqueId = `radio-${generateHash()}`
 

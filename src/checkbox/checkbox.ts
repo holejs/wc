@@ -19,18 +19,47 @@ declare global {
 }
 
 @customElement(COMPONENT_NAME)
-export class HWCCheckbox extends InputField {
+export class HWCCheckbox extends InputField<string> {
   static styles = styles
 
-  @property({ type: String }) color!: string
+  /**
+   * The color of the checkbox. You can set the color using different formats:
+   *
+   * - HEX: `#ff0000`
+   * - RGB: `rgb(255, 0, 0)`
+   * - RGBA: `rgba(255, 0, 0, 0.5)`
+   * - HSL: `hsl(0, 100%, 50%)`
+   * - Palette: For more information, see the [Color Palette](https://github.com/holejs/wc/blob/main/src/assets/colors.css)
+   *
+   * @example
+   * ```html
+   * <hwc-checkbox color="#ff0000"></hwc-checkbox>
+   *
+   * <hwc-checkbox color="rgb(255, 0, 0)"></hwc-checkbox>
+   *
+   * <hwc-checkbox color="rgba(255, 0, 0, 0.5)"></hwc-checkbox>
+   *
+   * <hwc-checkbox color="hsl(0, 100%, 50%)"></hwc-checkbox>
+   *
+   * <hwc-checkbox color="blue-darken-2"></hwc-checkbox>
+   * ```
+   */
+  @property()
+    color = ''
 
-  @property({ type: String }) value: string = 'on'
+  @property()
+    value = 'on'
 
-  @property({ type: String, reflect: true }) role = 'checkbox'
+  @property({ reflect: true })
+    role = 'checkbox'
 
-  @property({ type: Boolean, reflect: true }) checked = false
-
-  @property({ type: Boolean }) disabled = false
+  /**
+   * Indicates whether the checkbox is checked or not.
+   *
+   * @default false
+   */
+  @property({ type: Boolean, reflect: true })
+    checked = false
 
   private readonly _uniqueId = `checkbox-${generateHash()}`
 
