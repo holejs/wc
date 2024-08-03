@@ -101,9 +101,9 @@ export class HWCSelect extends InputField<string | string[] | null> {
     super.connectedCallback()
 
     // Initialize the event listeners.
-    this.form?.addEventListener('reset', this.reset.bind(this))
+    this.form?.addEventListener('reset', this.reset)
 
-    document.addEventListener('click', this._handleDocumentClick.bind(this))
+    document.addEventListener('click', this._handleDocumentClick)
 
     parseRules(this.rules).forEach(({ key }) => {
       // Remove the default rules.
@@ -149,9 +149,9 @@ export class HWCSelect extends InputField<string | string[] | null> {
     super.disconnectedCallback()
 
     // Remove the event listeners.
-    this.form?.removeEventListener('reset', this.reset.bind(this))
+    this.form?.removeEventListener('reset', this.reset)
 
-    document.removeEventListener('click', this._handleDocumentClick.bind(this))
+    document.removeEventListener('click', this._handleDocumentClick)
   }
 
   get value (): string | string[] | null {
@@ -218,10 +218,7 @@ export class HWCSelect extends InputField<string | string[] | null> {
     this.requestUpdate('expanded')
   }
 
-  /**
-   * Reset the select.
-   */
-  reset (): void {
+  reset = (): void => {
     this.dirty = false
     this.touched = false
     this.options = []
@@ -236,7 +233,7 @@ export class HWCSelect extends InputField<string | string[] | null> {
     return this.querySelectorAll('hwc-select-option')
   }
 
-  private _handleDocumentClick (ev: Event): void {
+  private _handleDocumentClick = (ev: Event): void => {
     const isClickInside = this.contains(ev.target as Node)
 
     if (!isClickInside) this.close()

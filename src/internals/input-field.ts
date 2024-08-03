@@ -30,7 +30,8 @@ import {
  * ```
  */
 export abstract class InputField<T> extends LitElement {
-  @query('input') protected $input!: HTMLElement
+  @query('input')
+  protected $input!: HTMLElement
 
   /**
    * For more information: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/attachInternals
@@ -299,4 +300,9 @@ export abstract class InputField<T> extends LitElement {
    * For more information: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles
    */
   abstract role: string
+
+  /**
+   * Reset the state of the input field.
+   */
+  abstract reset(): void
 }

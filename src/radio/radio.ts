@@ -62,7 +62,8 @@ export class HWCRadio extends InputField<string> {
   @property({ type: Boolean, reflect: true })
     checked = false
 
-  @state() private _uniqueId = `radio-${generateHash()}`
+  @state()
+  private _uniqueId = `radio-${generateHash()}`
 
   private _root: ParentNode | null = null
 
@@ -70,8 +71,7 @@ export class HWCRadio extends InputField<string> {
     super.connectedCallback()
 
     this.addEventListener('focusout', this._handleFocusout)
-
-    this.form?.addEventListener('reset', this.reset.bind(this))
+    this.form?.addEventListener('reset', this.reset)
 
     this._root = this.getRootNode() as ParentNode
   }
@@ -80,8 +80,7 @@ export class HWCRadio extends InputField<string> {
     super.disconnectedCallback()
 
     this.removeEventListener('focusout', this._handleFocusout)
-
-    this.form?.removeEventListener('reset', this.reset.bind(this))
+    this.form?.removeEventListener('reset', this.reset)
   }
 
   protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -104,16 +103,12 @@ export class HWCRadio extends InputField<string> {
     }
   }
 
-  /**
-   * Reset the radio.
-   */
-  reset (): void {
+  reset = (): void => {
     this.checked = false
     this.dirty = false
     this.touched = false
 
     this.setValidity(null)
-
     setTimeout(() => this.triggerValidation(), 0)
   }
 
@@ -173,7 +168,7 @@ export class HWCRadio extends InputField<string> {
     this.dispatchEvent(new Event('change'))
   }
 
-  private _handleFocusout (): void {
+  private _handleFocusout = (): void => {
     this.touched = true
 
     this.triggerValidation()

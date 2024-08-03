@@ -189,8 +189,8 @@ export class HWCTextField extends InputField<string> {
   protected firstUpdated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(changedProperties)
 
-    this.$control.addEventListener('click', this._onFocus.bind(this))
-    this.form?.addEventListener('reset', this.reset.bind(this))
+    this.$control.addEventListener('click', this._onFocus)
+    this.form?.addEventListener('reset', this.reset)
 
     // The elements found in the slot are removed to avoid rendering unnecessary elements that
     // affect the design of the element.
@@ -230,15 +230,12 @@ export class HWCTextField extends InputField<string> {
     super.disconnectedCallback()
 
     // Remove event listeners
-    this.$control.removeEventListener('click', this._onFocus.bind(this))
-    this.form?.removeEventListener('reset', this.reset.bind(this))
+    this.$control.removeEventListener('click', this._onFocus)
+    this.form?.removeEventListener('reset', this.reset)
     this._imask?.off('accept', this._onInput)
   }
 
-  /**
-   * Reset the text field
-   */
-  reset (): void {
+  reset = (): void => {
     this.touched = false
     this.dirty = false
 
@@ -326,9 +323,7 @@ export class HWCTextField extends InputField<string> {
     this.dispatchEvent(new CustomEvent('change'))
   }
 
-  private _onFocus (): void {
-    this.$input.focus()
-  }
+  private _onFocus = (): void => this.$input.focus()
 
   protected render (): unknown {
     const isError = this.hasError()
