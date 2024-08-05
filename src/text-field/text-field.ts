@@ -1,7 +1,7 @@
 import { customElement, property, query } from 'lit/decorators.js'
+import { PropertyValueMap, html, nothing } from 'lit'
 import IMask, { FactoryArg, InputMask } from 'imask'
 import { when } from 'lit/directives/when.js'
-import { PropertyValueMap, html } from 'lit'
 
 import styles from './text-field.css'
 
@@ -214,7 +214,7 @@ export class HWCTextField extends InputField<string> {
 
     if (changedProperties.has('value')) {
       this.internals.setFormValue(this.value ?? null)
-      this.triggerValidation()
+      delayFn().then(() => this.reportValidity())
     }
 
     if (changedProperties.has('label')) {
@@ -235,6 +235,114 @@ export class HWCTextField extends InputField<string> {
     this._imask?.off('accept', this._onInput)
   }
 
+  async reportValidity (): Promise<boolean> {
+    if (this.required && !this.value) {
+      this.setCustomValidity(this.errorMessageRequired)
+      return false
+    }
+
+    if (this.required && this.type === 'email' && /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(this.value) === false) {
+      this.setCustomValidity(this.errorMessageEmail)
+      return false
+    }
+
+    if (this.minLength && this.value.length < this.minLength) {
+      this.setCustomValidity(this.errorMessageMinLength.replace('{minLength}', String(this.minLength)))
+      return false
+    }
+
+    if (this.maxLength && this.value.length > this.maxLength) {
+      this.setCustomValidity(this.errorMessageMaxLength.replace('{maxLength}', String(this.maxLength)))
+      return false
+    }
+
+    if (this.min && Number(this.value) < this.min) {
+      this.setCustomValidity(this.errorMessageMin.replace('{min}', String(this.min)))
+      return false
+    }
+
+    if (this.max && Number(this.value) > this.max) {
+      this.setCustomValidity(this.errorMessageMax.replace('{max}', String(this.max)))
+      return false
+    }
+
+    if (this.pattern && new RegExp(this.pattern).test(this.value) === false) {
+      this.setCustomValidity(this.errorMessagePattern)
+      return false
+    }
+
+    // Validate if the textfield contains custom validation
+    if (!this.getRules().length) {
+      this.setCustomValidity('')
+      return true
+    }
+
+    try {
+      const feedback = await this.validate({
+        input: this.$input as HTMLInputElement,
+        el: this,
+        value: this.value
+      })
+
+      if (feedback?.status === 'invalid') {
+        this.setCustomValidity(feedback.message || this.errorMessageDefault)
+        return false
+      }
+
+      this.setCustomValidity('')
+      return true
+    } catch (error) {
+      this.setCustomValidity(this.errorMessageDefault)
+      return false
+    }
+  }
+
+  async checkValidity (): Promise<boolean> {
+    if (this.required && !this.value) {
+      return false
+    }
+
+    if (this.type === 'email' && /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(this.value) === false) {
+      return false
+    }
+
+    if (this.minLength && this.value.length < this.minLength) {
+      return false
+    }
+
+    if (this.maxLength && this.value.length > this.maxLength) {
+      return false
+    }
+
+    if (this.min && Number(this.value) < this.min) {
+      return false
+    }
+
+    if (this.max && Number(this.value) > this.max) {
+      return false
+    }
+
+    if (this.pattern && new RegExp(this.pattern).test(this.value) === false) {
+      return false
+    }
+
+    if (!this.getRules().length) {
+      return true
+    }
+
+    try {
+      const feedback = await this.validate({
+        input: this.$input as HTMLInputElement,
+        el: this,
+        value: this.value
+      })
+
+      return feedback?.status === 'complete'
+    } catch (error) {
+      return false
+    }
+  }
+
   reset = (): void => {
     this.touched = false
     this.dirty = false
@@ -243,8 +351,8 @@ export class HWCTextField extends InputField<string> {
     ;(this.$input as HTMLInputElement).value = ''
 
     this._imask?.updateValue()
-    this.setValidity(null)
-    this.triggerValidation()
+    this.setCustomValidity('')
+    this.reportValidity()
   }
 
   private _configureMask (): void {
@@ -280,7 +388,7 @@ export class HWCTextField extends InputField<string> {
   private _onBlur (_ev: InputEvent): void {
     this.touched = true
 
-    this.triggerValidation()
+    this.reportValidity()
   }
 
   /**
@@ -366,6 +474,12 @@ export class HWCTextField extends InputField<string> {
                 .value=${this.value}
                 type=${this.type}
                 name=${this.name}
+                ?required=${this.required}
+                minlength=${this.minLength || nothing}
+                maxlength=${this.maxLength || nothing}
+                min=${this.min || nothing}
+                max=${this.max || nothing}
+                pattern=${this.pattern}
                 @keydown=${this._onKeydown}
                 @blur=${this._onBlur}
                 @input=${this._onInput}

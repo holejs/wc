@@ -4,6 +4,7 @@ import { html } from 'lit'
 
 import '../button/button.js'
 import './checkbox.js'
+import { delayFn } from '../utils/delay.js'
 
 // eslint-disable-next-line no-undef
 type HWCCheckbox = HTMLElementTagNameMap['hwc-checkbox']
@@ -100,7 +101,8 @@ export const Basic: Story = {
     })
 
     // Validate the form is invalid.
-    await step('Form is invalid', () => {
+    await step('Form is invalid', async () => {
+      await delayFn()
       expect($form).toBeInvalid()
     })
 

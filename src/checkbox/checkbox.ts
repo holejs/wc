@@ -1,13 +1,14 @@
-import { PropertyValueMap, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
+import { PropertyValueMap, html } from 'lit'
 
 import styles from './checkbox.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
+import { delayFn } from '../utils/delay.js'
 
-import { InputField } from '../internals/input-field.js'
+import { INPUT_FIELD_ATTR_ERROR_MSG, InputField } from '../internals/input-field.js'
 
 const COMPONENT_NAME = 'hwc-checkbox'
 
@@ -61,11 +62,13 @@ export class HWCCheckbox extends InputField<string> {
   @property({ type: Boolean, reflect: true })
     checked = false
 
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Required })
+    errorMessageRequired = 'Please select this checkbox'
+
   private readonly _uniqueId = `checkbox-${generateHash()}`
 
   connectedCallback (): void {
     super.connectedCallback()
-
     this.form?.addEventListener('reset', this.reset)
   }
 
@@ -79,7 +82,8 @@ export class HWCCheckbox extends InputField<string> {
     }
 
     if (changedProperties.has('value') || changedProperties.has('checked')) {
-      this._setValue(this.checked ? this.value : null)
+      (this.$input as HTMLInputElement).value = this.value || ''
+      this.internals.setFormValue(this.checked ? this.value : null)
     }
 
     if (changedProperties.has('checked')) {
@@ -97,38 +101,51 @@ export class HWCCheckbox extends InputField<string> {
     this.form?.removeEventListener('reset', this.reset)
   }
 
+  async reportValidity (): Promise<boolean> {
+    if (this.required && !this.checked) {
+      this.setCustomValidity(this.errorMessageRequired)
+      return false
+    }
+
+    this.setCustomValidity('')
+    return true
+  }
+
+  async checkValidity (): Promise<boolean> {
+    if (this.required && !this.checked) {
+      this.setCustomValidity(this.errorMessageRequired)
+      return false
+    }
+
+    this.setCustomValidity('')
+    return true
+  }
+
   reset = (): void => {
-    if (this.disabled) return
+    if (this.disabled) {
+      return
+    }
 
     this.checked = false;
-
     (this.$input as HTMLInputElement).checked = false
 
     this.touched = false
     this.dirty = false
 
-    setTimeout(() => this.triggerValidation(), 0)
-  }
-
-  private _setValue (value: string | null): void {
-    (this.$input as HTMLInputElement).value = value || ''
-
-    this.internals.setFormValue(value)
+    delayFn().then(() => this.reportValidity())
   }
 
   private _onHandleChange (_ev: Event): void {
     this.checked = (this.$input as HTMLInputElement).checked
     this.dirty = true
 
-    this.triggerValidation()
-
+    this.reportValidity()
     this.dispatchEvent(new Event('change'))
   }
 
   private _onHandleBlur (): void {
     this.touched = true
-
-    this.triggerValidation()
+    this.reportValidity()
   }
 
   protected render (): unknown {
@@ -143,6 +160,7 @@ export class HWCCheckbox extends InputField<string> {
               name=${this.name}
               .value=${this.value}
               ?checked=${this.checked}
+              ?required=${this.required}
               ?disabled=${this.disabled}
               @change=${this._onHandleChange}
               @blur=${this._onHandleBlur}

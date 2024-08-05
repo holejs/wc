@@ -1,14 +1,15 @@
 /* eslint-disable no-undef */
-import { PropertyValueMap, html } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { when } from 'lit/directives/when.js'
+import { PropertyValueMap, html } from 'lit'
 
 import styles from './radio.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
+import { delayFn } from '../utils/delay.js'
 
-import { InputField } from '../internals/input-field.js'
+import { INPUT_FIELD_ATTR_ERROR_MSG, InputField } from '../internals/input-field.js'
 
 const COMPONENT_NAME = 'hwc-radio'
 
@@ -62,6 +63,9 @@ export class HWCRadio extends InputField<string> {
   @property({ type: Boolean, reflect: true })
     checked = false
 
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Required })
+    errorMessageRequired = 'Please select an option'
+
   @state()
   private _uniqueId = `radio-${generateHash()}`
 
@@ -93,14 +97,47 @@ export class HWCRadio extends InputField<string> {
     }
 
     if (changedProperties.has('value') || changedProperties.has('checked')) {
-      this._setValue(this.checked ? this.value : null)
+      (this.$input as HTMLInputElement).value = this.value || ''
+      this.internals.setFormValue(this.checked ? this.value : null)
     }
 
     if (changedProperties.has('checked')) {
-      if (this.checked) this._uncheckRadios()
+      if (this.checked) {
+        this._uncheckRadios()
+      }
 
       this.ariaChecked = String(this.checked)
     }
+  }
+
+  async reportValidity (): Promise<boolean> {
+    const $checkedRadio = this._getCheckedRadio()
+
+    if ($checkedRadio && $checkedRadio !== this) {
+      return true
+    }
+
+    if (this.required && !this.checked) {
+      this.setCustomValidity(this.errorMessageRequired)
+      return false
+    }
+
+    this.setCustomValidity('')
+    return true
+  }
+
+  async checkValidity (): Promise<boolean> {
+    const $checkedRadio = this._getCheckedRadio()
+
+    if ($checkedRadio && $checkedRadio !== this) {
+      return true
+    }
+
+    if (this.required && !this.checked) {
+      return false
+    }
+
+    return true
   }
 
   reset = (): void => {
@@ -108,14 +145,8 @@ export class HWCRadio extends InputField<string> {
     this.dirty = false
     this.touched = false
 
-    this.setValidity(null)
-    setTimeout(() => this.triggerValidation(), 0)
-  }
-
-  private _setValue (value: string | null): void {
-    (this.$input as HTMLInputElement).value = value || ''
-
-    this.internals.setFormValue(value)
+    this.setCustomValidity('')
+    delayFn().then(() => this.reportValidity())
   }
 
   /**
@@ -145,33 +176,21 @@ export class HWCRadio extends InputField<string> {
       .filter(($radio) => $radio !== this)
       .forEach(($radio) => {
         $radio.checked = false
-        $radio.setValidity(null)
+        $radio.setCustomValidity('')
       })
-  }
-
-  // This method has been overridden to prevent the validation from being triggered.
-  protected async triggerValidation (): Promise<void> {
-    const $checkedRadio = this._getCheckedRadio()
-
-    if ($checkedRadio && $checkedRadio !== this) return
-
-    return super.triggerValidation()
   }
 
   private _onHandleChange (_ev: Event): void {
     this.dirty = true
-
     this.checked = true
 
-    this.triggerValidation()
-
+    this.reportValidity()
     this.dispatchEvent(new Event('change'))
   }
 
   private _handleFocusout = (): void => {
     this.touched = true
-
-    this.triggerValidation()
+    this.reportValidity()
   }
 
   protected render (): unknown {
