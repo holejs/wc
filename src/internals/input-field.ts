@@ -3,17 +3,26 @@ import { LitElement, PropertyValueMap } from 'lit'
 
 import { TextFieldError } from '../error.js'
 
-import { parseRules } from '../utils/parseRules.js'
-
 import {
   ValidationContext,
   RuleHandler,
-  Validations,
-  RuleMethods,
   RuleEntity,
   RULES_MAP,
   Feedback
 } from '../validations.js'
+import { createParsingRules } from '../utils/createParsingRules.js'
+import { delayFn } from '../utils/delay.js'
+
+export const INPUT_FIELD_ATTR_ERROR_MSG = {
+  Required: 'error-message-required',
+  MinLength: 'error-message-minlength',
+  MaxLength: 'error-message-maxlength',
+  Min: 'error-message-min',
+  Max: 'error-message-max',
+  Email: 'error-message-email',
+  Pattern: 'error-message-pattern',
+  Default: 'error-message-default'
+} as const
 
 /**
  * Class responsible for adding validations to the input element.
@@ -88,6 +97,48 @@ export abstract class InputField<T> extends LitElement {
   @property()
     rules = ''
 
+  @property()
+    required = false
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Required })
+    errorMessageRequired = 'This field is required'
+
+  @property({ type: Number })
+    minLength: number | null = null
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.MinLength })
+    errorMessageMinLength = 'The value must have at least {minLength} characters'
+
+  @property({ type: Number })
+    maxLength: number | null = null
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.MaxLength })
+    errorMessageMaxLength = 'The value must have at most {maxLength} characters'
+
+  @property({ type: Number })
+    min: number | null = null
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Min })
+    errorMessageMin = 'The value must be greater than or equal to {min}'
+
+  @property({ type: Number })
+    max: number | null = null
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Max })
+    errorMessageMax = 'The value must be less than or equal to {max}'
+
+  @property()
+    pattern = ''
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Pattern })
+    errorMessagePattern = 'The value does not match the pattern'
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Email })
+    errorMessageEmail = 'The email is invalid'
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Default })
+    errorMessageDefault = 'The value is invalid'
+
   /**
    * Indicates whether the input field has been modified.
    */
@@ -105,29 +156,13 @@ export abstract class InputField<T> extends LitElement {
 
   private _rules = new Map<string, RuleHandler>()
 
-  connectedCallback (): void {
-    super.connectedCallback()
-
-    parseRules(this.rules).forEach(({ key }) => {
-      const name = key
-      const handler = Validations[key as RuleMethods]
-
-      this.addRule({ name, handler })
-    })
-  }
-
-  protected firstUpdated (_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    this._configureRules()
-
-    this.triggerValidation()
-  }
-
   protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-    if (changedProperties.has('_validationMessage')) {
-      this.setAttribute(
-        'aria-invalid',
-        String(Boolean(this.validationMessage) && (this.dirty || this.touched))
-      )
+    if (
+      changedProperties.has('_validationMessage') ||
+      changedProperties.has('dirty') ||
+      changedProperties.has('touched')
+    ) {
+      this.setAttribute('aria-invalid', String(this.hasError()))
     }
 
     if (changedProperties.has('disabled')) {
@@ -137,10 +172,18 @@ export abstract class InputField<T> extends LitElement {
     if (changedProperties.has('readonly')) {
       this.setAttribute('aria-readonly', String(this.readonly))
     }
+
+    if (changedProperties.has('rules')) {
+      delayFn().then(() => {
+        this._configureRules()
+        this._configureErrorMessages()
+        this.reportValidity()
+      })
+    }
   }
 
   protected hasError (): boolean {
-    return Boolean(this.validationMessage) && (this.touched || this.dirty)
+    return !!this.validationMessage && (this.touched || this.dirty)
   }
 
   /**
@@ -210,10 +253,30 @@ export abstract class InputField<T> extends LitElement {
     this._rules.delete(name)
   }
 
+  setCustomValidity (message: string): void {
+    this._validationMessage = message || null
+    this.requestUpdate('_validationMessage')
+
+    if (!message) {
+      return this.internals.setValidity({})
+    }
+
+    if (!this.$input) {
+      return
+    }
+
+    this.internals.setValidity(
+      { customError: true },
+      message,
+      this.$input
+    )
+  }
+
   /**
    * Sets a custom validation message.
    *
    * @param message The validation message to set.
+   * @deprecated
    */
   setValidity (message: string | null): void {
     if (!message) {
@@ -242,13 +305,24 @@ export abstract class InputField<T> extends LitElement {
    * and associates validators based on the defined rules.
    */
   private _configureRules (): void {
-    // Parse the rules into key-value pairs.
-    const ruleItems = parseRules(this.rules)
+    const parsingRules = createParsingRules(this.rules)
 
-    // Set attribute native input.
-    ruleItems.forEach(({ key, value }) => {
-      this.$input.setAttribute(key, value || '')
-    })
+    this.required = parsingRules.get(RULES_MAP.Required) as boolean || false
+    this.minLength = parsingRules.get(RULES_MAP.MinLength) as number || null
+    this.maxLength = parsingRules.get(RULES_MAP.MaxLength) as number || null
+    this.min = parsingRules.get(RULES_MAP.Min) as number || null
+    this.max = parsingRules.get(RULES_MAP.Max) as number || null
+    this.pattern = parsingRules.get(RULES_MAP.Pattern) as string || ''
+  }
+
+  private _configureErrorMessages (): void {
+    this.errorMessageRequired = this.getAttribute(`data-${INPUT_FIELD_ATTR_ERROR_MSG.Required}`) || this.errorMessageRequired
+    this.errorMessageMinLength = this.getAttribute(`data-${INPUT_FIELD_ATTR_ERROR_MSG.MinLength}`) || this.errorMessageMinLength
+    this.errorMessageMaxLength = this.getAttribute(`data-${INPUT_FIELD_ATTR_ERROR_MSG.MaxLength}`) || this.errorMessageMaxLength
+    this.errorMessageMin = this.getAttribute(`data-${INPUT_FIELD_ATTR_ERROR_MSG.Min}`) || this.errorMessageMin
+    this.errorMessageMax = this.getAttribute(`data-${INPUT_FIELD_ATTR_ERROR_MSG.Max}`) || this.errorMessageMax
+    this.errorMessagePattern = this.getAttribute(`data-${INPUT_FIELD_ATTR_ERROR_MSG.Pattern}`) || this.errorMessagePattern
+    this.errorMessageEmail = this.getAttribute(`data-${INPUT_FIELD_ATTR_ERROR_MSG.Email}`) || this.errorMessageEmail
   }
 
   /**
@@ -280,6 +354,8 @@ export abstract class InputField<T> extends LitElement {
 
   /**
    * This method is responsible for triggering the validation.
+   *
+   * @deprecated
    */
   protected async triggerValidation (): Promise<void> {
     const feedback = await this.validate({
@@ -287,7 +363,7 @@ export abstract class InputField<T> extends LitElement {
       el: this
     })
 
-    this.setValidity(feedback?.message || null)
+    this.setCustomValidity(feedback?.message || '')
   }
 
   /**
@@ -305,4 +381,19 @@ export abstract class InputField<T> extends LitElement {
    * Reset the state of the input field.
    */
   abstract reset(): void
+
+  /**
+   * Checks the validity of the component's value.
+   *
+   * @returns {Promise<boolean>} A promise that resolves to `true` if the value is valid, `false` otherwise.
+   */
+  abstract checkValidity(): Promise<boolean>
+
+  /**
+   * Reports the validity of the component's value to the user.
+   * This provide feedback to the user about the validation state.
+   *
+   * @returns {Promise<boolean>} A promise that resolves to `true` if the value is valid, `false` otherwise.
+   */
+  abstract reportValidity(): Promise<boolean>
 }
