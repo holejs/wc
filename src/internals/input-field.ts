@@ -94,7 +94,7 @@ export abstract class InputField<T> extends LitElement {
    *
    * @default false
    */
-  @property()
+  @property({ type: Boolean })
     required = false
 
   /**
@@ -419,7 +419,7 @@ export abstract class InputField<T> extends LitElement {
   private _configureRules (): void {
     const parsingRules = createParsingRules(this.rules)
 
-    this.required = parsingRules.get<boolean>(RULES_MAP.Required) || false
+    this.required = parsingRules.get<boolean>(RULES_MAP.Required) || this.required
     this.minLength = parsingRules.get<number>(RULES_MAP.MinLength) || this.minLength
     this.maxLength = parsingRules.get<number>(RULES_MAP.MaxLength) || this.maxLength
     this.min = parsingRules.get<number>(RULES_MAP.Min) || this.min
