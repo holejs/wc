@@ -479,7 +479,7 @@ export class HWCTextField extends InputField<string> {
                 maxlength=${this.maxLength || nothing}
                 min=${this.min || nothing}
                 max=${this.max || nothing}
-                pattern=${this.pattern}
+                pattern=${this.pattern || nothing}
                 @keydown=${this._onKeydown}
                 @blur=${this._onBlur}
                 @input=${this._onInput}
