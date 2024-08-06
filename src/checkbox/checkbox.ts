@@ -89,10 +89,6 @@ export class HWCCheckbox extends InputField<string> {
     if (changedProperties.has('checked')) {
       this.ariaChecked = String(this.checked)
     }
-
-    if (changedProperties.has('disabled')) {
-      this.ariaDisabled = String(this.disabled)
-    }
   }
 
   disconnectedCallback (): void {
