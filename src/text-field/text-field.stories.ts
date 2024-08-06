@@ -1,6 +1,6 @@
 import { expect, userEvent, within } from '@storybook/test'
 import type { StoryObj } from '@storybook/web-components'
-import { html } from 'lit'
+import { html, nothing } from 'lit'
 
 import '../button/button.js'
 import type { HWCTextField } from '../text-field/text-field.js'
@@ -21,28 +21,44 @@ const meta = {
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6">
-          <hwc-text-field
-            appearance=${args.appearance || 'outlined'}
-            color=${args.color || 'blue-darken-2'}
-            label=${args.label || ''}
-            placeholder=${args.placeholder || ''}
-            type=${args.type || 'text'}
-            name=${args.name || ''}
-            ?autofocus=${args.autofocus || false}
-            ?clearable=${args.clearable || false}
-            ?disabled=${args.disabled || false}
-            ?readonly=${args.readonly || false}
-            .value=${args.value || ''}
-            hint=${args.hint || ''}
-            rules=${args.rules || ''}
-            mask=${args.mask || ''}
-            data-error-message-required=${args['data-error-message-required'] || ''}
-            data-error-message-minlength=${args['data-error-message-minlength'] || ''}
-            data-error-message-maxlength=${args['data-error-message-maxlength'] || ''}
-            data-error-message-pattern=${args['data-error-message-pattern'] || ''}
-            data-error-message-email=${args['data-error-message-email'] || ''}
-            @change=${_onHandleChange}
-          ></hwc-text-field>
+          <form>
+            <hwc-text-field
+              appearance=${args.appearance || 'outlined'}
+              color=${args.color || 'blue-darken-2'}
+              label=${args.label || ''}
+              placeholder=${args.placeholder || nothing}
+              type=${args.type || 'text'}
+              name=${args.name || nothing}
+              ?autofocus=${args.autofocus || false}
+              ?clearable=${args.clearable}
+              ?disabled=${args.disabled || false}
+              ?readonly=${args.readonly || false}
+              .value=${args.value || ''}
+              hint=${args.hint || nothing}
+              mask=${args.mask || nothing}
+              ?required=${args.required}
+              minlength=${args.minlength || nothing}
+              maxlength=${args.maxlength || nothing}
+              min=${args.min || nothing}
+              max=${args.max || nothing}
+              pattern=${args.pattern || nothing}
+              error-message-required=${args['error-message-required'] || nothing}
+              error-message-minlength=${args['error-message-minlength'] || nothing}
+              error-message-maxlength=${args['error-message-maxlength'] || nothing}
+              error-message-min=${args['error-message-min'] || nothing}
+              error-message-max=${args['error-message-max'] || nothing}
+              error-message-pattern=${args['error-message-pattern'] || nothing}
+              error-message-email=${args['error-message-email'] || nothing}
+              error-message-default=${args['error-message-default'] || nothing}
+              rules=${args.rules || nothing}
+              data-error-message-required=${args['data-error-message-required'] || nothing}
+              data-error-message-minlength=${args['data-error-message-minlength'] || nothing}
+              data-error-message-maxlength=${args['data-error-message-maxlength'] || nothing}
+              data-error-message-pattern=${args['data-error-message-pattern'] || nothing}
+              data-error-message-email=${args['data-error-message-email'] || nothing}
+              @change=${_onHandleChange}
+            ></hwc-text-field>
+          </form>
         </div>
       </div>
     </div>
@@ -116,9 +132,65 @@ const meta = {
       control: 'boolean',
       description: 'Defines if the text field has a clear button.'
     },
+    required: {
+      control: 'boolean',
+      description: 'Defines if the text field is required.'
+    },
+    minlength: {
+      control: 'number',
+      description: 'Defines the minimum length of the text field.'
+    },
+    maxlength: {
+      control: 'number',
+      description: 'Defines the maximum length of the text field.'
+    },
+    min: {
+      control: 'number',
+      description: 'Defines the minimum value of the text field.'
+    },
+    max: {
+      control: 'number',
+      description: 'Defines the maximum value of the text field.'
+    },
+    pattern: {
+      control: 'text',
+      description: 'Defines the pattern of the text field.'
+    },
+    'error-message-required': {
+      control: 'text',
+      description: 'Defines the error message when the text field is required.'
+    },
+    'error-message-min': {
+      control: 'text',
+      description: 'Defines the error message when the text field does not meet the minimum value.'
+    },
+    'error-message-max': {
+      control: 'text',
+      description: 'Defines the error message when the text field exceeds the maximum value.'
+    },
+    'error-message-minlength': {
+      control: 'text',
+      description: 'Defines the error message when the text field does not meet the minimum length.'
+    },
+    'error-message-maxlength': {
+      control: 'text',
+      description: 'Defines the error message when the text field exceeds the maximum length.'
+    },
+    'error-message-pattern': {
+      control: 'text',
+      description: 'Defines the error message when the text field does not meet the pattern.'
+    },
+    'error-message-email': {
+      control: 'text',
+      description: 'Defines the error message when the text field does not meet the email pattern.'
+    },
+    'error-message-default': {
+      control: 'text',
+      description: 'Defines the default error message.'
+    },
     rules: {
       control: 'text',
-      description: 'Defines the validation rules of the text field. The available rules are: `required`, `min`, `max`, `minlength`, `maxlength`, `pattern` and `email`.'
+      description: 'Defines the validation rules of the text field. The available rules are: `required`, `min`, `max`, `minlength`, `maxlength`, `pattern` and `email`. This property is `deprecated`'
     },
     'data-error-message-required': {
       control: 'text',
