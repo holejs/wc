@@ -9,13 +9,11 @@ import styles from './select.css'
 
 import { isValidColorFormat } from '../utils/isValidColorFormat.js'
 import { generateHash } from '../utils/generateHash.js'
-import { parseRules } from '../utils/parseRules.js'
 
-import { RuleHandler, RuleMethods } from '../validations.js'
-import { InputField } from '../internals/input-field.js'
-import { Validations } from './constants.js'
+import { INPUT_FIELD_ATTR_ERROR_MSG, InputField } from '../internals/input-field.js'
 
 import { HWCSelectOption } from './select-option.js'
+import { delayFn } from '../utils/delay.js'
 
 const COMPONENT_NAME = 'hwc-select'
 
@@ -95,6 +93,12 @@ export class HWCSelect extends InputField<string | string[] | null> {
   @property({ type: Boolean, attribute: false })
   private expanded = false
 
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Min })
+  override errorMessageMin = 'The number of selected options must be greater than or equal to {min}'
+
+  @property({ attribute: INPUT_FIELD_ATTR_ERROR_MSG.Max })
+  override errorMessageMax = 'The number of selected options must be less than or equal to {max}'
+
   private _uniqueId = `select-${generateHash()}`
 
   connectedCallback (): void {
@@ -102,17 +106,7 @@ export class HWCSelect extends InputField<string | string[] | null> {
 
     // Initialize the event listeners.
     this.form?.addEventListener('reset', this.reset)
-
     document.addEventListener('click', this._handleDocumentClick)
-
-    parseRules(this.rules).forEach(({ key }) => {
-      // Remove the default rules.
-      this.removeRule(key)
-
-      const handler = Validations[key as RuleMethods] as RuleHandler
-
-      this.addRule({ name: key, handler })
-    })
   }
 
   protected updated (changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -124,9 +118,7 @@ export class HWCSelect extends InputField<string | string[] | null> {
       this.options.forEach(({ value }) => formData.append(this.name, value))
 
       this.internals.setFormValue(formData)
-
-      this.triggerValidation()
-
+      delayFn().then(() => this.reportValidity())
       this.dispatchEvent(new CustomEvent('change'))
     }
 
@@ -150,7 +142,6 @@ export class HWCSelect extends InputField<string | string[] | null> {
 
     // Remove the event listeners.
     this.form?.removeEventListener('reset', this.reset)
-
     document.removeEventListener('click', this._handleDocumentClick)
   }
 
@@ -162,6 +153,42 @@ export class HWCSelect extends InputField<string | string[] | null> {
     return value ?? null
   }
 
+  async reportValidity (): Promise<boolean> {
+    if (this.required && !this.options.length) {
+      this.setCustomValidity(this.errorMessageRequired)
+      return false
+    }
+
+    if (this.min && this.options.length < this.min) {
+      this.setCustomValidity(this.errorMessageMin.replace('{min}', String(this.min)))
+      return false
+    }
+
+    if (this.max && this.options.length > this.max) {
+      this.setCustomValidity(this.errorMessageMax.replace('{max}', String(this.max)))
+      return false
+    }
+
+    this.setCustomValidity('')
+    return true
+  }
+
+  async checkValidity (): Promise<boolean> {
+    if (this.required && !this.options.length) {
+      return false
+    }
+
+    if (this.min && this.options.length < this.min) {
+      return false
+    }
+
+    if (this.max && this.options.length > this.max) {
+      return false
+    }
+
+    return true
+  }
+
   /**
    * Add an option.
    *
@@ -169,7 +196,9 @@ export class HWCSelect extends InputField<string | string[] | null> {
    * @returns {void}
    */
   appendOption (value: Option): void {
-    if (this.dirty || Boolean(value)) this.dirty = true
+    if (this.dirty || Boolean(value)) {
+      this.dirty = true
+    }
 
     this.multiple ? this.options.push(value) : this.options = [value]
 
@@ -185,10 +214,11 @@ export class HWCSelect extends InputField<string | string[] | null> {
   removeOption (key: string): void {
     const index = this.options.findIndex(({ value }) => value === key)
 
-    if (index < 0) return
+    if (index < 0) {
+      return
+    }
 
     this.options.splice(index, 1)
-
     this.requestUpdate('options')
   }
 
@@ -198,7 +228,9 @@ export class HWCSelect extends InputField<string | string[] | null> {
    * @returns {void}
    */
   close (): void {
-    if (!this.expanded) return
+    if (!this.expanded) {
+      return
+    }
 
     this.expanded = false
     this.requestUpdate('expanded')
@@ -212,7 +244,9 @@ export class HWCSelect extends InputField<string | string[] | null> {
   open (): void {
     const isDisabled = this.readonly || this.disabled
 
-    if (this.expanded || isDisabled) return
+    if (this.expanded || isDisabled) {
+      return
+    }
 
     this.expanded = true
     this.requestUpdate('expanded')
@@ -236,19 +270,19 @@ export class HWCSelect extends InputField<string | string[] | null> {
   private _handleDocumentClick = (ev: Event): void => {
     const isClickInside = this.contains(ev.target as Node)
 
-    if (!isClickInside) this.close()
+    if (!isClickInside) {
+      this.close()
+    }
   }
 
   private _onHandleClick (): void {
     !this.expanded ? this.open() : this.close()
-
-    this.triggerValidation()
+    this.reportValidity()
   }
 
   private _onHandleBlur (): void {
     this.touched = true
-
-    this.triggerValidation()
+    this.reportValidity()
   }
 
   protected render (): unknown {

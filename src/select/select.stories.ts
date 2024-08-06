@@ -2,6 +2,8 @@ import { expect, fireEvent, userEvent, within } from '@storybook/test'
 import type { StoryObj } from '@storybook/web-components'
 import { html } from 'lit'
 
+import { delayFn } from '../utils/delay.js'
+
 import '../button/button.js'
 
 import './select-option.js'
@@ -180,7 +182,8 @@ export const Basic: Story = {
     })
 
     // Validate the form is invalid.
-    await step('Validate the form is invalid.', () => {
+    await step('Validate the form is invalid.', async () => {
+      await delayFn()
       expect($form.checkValidity()).toBeFalsy()
     })
 
