@@ -31,7 +31,7 @@ export const createParsingRules = (rules: string) => {
    *
    * @param key The key to retrieve the value for.
    */
-  const get = (key: string) => parsingMap.get(key)
+  const get = <T>(key: string) => parsingMap.get(key) as T | undefined
 
   /**
    * Checks if a given key exists in the rules map.
