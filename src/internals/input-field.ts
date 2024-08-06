@@ -246,6 +246,17 @@ export abstract class InputField<T> extends LitElement {
         this.reportValidity()
       })
     }
+
+    if (
+      changedProperties.has('required') ||
+      changedProperties.has('minLength') ||
+      changedProperties.has('maxLength') ||
+      changedProperties.has('min') ||
+      changedProperties.has('max') ||
+      changedProperties.has('pattern')
+    ) {
+      delayFn().then(() => this.reportValidity())
+    }
   }
 
   /**
@@ -408,12 +419,12 @@ export abstract class InputField<T> extends LitElement {
   private _configureRules (): void {
     const parsingRules = createParsingRules(this.rules)
 
-    this.required = parsingRules.get(RULES_MAP.Required) as boolean || false
-    this.minLength = parsingRules.get(RULES_MAP.MinLength) as number || null
-    this.maxLength = parsingRules.get(RULES_MAP.MaxLength) as number || null
-    this.min = parsingRules.get(RULES_MAP.Min) as number || null
-    this.max = parsingRules.get(RULES_MAP.Max) as number || null
-    this.pattern = parsingRules.get(RULES_MAP.Pattern) as string || ''
+    this.required = parsingRules.get<boolean>(RULES_MAP.Required) || false
+    this.minLength = parsingRules.get<number>(RULES_MAP.MinLength) || this.minLength
+    this.maxLength = parsingRules.get<number>(RULES_MAP.MaxLength) || this.maxLength
+    this.min = parsingRules.get<number>(RULES_MAP.Min) || this.min
+    this.max = parsingRules.get<number>(RULES_MAP.Max) || this.max
+    this.pattern = parsingRules.get<string>(RULES_MAP.Pattern) || this.pattern
   }
 
   private _configureErrorMessages (): void {
