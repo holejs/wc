@@ -25,6 +25,18 @@ This component is useful in any web application that requires the collection of 
   - [Error messages](#error-messages)
   - [Custom validations](#custom-validations)
   - [Mask](#mask)
+  - [Methods](#methods)
+    - [`reset()`](#reset)
+    - [`reportValidity()`](#reportvalidity)
+    - [`checkValidity()`](#checkvalidity)
+    - [`setCustomValidity(message: string)`](#setcustomvaliditymessage-string)
+    - [`getRules(): RuleEntity[]`](#getrules-ruleentity)
+    - [`getRule(name: string): RuleHandler | null`](#getrulename-string-rulehandler--null)
+    - [`hasRule(name: string): boolean`](#hasrulename-string-boolean)
+    - [`addRule (validation: RuleEntity): void`](#addrule-validation-ruleentity-void)
+    - [`removeRule (name: string): void`](#removerule-name-string-void)
+    - [`setValidity(message: string | null)`](#setvaliditymessage-string--null)
+  - [API](#api)
   - [CSS Custom Properties](#css-custom-properties)
 
 ## Basic usage
@@ -214,7 +226,9 @@ For this example, the field needs to be required, have at least 5 characters, an
 ```html
 <hwc-text-field
   name="fullname"
-  rules="required|minlength:5|maxlength:50"
+  required
+  minlength="5"
+  maxlength="50"
 ></hwc-text-field>
 ```
 
@@ -224,8 +238,9 @@ For this example, the field needs to be required and to be a valid email.
 
 ```html
 <hwc-text-field
+  type="email"
   name="fullname"
-  rules="required|email"
+  required
 ></hwc-text-field>
 ```
 
@@ -240,14 +255,26 @@ This example requires that the field be required and that the password meets the
 
 ```html
 <hwc-text-field
+  type="password"
   name="fullname"
-  rules="required|pattern:^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$"
+  required
+  pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$"
 ></hwc-text-field>
 ```
 
 As you can see, it's that easy to add validations in real time (as the user types) by simply defining these rules. Surprising isn't it?
 
-Now, you may need to customize these error messages. Don't worry, you can do it too. See the next section [Error messages.](#error-messages)
+> [!CAUTION]
+> You can use the `rules` prop to define multiple rules. Don't use this way, it is deprecated.
+
+```html
+<hwc-text-field
+  name="fullname"
+  rules="required|minlength:5|maxlength:50"
+></hwc-text-field>
+```
+
+Now, you may need to customize these error messages. Don't worry, you can do it too. See the next section [Error messages.](#error-messages).
 
 ## Error messages
 
@@ -258,13 +285,26 @@ It is very likely that the default error messages will not meet your needs, but 
   name="fullname"
   rules="required|minlength:5|maxlength:50"
 
-  data-error-message-required="This field is required."
-  data-error-message-minlength="Must contain at least 5 characters."
-  data-error-message-maxlength="Must contain a maximum of 50 characters."
+  error-message-required="This field is required."
+  error-message-minlength="Must contain at least 5 characters."
+  error-message-maxlength="Must contain a maximum of 50 characters."
 ></hwc-text-field>
 ```
 
 Excellent, by doing this you have already customized the error messages.
+
+> [!CAUTION]
+> In previous versions, you can set the error messages using the `data-error-message-<type>` attribute. Don't use this way, it is deprecated.
+
+```html
+<hwc-text-field
+  name="fullname"
+  rules="required|minlength:5|maxlength:50"
+  data-error-message-required="This field is required."
+  data-error-message-minlength="Must contain at least {minLength} characters."
+  data-error-message-maxlength="Must contain a maximum of {maxLength} characters."
+></hwc-text-field>
+```
 
 ## Custom validations
 
@@ -305,9 +345,6 @@ The `mask` property allows you to define a mask for the text field. This mask wi
 > [!NOTE]
 > To add masks to text fields, [Imask](https://imask.js.org/guide.html) is being used. Read their documentation for more details.
 
-> [!TIP]
-> Accompany your mask with the pattern property to validate the value entered by the user.
-
 See the following examples:
 
 **1. Card number**
@@ -339,6 +376,115 @@ See the following examples:
   rules="required|pattern:^[0-9]{2}/[0-9]{2}/[0-9]{4}$"
 ></hwc-text-field>
 ```
+
+**4. Currency**
+
+```html
+<hwc-text-field
+  name="currency"
+></hwc-text-field>
+
+<script>
+  const $currency = document.querySelector('hwc-text-field[name="currency"]');
+
+  $currency.mask = {
+    mask: "$num",
+    blocks: {
+      num: {
+        mask: Number,
+        thousandsSeparator: ',',
+        radix: '.',
+        scale: 2
+      }
+    }
+  }
+</script>
+```
+
+## Methods
+
+### `reset()`
+
+Resets the text field to its initial state.
+
+### `reportValidity()`
+
+Checks the validity of the text field and displays the error messages.
+
+### `checkValidity()`
+
+Checks the validity of the text field and returns a boolean value indicating whether the field is valid or not. But it does not display the error messages.
+
+### `setCustomValidity(message: string)`
+
+Sets a custom error message to be displayed when the text field is invalid.
+
+```ts
+const $textField = document.querySelector('hwc-text-field[name="fullname"]')
+
+$textField.setCustomValidity('This field is required.')
+```
+
+### `getRules(): RuleEntity[]`
+
+Return a list of the validation rules registered to the input.
+
+### `getRule(name: string): RuleHandler | null`
+
+Returns the validation rule with the given name.
+
+### `hasRule(name: string): boolean`
+
+Returns true if the input has a validation rule with the given name.
+
+### `addRule (validation: RuleEntity): void`
+
+Adds a validation rule to the input.
+
+### `removeRule (name: string): void`
+
+Removes a validation rule from the input.
+
+### `setValidity(message: string | null)`
+
+> [!WARNING]
+> The `setValidity` method is deprecated. Use `setCustomValidity` instead.
+
+Sets the validity of the text field and displays the error message if necessary.
+
+## API
+
+| Property | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| `appearance` | `string` | `appearance` | Defines the visual style of the text field. The available values are: `outlined` and `underline`. |
+| `color` | `string` | `color` | Color of the text field. |
+| `label` | `string` | `label` | Label that describes the purpose or content of the text field. |
+| `placeholder` | `string` | `placeholder` | Text that is displayed as a hint or guide within the text field before the user enters a value. |
+| `type` | `string` | `type` | Type of the text field. |
+| `name` | `string` | `name` | Name of the text field that is used to identify the value entered in the form. |
+| `autofocus` | `boolean` | `autofocus` | If this property is set, the text field will automatically get focus when the page loads. |
+| `disabled` | `boolean` | `disabled` | If this property is set, the text field will be disabled and the user will not be able to interact with it. |
+| `readonly` | `boolean` | `readonly` | If this property is set, the text field will be read-only and the user will not be able to modify its value. |
+| `hint` | `string` | `hint` | Provides a hint or instruction to help the user complete the field. |
+| `clearable` | `boolean` | `clearable` | If this property is set, a button will be displayed that allows the user to clear the value of the text field. |
+| `mask` | `string\|FactoryArg` | `mask` | Defines a mask for the text field. `FactoryArg` is an object defined by [Imask](https://imask.js.org/guide.html). |
+| `rules` | `string` | `rules` | Defines the validation rules for the text field. **DEPRECATED** |
+| `dirty` | `boolean` | `NA` | Indicates whether the text field has been modified. |
+| `touched` | `boolean` | `NA` | Indicates whether the text field has been touched. |
+| `required` | `boolean` | `required` | Specifies whether a form field needs to be completed before the form is submitted. |
+| `minLength` | `number` | `minlength` | Specifies the minimum length of a text string. |
+| `maxLength` | `number` | `maxlength` | Specifies the maximum length of a text string. |
+| `min` | `number` | `min` | Specifies the minimum value for numeric input types. |
+| `max` | `number` | `max` | Specifies the maximum value for numeric input types. |
+| `pattern` | `string` | `pattern` | Specifies a regular expression that defines a pattern that the input data should follow. |
+| `errorMessageRequired` | `string` | `error-message-required` | Error message for the required rule. |
+| `errorMessageMinlength` | `string` | `error-message-minlength` | Error message for the minlength rule. |
+| `errorMessageMaxlength` | `string` | `error-message-maxlength` | Error message for the maxlength rule. |
+| `errorMessageEmail` | `string` | `error-message-email` | Error message for the email rule. |
+| `errorMessagePattern` | `string` | `error-message-pattern` | Error message for the pattern rule. |
+| `errorMessageMin` | `string` | `error-message-min` | Error message for the min rule. |
+| `errorMessageMax` | `string` | `error-message-max` | Error message for the max rule. |
+| `errorMessageDefault` | `string` | `error-message-default` | Default error message. |
 
 ## CSS Custom Properties
 
