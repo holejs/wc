@@ -1,3 +1,25 @@
+# [0.19.0](https://github.com/holejs/wc/compare/v0.17.2...v0.19.0) (2024-09-04)
+
+
+### Bug Fixes
+
+* ensure default values for input properties when parsing rules ([7a50189](https://github.com/holejs/wc/commit/7a50189005de3a0a44878aeb850ff8bd99597241))
+* prevent rendering of 'pattern' attribute when undefined ([b2865be](https://github.com/holejs/wc/commit/b2865beadb292065ee4d048d261c086eebfaea41))
+* **validation:** ensure boolean type for 'required' property ([4e5a2f9](https://github.com/holejs/wc/commit/4e5a2f99999727bf2144bd6ea104fee18f05fbf7))
+
+
+### Features
+
+* Add avatar component and its styles ([36ed0a6](https://github.com/holejs/wc/commit/36ed0a65adef656104ebc51bf7c488975359f8b2))
+* Add support for IMask library in HWCTextField ([70b9265](https://github.com/holejs/wc/commit/70b9265a3117123691077685af90fcaae0f48e4f))
+* **avatar:** Add color property, update color styling & define CSS Custom Props in HWCAvatar ([437376e](https://github.com/holejs/wc/commit/437376eeae47a11a503506ac7fc60121624f71b3))
+* **avatar:** Add image support to HWCAvatar component ([618d5e3](https://github.com/holejs/wc/commit/618d5e3ae6423c1ef6a0f8423f7055c647d21c3b))
+* Integrated with the new InputField changes ([3cda3f3](https://github.com/holejs/wc/commit/3cda3f3de0a9d62b2576e810ecdbc0b718b5a02f))
+* New InputField changes have been integrated ([1274c20](https://github.com/holejs/wc/commit/1274c209d370b848b8b97e6b7d51818fb45df4ce))
+* New methods and simplifications have been added to validations ([d38e68b](https://github.com/holejs/wc/commit/d38e68b437545027d5df0ec8a385f6a31ca0ab21))
+
+
+
 # [0.18.0](https://github.com/holejs/wc/compare/v0.17.2...v0.18.0) (2024-02-07)
 
 
