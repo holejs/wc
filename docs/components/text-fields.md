@@ -353,7 +353,8 @@ See the following examples:
 <hwc-text-field
   name="card_number"
   mask="0000 0000 0000 0000"
-  rules="required|pattern:^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$"
+  required
+  pattern="^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$"
 ></hwc-text-field>
 ```
 
@@ -363,7 +364,8 @@ See the following examples:
 <hwc-text-field
   name="phone_number"
   mask="(000) 0000-0000"
-  rules="required|pattern:^\([0-9]{3}\) [0-9]{4}-[0-9]{4}$"
+  required
+  pattern="^\([0-9]{3}\) [0-9]{4}-[0-9]{4}$"
 ></hwc-text-field>
 ```
 
@@ -373,7 +375,8 @@ See the following examples:
 <hwc-text-field
   name="date"
   mask="00/00/0000"
-  rules="required|pattern:^[0-9]{2}/[0-9]{2}/[0-9]{4}$"
+  required
+  pattern="^[0-9]{2}/[0-9]{2}/[0-9]{4}$"
 ></hwc-text-field>
 ```
 
