@@ -167,8 +167,8 @@ Sets the validity of the checkbox and displays the error message if necessary.
 | `required` | `boolean` | `required` | Indicates whether the checkbox is required. |
 | `errorMessageRequired` | `string` | `error-message-required` | The error message to display when the checkbox is required and not checked. |
 | `name` | `string` | `name` | Specifies the name that the checkbox will have. |
-| `dirty` | `boolean` | `dirty` | Indicates whether the input field has been modified. |
-| `touched` | `boolean` | `touched` | Indicates whether the input field has been touched. |
+| `dirty` | `boolean` | `NA` | Indicates whether the input field has been modified. |
+| `touched` | `boolean` | `NA` | Indicates whether the input field has been touched. |
 
 ## CSS Custom Properties
 
