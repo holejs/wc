@@ -173,13 +173,69 @@ The `hwc-select` component has the following error messages:
 
 ```html
 <hwc-select
-  data-error-message-required="This field is required."
+  required
+  error-message-required="This field is required."
 >
   <hwc-select-option value="blue">Blue</hwc-select-option>
   <hwc-select-option value="red">Red</hwc-select-option>
   <hwc-select-option value="orange">Orange</hwc-select-option>
 </hwc-select>
 ```
+
+> [!NOTE]
+> For more information about the validations visit the [Validations](/docs/components/text-fields.md#validations) and [Error Messages](/docs/components/text-fields.md#error-messages)
+
+## Events
+
+### `change`
+
+The `change` event is triggered when the value of the select changes.
+
+## Methods
+
+### `reset(): void`
+
+Resets the text field to its initial state.
+
+### `reportValidity(): Promise<boolean>`
+
+Checks the validity of the text field and displays the error messages.
+
+### `checkValidity(): Promise<boolean>`
+
+Checks the validity of the text field and returns a boolean value indicating whether the field is valid or not. But it does not display the error messages.
+
+### `setCustomValidity(message: string): void`
+
+Sets a custom error message to be displayed when the text field is invalid.
+
+### `setValidity(message: string | null): void`
+
+> [!WARNING]
+> The `setValidity` method is deprecated. Use `setCustomValidity` instead.
+
+Sets the validity of the text field and displays the error message if necessary.
+
+## API
+
+| Property | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | `name` | The name of the select. |
+| `label` | `string` | `label` | The label of the select. |
+| `hint` | `string` | `hint` | The hint of the select. |
+| `color` | `string` | `color` | The color of the select. You can set the color using different formats: HEX, RGB, RGBA, HSL, [Color palette](/src/assets/colors.css). |
+| `multiple` | `boolean` | `multiple` | If `true`, the user can select multiple options. |
+| `disabled` | `boolean` | `disabled` | If `true`, the select is disabled. |
+| `readonly` | `boolean` | `readonly` | If `true`, the select is readonly. |
+| `required` | `boolean` | `required` | If `true`, the select is required. |
+| `min` | `number` | `min` | The minimum number of options that the user must select. |
+| `max` | `number` | `max` | The maximum number of options that the user must select. |
+| `rules` | `string` | `rules` | The rules of the select. **DEPRECATED** |
+| `errorMessageRequired` | `string` | `error-message-required` | The error message when the select is required. |
+| `errorMessageMin` | `string` | `error-message-min` | The error message when the select is less than the minimum. |
+| `errorMessageMax` | `string` | `error-message-max` | The error message when the select is greater than the maximum. |
+| `dirty` | `boolean` | `NA` | Indicates whether the input field has been modified. |
+| `touched` | `boolean` | `NA` | Indicates whether the input field has been touched. |
 
 ## CSS Custom Properties
 
