@@ -6,7 +6,7 @@ The `<hwc-checkbox>` component is a custom component for creating stylized check
 
 To use the `<hwc-checkbox>` component, simply include tag in your HTML. You can adjust the properties to customize the appearance and behavior of the checkbox.
 
-**Javacript7Typescript**
+**Javacript/Typescript**
 
 ```ts
 import '@holejs/wc/checkbox/checkbox.js'
@@ -74,10 +74,13 @@ Unlike the validations of the `<hwc-text-field>`, the checkbox only presents one
 
 ```html
 <hwc-checkbox
-  rules="required"
-  data-error-message-required="Complete the checkbox."
+  required
+  error-message-required="Complete the checkbox."
 ></hwc-checkbox>
 ```
+
+> [!NOTE]
+> For more information about the validations visit the [Validations](/docs/components/text-fields.md#validations) and [Error Messages](/docs/components/text-fields.md#error-messages)
 
 ## Additionals
 
@@ -121,6 +124,51 @@ This way you can extract a list of values selected by the user.
 
 > **NOTE**
 > When the form is submitted without `preventDefault()` the way it will send the data is as follows: `technologies=lit&technologies=vue`. More information https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#handling_multiple_checkboxes
+
+## Events
+
+### `change`
+
+The `change` event is triggered when the checkbox is checked or unchecked.
+
+## Methods
+
+### `reset(): void`
+
+Resets the checkbox to its initial state.
+
+### `reportValidity(): Promise<boolean>`
+
+Checks the validity of the checkbox and displays the error messages.
+
+### `checkValidity(): Promise<boolean>`
+
+Checks the validity of the checkbox and returns a boolean value indicating whether the field is valid or not. But it does not display the error messages.
+
+### `setCustomValidity(message: string): void`
+
+Sets a custom error message to be displayed when the checkbox is invalid.
+
+### `setValidity(message: string | null)`
+
+> [!WARNING]
+> The `setValidity` method is deprecated. Use `setCustomValidity` instead.
+
+Sets the validity of the checkbox and displays the error message if necessary.
+
+## API
+
+| Property | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| `color` | `string` | `color` | The color of the checkbox. You can set the color using different formats: HEX, RGB, RGBA, HSL, HSLA, and [Palette Color](/src/assets/colors.css). |
+| `value` | `string` | `value` | The value associated with the checkbox when it is checked. **Default:** `on` |
+| `checked` | `boolean` | `checked` | Indicates whether the checkbox is initially checked. |
+| `disabled` | `boolean` | `disabled` | Determines whether the checkbox is disabled, which prevents the user from interacting with it. |
+| `required` | `boolean` | `required` | Indicates whether the checkbox is required. |
+| `errorMessageRequired` | `string` | `error-message-required` | The error message to display when the checkbox is required and not checked. |
+| `name` | `string` | `name` | Specifies the name that the checkbox will have. |
+| `dirty` | `boolean` | `dirty` | Indicates whether the input field has been modified. |
+| `touched` | `boolean` | `touched` | Indicates whether the input field has been touched. |
 
 ## CSS Custom Properties
 
