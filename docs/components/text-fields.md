@@ -26,16 +26,16 @@ This component is useful in any web application that requires the collection of 
   - [Custom validations](#custom-validations)
   - [Mask](#mask)
   - [Methods](#methods)
-    - [`reset()`](#reset)
-    - [`reportValidity()`](#reportvalidity)
-    - [`checkValidity()`](#checkvalidity)
-    - [`setCustomValidity(message: string)`](#setcustomvaliditymessage-string)
+    - [`reset(): void`](#reset-void)
+    - [`reportValidity(): Promise<boolean>`](#reportvalidity-promiseboolean)
+    - [`checkValidity(): Promise<boolean>`](#checkvalidity-promiseboolean)
+    - [`setCustomValidity(message: string): void`](#setcustomvaliditymessage-string-void)
     - [`getRules(): RuleEntity[]`](#getrules-ruleentity)
     - [`getRule(name: string): RuleHandler | null`](#getrulename-string-rulehandler--null)
     - [`hasRule(name: string): boolean`](#hasrulename-string-boolean)
     - [`addRule (validation: RuleEntity): void`](#addrule-validation-ruleentity-void)
     - [`removeRule (name: string): void`](#removerule-name-string-void)
-    - [`setValidity(message: string | null)`](#setvaliditymessage-string--null)
+    - [`setValidity(message: string | null): void`](#setvaliditymessage-string--null-void)
   - [API](#api)
   - [CSS Custom Properties](#css-custom-properties)
 
@@ -406,27 +406,21 @@ See the following examples:
 
 ## Methods
 
-### `reset()`
+### `reset(): void`
 
 Resets the text field to its initial state.
 
-### `reportValidity()`
+### `reportValidity(): Promise<boolean>`
 
 Checks the validity of the text field and displays the error messages.
 
-### `checkValidity()`
+### `checkValidity(): Promise<boolean>`
 
 Checks the validity of the text field and returns a boolean value indicating whether the field is valid or not. But it does not display the error messages.
 
-### `setCustomValidity(message: string)`
+### `setCustomValidity(message: string): void`
 
 Sets a custom error message to be displayed when the text field is invalid.
-
-```ts
-const $textField = document.querySelector('hwc-text-field[name="fullname"]')
-
-$textField.setCustomValidity('This field is required.')
-```
 
 ### `getRules(): RuleEntity[]`
 
@@ -448,7 +442,7 @@ Adds a validation rule to the input.
 
 Removes a validation rule from the input.
 
-### `setValidity(message: string | null)`
+### `setValidity(message: string | null): void`
 
 > [!WARNING]
 > The `setValidity` method is deprecated. Use `setCustomValidity` instead.
